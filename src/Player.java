@@ -4,19 +4,24 @@ public class Player {
             foursChosen, fivesChosen, sixesChosen, smallStraightChosen,
             largeStraightChosen, fullHouseChosen, threeOfAKindChosen,
             fourOfAKindChosen, chanceChosen, yahtzeeChosen;
-    private int totalScore, acesScore, twosScore, threesScore,
-            foursScore, fivesScore, sixesScore, threeOfAKindScore,
-            fourOfAKindScore, chanceScore;
+    private int totalScore, yahtzeeRolls;
 
 
-
-    public Player(String name){
+    public Player(String name) {
         this.name = name;
         turn = acesChosen = twosChosen = threesChosen = foursChosen = fivesChosen =
-            sixesChosen = smallStraightChosen = largeStraightChosen = fullHouseChosen =
-            threeOfAKindChosen = fourOfAKindChosen = chanceChosen = yahtzeeChosen = false;
-        totalScore = acesScore = twosScore = threesScore = foursScore = fivesScore =
-                sixesScore = threeOfAKindScore = fourOfAKindScore = chanceScore = 0;
+                sixesChosen = smallStraightChosen = largeStraightChosen = fullHouseChosen =
+                        threeOfAKindChosen = fourOfAKindChosen = chanceChosen = yahtzeeChosen = false;
+
+        totalScore = yahtzeeRolls = 0;
+    }
+
+    public int getYahtzeeRolls() {
+        return yahtzeeRolls;
+    }
+
+    public void setYahtzeeRolls(int yahtzeeRolls) {
+        this.yahtzeeRolls = yahtzeeRolls;
     }
 
     public String getName() {
@@ -146,76 +151,6 @@ public class Player {
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
     }
-
-    public int getAcesScore() {
-        return acesScore;
-    }
-
-    public void setAcesScore(int acesScore) {
-        this.acesScore = acesScore;
-    }
-
-    public int getTwosScore() {
-        return twosScore;
-    }
-
-    public void setTwosScore(int twosScore) {
-        this.twosScore = twosScore;
-    }
-
-    public int getThreesScore() {
-        return threesScore;
-    }
-
-    public void setThreesScore(int threesScore) {
-        this.threesScore = threesScore;
-    }
-
-    public int getFoursScore() {
-        return foursScore;
-    }
-
-    public void setFoursScore(int foursScore) {
-        this.foursScore = foursScore;
-    }
-
-    public int getFivesScore() {
-        return fivesScore;
-    }
-
-    public void setFivesScore(int fivesScore) {
-        this.fivesScore = fivesScore;
-    }
-
-    public int getSixesScore() {
-        return sixesScore;
-    }
-
-    public void setSixesScore(int sixesScore) {
-        this.sixesScore = sixesScore;
-    }
-
-    public int getThreeOfAKindScore() {
-        return threeOfAKindScore;
-    }
-
-    public void setThreeOfAKindScore(int threeOfAKindScore) {
-        this.threeOfAKindScore = threeOfAKindScore;
-    }
-
-    public int getFourOfAKindScore() {
-        return fourOfAKindScore;
-    }
-
-    public void setFourOfAKindScore(int fourOfAKindScore) {
-        this.fourOfAKindScore = fourOfAKindScore;
-    }
-
-    public int getChanceScore() {
-        return chanceScore;
-    }
-
-    public void setChanceScore(int chanceScore) {
-        this.chanceScore = chanceScore;
-    }
 }
+
+

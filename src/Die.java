@@ -14,8 +14,6 @@ public class Die {
     public int roll(){
         if (!hold) {
             roll = rand.nextInt(6) + 1;
-        } else {
-            roll = 0;
         }
         return roll;
     }
