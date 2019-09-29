@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GameLogic {
     public Die die1, die2, die3, die4, die5;
     public Player player1, player2, player3, player4, player5;
@@ -82,10 +84,27 @@ public class GameLogic {
                     return 17;
                 }
                 break;
-            case SMALL_STRAIGHT: //incomplete, need to check if small straight happened
+            case SMALL_STRAIGHT: //incomplete, need to check if small straight happened.
                 if (!player.isSmallStraightChosen()) {
                     player.setSmallStraightChosen(true);
-                    return SMALL_STRAIGHT_SCORE;
+                    //check for if small straight happened.
+
+                    //add values of dice to arraylist
+                    ArrayList<Integer> dieVals = new ArrayList<>();
+                    dieVals.add(die1Val);
+                    dieVals.add(die2Val);
+                    dieVals.add(die3Val);
+                    dieVals.add(die4Val);
+                    dieVals.add(die5Val);
+                    int sum = 0;
+                    //add contents of array list to get 15.
+                    for (int i = 0; i < dieVals.size(); i++) {
+                        sum += dieVals.get(i);
+                    }
+                    boolean condition = die1Val != die2Val && die1Val != die3Val && die1Val != die4Val && die1Val != die5Val;
+                    if (sum == 15 && condition ) {
+                        return SMALL_STRAIGHT_SCORE;
+                    }
                 }
                 break;
             case LARGE_STRAIGHT: //incomplete need to check if large straight happened
