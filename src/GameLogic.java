@@ -7,6 +7,7 @@ public class GameLogic {
     public ScoreOption optionChosen;
     public static final int FULL_HOUSE_SCORE = 25, SMALL_STRAIGHT_SCORE = 30,
             LARGE_STRAIGHT_SCORE = 40, YAHTZEE_SCORE = 50, BONUS_SCORE = 100;
+    public static ArrayList<Integer> dieVals = new ArrayList<>();
 
     public GameLogic(){
         die1 = new Die();
@@ -95,7 +96,6 @@ public class GameLogic {
                     player.setLargeStraightChosen(true);
                     //check for if large straight happened.
                     //add values of dice to arraylist
-                    ArrayList<Integer> dieVals = new ArrayList<>();
                     dieVals.add(die1Val);
                     dieVals.add(die2Val);
                     dieVals.add(die3Val);
