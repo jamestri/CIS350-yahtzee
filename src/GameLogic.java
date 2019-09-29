@@ -87,8 +87,13 @@ public class GameLogic {
             case SMALL_STRAIGHT: //incomplete, need to check if small straight happened.
                 if (!player.isSmallStraightChosen()) {
                     player.setSmallStraightChosen(true);
-                    //check for if small straight happened.
-
+                        return SMALL_STRAIGHT_SCORE;
+                }
+                break;
+            case LARGE_STRAIGHT: //incomplete need to check if large straight happened
+                if (!player.isLargeStraightChosen()) {
+                    player.setLargeStraightChosen(true);
+                    //check for if large straight happened.
                     //add values of dice to arraylist
                     ArrayList<Integer> dieVals = new ArrayList<>();
                     dieVals.add(die1Val);
@@ -102,15 +107,9 @@ public class GameLogic {
                         sum += dieVals.get(i);
                     }
                     boolean condition = die1Val != die2Val && die1Val != die3Val && die1Val != die4Val && die1Val != die5Val;
-                    if (sum == 15 && condition ) {
-                        return SMALL_STRAIGHT_SCORE;
+                    if (sum == 15 || sum == 20 && condition) {
+                        return LARGE_STRAIGHT_SCORE;
                     }
-                }
-                break;
-            case LARGE_STRAIGHT: //incomplete need to check if large straight happened
-                if (!player.isLargeStraightChosen()) {
-                    player.setLargeStraightChosen(true);
-                    return LARGE_STRAIGHT_SCORE;
                 }
                 break;
             case CHANCE:
