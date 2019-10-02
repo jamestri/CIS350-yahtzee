@@ -1,13 +1,15 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GameLogic {
     public Die die1, die2, die3, die4, die5;
     public Player player1, player2, player3, player4, player5;
-    public int numRolls, die1Val, die2Val, die3Val, die4Val, die5Val;
+    public int numRounds, numRolls, die1Val, die2Val, die3Val, die4Val, die5Val;
     public ScoreOption optionChosen;
     public static final int FULL_HOUSE_SCORE = 25, SMALL_STRAIGHT_SCORE = 30,
             LARGE_STRAIGHT_SCORE = 40, YAHTZEE_SCORE = 50, BONUS_SCORE = 100;
     public static ArrayList<Integer> dieVals;
+    public GameStatus gameStatus;
 
     public GameLogic(){
         die1 = new Die();
@@ -21,9 +23,11 @@ public class GameLogic {
         player4 = new Player("Player 4");
         player5 = new Player("Player 5");
         numRolls = 0;
+        numRounds = 0;
         player1.setTurn(true);
         optionChosen = ScoreOption.NONE;
         dieVals = new ArrayList<>();
+        gameStatus = GameStatus.IN_PROGRESS;
     }
 
     /**
@@ -60,6 +64,7 @@ public class GameLogic {
     /**
      * Changes turn to next player
      * Figure out a new order or keep this? Make it dynamic? More players?
+     * Increments number of rounds
      */
     private void changeTurn(){
         if (player1.isTurn()){
@@ -81,7 +86,36 @@ public class GameLogic {
         if (player5.isTurn()){
             player5.setTurn(false);
             player1.setTurn(true);
+            numRounds++;
         }
+        if (numRounds == 13) {
+            isWinner();
+        }
+    }
+
+    /**
+     * Returns the number of rounds currently in progress
+     * @return num rounds in progress
+     */
+    public int getNumRounds(){
+        return numRounds;
+    }
+
+
+    /**
+     * Returns the winner out of the five players and sets gamestatus to over
+     * @return winning player
+     */
+    public Player isWinner(){
+        ArrayList<Player> whoWins = new ArrayList<>();
+        whoWins.add(player1);
+        whoWins.add(player2);
+        whoWins.add(player3);
+        whoWins.add(player4);
+        whoWins.add(player5);
+        Collections.sort(whoWins);
+        gameStatus = GameStatus.GAME_OVER;
+        return whoWins.get(4);
     }
 
     /**
