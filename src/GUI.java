@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
+	GameLogic game;
+	
 	private JPanel dicePanel;
 	private JPanel scorePanel;
 	private JPanel scoreSelectPanel;
@@ -47,6 +49,8 @@ public class GUI extends JFrame implements ActionListener {
 	JButton diceBtn5;
 
 	public GUI() {
+		game = new GameLogic();
+		
 		fileMenu = new JMenu("File");
 		optionsMenu = new JMenu("Options");
 
@@ -91,6 +95,12 @@ public class GUI extends JFrame implements ActionListener {
 		dicePanel.add(diceBtn4);
 		dicePanel.add(diceBtn5);
 
+		
+		diceBtn1.addActionListener(this);
+		diceBtn2.addActionListener(this);
+		diceBtn3.addActionListener(this);
+		diceBtn4.addActionListener(this);
+		diceBtn5.addActionListener(this);
 		
 		scorePanel = new JPanel();
 		add(scorePanel);
@@ -149,27 +159,28 @@ public class GUI extends JFrame implements ActionListener {
 		
 		//Roll Button
 		if(e.getSource() == diceBtn1) {
-			//roll
+			game.roll();
+			diceBtn1.setText(Integer.toString(game.die1.getRoll()));
 		}
 		
 		//Roll Button
 		if(e.getSource() == diceBtn2) {
-			//roll
+			diceBtn2.setText(Integer.toString(game.die2.getRoll()));
 		}
 		
 		//Roll Button
 		if(e.getSource() == diceBtn3) {
-			//roll
+			diceBtn3.setText(Integer.toString(game.die3.getRoll()));
 		}
 		
 		//Roll Button
 		if(e.getSource() == diceBtn4) {
-			//roll
+			diceBtn4.setText(Integer.toString(game.die4.getRoll()));
 		}
 		
 		//Roll Button
 		if(e.getSource() == diceBtn5) {
-			//roll
+			diceBtn5.setText(Integer.toString(game.die5.getRoll()));
 		}
 		
 	}
