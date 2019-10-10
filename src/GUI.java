@@ -1,14 +1,7 @@
+import java.awt.Dimension;
 import java.awt.GridLayout; 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.EmptyStackException;
-import java.util.GregorianCalendar;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -31,7 +24,6 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
-
 	private JPanel dicePanel;
 	private JPanel scorePanel;
 	private JPanel scoreSelectPanel;
@@ -47,9 +39,14 @@ public class GUI extends JFrame implements ActionListener {
 	private JMenuItem openGame;
 	private JMenuItem saveGame;
 	private JMenuItem exitItem;
+	
+	JButton diceBtn1;
+	JButton diceBtn2;
+	JButton diceBtn3;
+	JButton diceBtn4;
+	JButton diceBtn5;
 
 	public GUI() {
-
 		fileMenu = new JMenu("File");
 		optionsMenu = new JMenu("Options");
 
@@ -79,11 +76,21 @@ public class GUI extends JFrame implements ActionListener {
 		dicePanel = new JPanel();
 		add(dicePanel);
 		dicePanel.setLayout(new GridLayout(2,3));
-		dicePanel.add(new JButton("1"));
-		dicePanel.add(new JButton("2"));
-		dicePanel.add(new JButton("3"));
-		dicePanel.add(new JButton("4"));
-		dicePanel.add(new JButton("5"));
+		
+		diceBtn1 = new JButton("Roll 1");
+		diceBtn2 = new JButton("Roll 2");
+		diceBtn3 = new JButton("Roll 3");
+		diceBtn4 = new JButton("Roll 4");
+		diceBtn5 = new JButton("Roll 5");
+		
+//		diceBtn1.setPreferredSize(new Dimension(70, 70));
+		
+		dicePanel.add(diceBtn1);
+		dicePanel.add(diceBtn2);
+		dicePanel.add(diceBtn3);
+		dicePanel.add(diceBtn4);
+		dicePanel.add(diceBtn5);
+
 		
 		scorePanel = new JPanel();
 		add(scorePanel);
@@ -139,6 +146,31 @@ public class GUI extends JFrame implements ActionListener {
 			}
 		}
 		
+		
+		//Roll Button
+		if(e.getSource() == diceBtn1) {
+			//roll
+		}
+		
+		//Roll Button
+		if(e.getSource() == diceBtn2) {
+			//roll
+		}
+		
+		//Roll Button
+		if(e.getSource() == diceBtn3) {
+			//roll
+		}
+		
+		//Roll Button
+		if(e.getSource() == diceBtn4) {
+			//roll
+		}
+		
+		//Roll Button
+		if(e.getSource() == diceBtn5) {
+			//roll
+		}
 		
 	}
 
