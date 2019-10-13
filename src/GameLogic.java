@@ -33,7 +33,7 @@ public class GameLogic {
     /**
      * Rolls the dice should the number of max rolls not be hit
      */
-    private void roll(){
+    public void roll(){
         if (numRolls < 3) {
                 die1Val = die1.roll();
                 die2Val = die2.roll();
