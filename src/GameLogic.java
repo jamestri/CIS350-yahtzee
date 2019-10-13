@@ -94,6 +94,25 @@ public class GameLogic {
     }
 
     /**
+     * Gets the current player numbers turn
+     *
+     */
+    public int getTurn() {
+    	if (player1.isTurn())
+    		return 1;
+    	else if (player2.isTurn())
+    		return 2;
+    	else if (player3.isTurn())
+    		return 3;
+    	else if (player4.isTurn())
+    		return 4;
+    	else if (player5.isTurn())
+    		return 5;
+    	else
+    		return -1;
+    }
+    
+    /**
      * Returns the number of rounds currently in progress
      * @return num rounds in progress
      */

@@ -75,7 +75,7 @@ public class GUI extends JFrame implements ActionListener {
 		setJMenuBar(menus);
 		
 		setLayout(new GridLayout(4,1));
-		add(new JLabel("Player #'s Turn"));
+		add(new JLabel("Player #'s Turn  " + game.getTurn()));
 		
 		dicePanel = new JPanel();
 		add(dicePanel);
@@ -106,16 +106,16 @@ public class GUI extends JFrame implements ActionListener {
 		add(scorePanel);
 		scorePanel.setLayout(new GridLayout(6,1));
 		scorePanel.add(new JLabel("Scores:"));
-		scorePanel.add(new JLabel("Player 1's Score:"));
-		scorePanel.add(new JLabel("Player 2's Score:"));
-		scorePanel.add(new JLabel("Player 3's Score:"));
-		scorePanel.add(new JLabel("Player 4's Score:"));
-		scorePanel.add(new JLabel("Player 5's Score:"));
+		scorePanel.add(new JLabel("Player 1's Score:  " + game.player1.getTotalScore()));
+		scorePanel.add(new JLabel("Player 2's Score:  " + game.player2.getTotalScore()));
+		scorePanel.add(new JLabel("Player 3's Score:  " + game.player3.getTotalScore()));
+		scorePanel.add(new JLabel("Player 4's Score:  " + game.player4.getTotalScore()));
+		scorePanel.add(new JLabel("Player 5's Score:  " + game.player5.getTotalScore()));
 		
 		scoreSelectPanel = new JPanel();
 		add(scoreSelectPanel);
 		scoreSelectPanel.setLayout(new GridLayout(1,2));
-		scoreSelectPanel.add(new JComboBox());
+		scoreSelectPanel.add(new JComboBox(game.optionChosen.values()));
 		scoreSelectPanel.add(new JButton("Submit"));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
