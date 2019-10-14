@@ -1,4 +1,4 @@
-public class Player implements Comparable{
+public class Player implements Comparable<Player>{
     private String name;
     private boolean turn, acesChosen, twosChosen, threesChosen,
             foursChosen, fivesChosen, sixesChosen, smallStraightChosen,
@@ -152,9 +152,13 @@ public class Player implements Comparable{
         this.totalScore = totalScore;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return getTotalScore();
+
+    public int compareTo(Player o) {
+        if (getTotalScore() < o.getTotalScore()) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }
 
