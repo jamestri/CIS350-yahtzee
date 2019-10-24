@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Random;
 
-public class Die {
+public class Die implements Serializable {
     private int roll;
     private Random rand;
     private boolean hold;

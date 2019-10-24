@@ -1,4 +1,6 @@
-public class Player implements Comparable<Player>{
+import java.io.Serializable;
+
+public class Player implements Comparable, Serializable{
     private String name;
     private boolean turn, acesChosen, twosChosen, threesChosen,
             foursChosen, fivesChosen, sixesChosen, smallStraightChosen,
@@ -152,13 +154,9 @@ public class Player implements Comparable<Player>{
         this.totalScore = totalScore;
     }
 
-
-    public int compareTo(Player o) {
-        if (getTotalScore() < o.getTotalScore()) {
-            return -1;
-        } else {
-            return 1;
-        }
+    @Override
+    public int compareTo(Object o) {
+        return getTotalScore();
     }
 }
 

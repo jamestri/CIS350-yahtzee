@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class GameLogic {
+public class GameLogic implements Serializable {
     public Die die1, die2, die3, die4, die5;
     public Player player1, player2, player3, player4, player5;
     public int numRounds, numRolls, die1Val, die2Val, die3Val, die4Val, die5Val;
