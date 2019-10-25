@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -32,6 +33,8 @@ public class GUI extends JFrame implements ActionListener {
   private JPanel scorePanel;
   /* JPanel for Selecting Scores */
   private JPanel scoreSelectPanel;
+  /* JPanel for Action Buttons */
+  private JPanel actionPanel;
 
   /* Holds all JMenus*/
   private JMenuBar menus;
@@ -47,6 +50,8 @@ public class GUI extends JFrame implements ActionListener {
   private JMenuItem saveGame;
   /* Menu Item to exit game */
   private JMenuItem exitItem;
+  /* Menu Item to add player */
+  private JMenuItem addPlayer;
 
   /* Button to Roll Dice 1 */
   JButton diceBtn1;
@@ -60,6 +65,10 @@ public class GUI extends JFrame implements ActionListener {
   JButton diceBtn5;
   /* Button to Roll all */
   JButton rollAll;
+  /* Button to Hold Dice */
+  JButton holdDice;
+  /* Button to Pass Dice */
+  JButton passDice;
 
   /* Button to submit score */
   JButton submitScore;
@@ -75,17 +84,20 @@ public class GUI extends JFrame implements ActionListener {
     optionsMenu = new JMenu("Options");
 
     // Instantiates buttons on file menu
+    addPlayer = new JMenuItem("Add Player");
     openGame = new JMenuItem("Open Game");
     saveGame = new JMenuItem("Save Game");
     exitItem = new JMenuItem("Exit");
 
     // Adds buttons to file menu
+    fileMenu.add(addPlayer);
     fileMenu.add(openGame);
     fileMenu.add(saveGame);
     fileMenu.addSeparator();
     fileMenu.add(exitItem);
 
     // Instantiates action listeners for file menu
+    addPlayer.addActionListener(this);
     openGame.addActionListener(this);
     exitItem.addActionListener(this);
     saveGame.addActionListener(this);
@@ -144,6 +156,20 @@ public class GUI extends JFrame implements ActionListener {
     scorePanel.add(new JLabel("Player 3's Score:  " + game.player3.getTotalScore()));
     scorePanel.add(new JLabel("Player 4's Score:  " + game.player4.getTotalScore()));
     scorePanel.add(new JLabel("Player 5's Score:  " + game.player5.getTotalScore()));
+
+    // Creates and adds new panel for the roll dice buttons
+    actionPanel = new JPanel();
+    add(actionPanel);
+    actionPanel.setLayout(new GridLayout(1, 2));
+
+    // creates and adds roll dice buttons
+    holdDice = new JButton("Hold Dice");
+    passDice = new JButton("Pass Dice");
+
+    actionPanel.add(holdDice);
+    actionPanel.add(passDice);
+    holdDice.addActionListener(this);
+    passDice.addActionListener(this);
 
     // adds new panel and combobox and button for selecting your score
     scoreSelectPanel = new JPanel();
@@ -209,20 +235,46 @@ public class GUI extends JFrame implements ActionListener {
       }
     }
 
-    // Roll Button 1
-    if (e.getSource() == diceBtn1) {}
+    // Select Button 1
+    if (e.getSource() == diceBtn1) {
+      if (!diceBtn1.isSelected())
+        diceBtn1.setSelected(true);
+      else
+        diceBtn1.setSelected(false);
+    }
 
-    // Roll Button 2
-    if (e.getSource() == diceBtn2) {}
+    // Select Button 2
+    if (e.getSource() == diceBtn2) {
+      if (!diceBtn2.isSelected())
+        diceBtn2.setSelected(true);
+      else
+        diceBtn2.setSelected(false);
+    }
 
-    // Roll Button 3
-    if (e.getSource() == diceBtn3) {}
+    // Select Button 3
+    if (e.getSource() == diceBtn3) {
+      if (!diceBtn3.isSelected())
+        diceBtn3.setSelected(true);
+      else
+        diceBtn3.setSelected(false);
+    }
 
-    // Roll Button 4
-    if (e.getSource() == diceBtn4) {}
+    // Select Button 4
+    if (e.getSource() == diceBtn4) {
+      if (!diceBtn4.isSelected()) {
+        diceBtn4.setSelected(true);
+      } else {
+        diceBtn4.setSelected(false);
+        }
+    }
 
-    // Roll Button 5
-    if (e.getSource() == diceBtn5) {}
+    // Select Button 5
+    if (e.getSource() == diceBtn5) {
+      if (!diceBtn5.isSelected())
+        diceBtn5.setSelected(true);
+      else
+        diceBtn5.setSelected(false);
+    }
 
     // Roll All
     if (e.getSource() == rollAll) {
@@ -238,6 +290,12 @@ public class GUI extends JFrame implements ActionListener {
     if (e.getSource() == submitScore) {
       game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
     }
+
+    if (e.getSource() == holdDice) {}
+    if (e.getSource() == passDice) {}
+    if (e.getSource() == addPlayer) {
+      String playername = JOptionPane.showInputDialog("Please input a player name: ");
+      game.addPlayer(playername);
+    }
   }
 }
-

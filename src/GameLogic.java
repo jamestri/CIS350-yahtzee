@@ -116,6 +116,15 @@ public class GameLogic implements Serializable {
   }
 
   /**
+   * Adds the player who will be added into the game.
+   *
+   * @param name of the player
+   */
+  public void addPlayer(String name) {
+    Player newPlayer = new Player(name);
+  }
+
+  /**
    * Returns the winner out of the five players and sets gamestatus to over
    *
    * @return winning player
@@ -496,4 +505,3 @@ public class GameLogic implements Serializable {
     return 0;
   }
 }
-
