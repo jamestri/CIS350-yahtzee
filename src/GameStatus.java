@@ -1,4 +1,4 @@
 public enum GameStatus {
-    IN_PROGRESS,
-    GAME_OVER
+  IN_PROGRESS,
+  GAME_OVER
 }
