@@ -1,9 +1,13 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedList;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -72,6 +76,17 @@ public class GUI extends JFrame implements ActionListener {
 
   /* Button to submit score */
   JButton submitScore;
+  
+  /* Label to show whose turn it is */
+  JLabel turn;
+  
+  /* Label to show scores */
+  JLabel player1Score;
+  JLabel player2Score;
+  JLabel player3Score;
+  JLabel player4Score;
+  JLabel player5Score;
+
 
   JComboBox scoreOptions;
   /** Constructor for GUI This is where I set up the layout as well as all the buttons and menus */
@@ -116,7 +131,8 @@ public class GUI extends JFrame implements ActionListener {
     setLayout(new GridLayout(4, 1));
 
     // Adds label with current players turn
-    add(new JLabel("Player #'s Turn  " + game.getTurn()));
+    turn = new JLabel("Turn Player  " + game.getTurn());
+    add(turn);
 
     // Creates and adds new panel for the roll dice buttons
     dicePanel = new JPanel();
@@ -151,11 +167,16 @@ public class GUI extends JFrame implements ActionListener {
     add(scorePanel);
     scorePanel.setLayout(new GridLayout(6, 1));
     scorePanel.add(new JLabel("Scores:"));
-    scorePanel.add(new JLabel("Player 1's Score:  " + game.player1.getTotalScore()));
-    scorePanel.add(new JLabel("Player 2's Score:  " + game.player2.getTotalScore()));
-    scorePanel.add(new JLabel("Player 3's Score:  " + game.player3.getTotalScore()));
-    scorePanel.add(new JLabel("Player 4's Score:  " + game.player4.getTotalScore()));
-    scorePanel.add(new JLabel("Player 5's Score:  " + game.player5.getTotalScore()));
+    player1Score = new JLabel("Player 1's Score:  " + game.player1.getTotalScore());
+    player2Score = new JLabel("Player 2's Score:  " + game.player2.getTotalScore());
+    player3Score = new JLabel("Player 3's Score:  " + game.player3.getTotalScore());
+    player4Score = new JLabel("Player 4's Score:  " + game.player4.getTotalScore());
+    player5Score = new JLabel("Player 5's Score:  " + game.player5.getTotalScore());
+    scorePanel.add(player1Score);
+    scorePanel.add(player2Score);
+    scorePanel.add(player3Score);
+    scorePanel.add(player4Score);
+    scorePanel.add(player5Score);
 
     // Creates and adds new panel for the roll dice buttons
     actionPanel = new JPanel();
@@ -214,7 +235,21 @@ public class GUI extends JFrame implements ActionListener {
       int status = chooser.showOpenDialog(null);
       if (status == JFileChooser.APPROVE_OPTION) {
         String filename = chooser.getSelectedFile().getAbsolutePath();
-        // put try catch here to open the game
+		try {
+			FileInputStream fileIn = new FileInputStream(filename);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			game = (GameLogic) in.readObject();
+			in.close();
+		} catch (ClassNotFoundException e1) {
+			JOptionPane.showMessageDialog
+			(null, "Invalid File!");
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog
+			(null, "Invalid File!");
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog
+			(null, "Invalid File!");
+		}
       }
     }
 
@@ -289,6 +324,12 @@ public class GUI extends JFrame implements ActionListener {
     // Submit Score Button
     if (e.getSource() == submitScore) {
       game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
+      turn.setText("Turn Player  " + game.getTurn()); //update whose turn it is
+      player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
+      player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
+      player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
+      player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
+      player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
     }
 
     if (e.getSource() == holdDice) {}
