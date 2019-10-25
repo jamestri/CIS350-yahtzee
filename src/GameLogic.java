@@ -496,3 +496,4 @@ public class GameLogic implements Serializable {
     return 0;
   }
 }
+

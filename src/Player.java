@@ -178,3 +178,4 @@ public class Player implements Comparable, Serializable {
     return getTotalScore();
   }
 }
+
