@@ -15,6 +15,7 @@ public class GameLogic implements Serializable {
   public static ArrayList<Integer> dieVals;
   public GameStatus gameStatus;
 
+  /**Default Constructor*/
   public GameLogic() {
     die1 = new Die();
     die2 = new Die();
@@ -47,8 +48,7 @@ public class GameLogic implements Serializable {
   }
 
   /**
-   * Adds the players score to the score option that they chose, also does bonus score for yahtzee
-   * rolls
+   * Adds the players score to the score option that they chose
    *
    * @param player player who chose the score category
    */
@@ -66,8 +66,7 @@ public class GameLogic implements Serializable {
   }
 
   /**
-   * Changes turn to next player Figure out a new order or keep this? Make it dynamic? More players?
-   * Increments number of rounds
+   * Changes turn to next player and increments round counter
    */
   private void changeTurn() {
     if (player1.isTurn()) {

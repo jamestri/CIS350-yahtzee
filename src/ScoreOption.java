@@ -1,3 +1,6 @@
+/**
+ * Enumerator for different scoring options
+ */
 public enum ScoreOption {
   NONE,
   ACES,
