@@ -20,9 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * ******************************************************************** GUI frame for Yahtzee
+ * ************************************************** GUI frame for Yahtzee
  *
- * @version September 27 2019 *******************************************************************
+ * @version September 27 2019 *********************************************
  */
 
 /** @author Nate Johnson */
@@ -89,7 +89,9 @@ public class GUI extends JFrame implements ActionListener {
 
 
   JComboBox scoreOptions;
-  /** Constructor for GUI This is where I set up the layout as well as all the buttons and menus */
+  /** Constructor for GUI, This is where
+   * I set up the layout as well as
+   * all the buttons and menus. */
   public GUI() {
     // Instantiates new gamelogic object
     game = new GameLogic();
@@ -272,53 +274,58 @@ public class GUI extends JFrame implements ActionListener {
 
     // Select Button 1
     if (e.getSource() == diceBtn1) {
-      if (!diceBtn1.isSelected())
-        diceBtn1.setSelected(true);
+      if (!diceBtn1.isEnabled())
+        diceBtn1.setEnabled(true);
       else
-        diceBtn1.setSelected(false);
+        diceBtn1.setEnabled(false);
     }
 
     // Select Button 2
     if (e.getSource() == diceBtn2) {
-      if (!diceBtn2.isSelected())
-        diceBtn2.setSelected(true);
+      if (!diceBtn2.isEnabled())
+        diceBtn2.setEnabled(true);
       else
-        diceBtn2.setSelected(false);
+        diceBtn2.setEnabled(false);
     }
 
     // Select Button 3
     if (e.getSource() == diceBtn3) {
-      if (!diceBtn3.isSelected())
-        diceBtn3.setSelected(true);
+      if (!diceBtn3.isEnabled())
+        diceBtn3.setEnabled(true);
       else
-        diceBtn3.setSelected(false);
+        diceBtn3.setEnabled(false);
     }
 
     // Select Button 4
     if (e.getSource() == diceBtn4) {
-      if (!diceBtn4.isSelected()) {
-        diceBtn4.setSelected(true);
+      if (!diceBtn4.isEnabled()) {
+        diceBtn4.setEnabled(true);
       } else {
-        diceBtn4.setSelected(false);
+        diceBtn4.setEnabled(false);
         }
     }
 
     // Select Button 5
     if (e.getSource() == diceBtn5) {
-      if (!diceBtn5.isSelected())
-        diceBtn5.setSelected(true);
+      if (!diceBtn5.isEnabled())
+        diceBtn5.setEnabled(true);
       else
-        diceBtn5.setSelected(false);
+        diceBtn5.setEnabled(false);
     }
 
     // Roll All
     if (e.getSource() == rollAll) {
       game.roll();
-      diceBtn1.setText(Integer.toString(game.die1.getRoll()));
-      diceBtn2.setText(Integer.toString(game.die2.getRoll()));
-      diceBtn3.setText(Integer.toString(game.die3.getRoll()));
-      diceBtn4.setText(Integer.toString(game.die4.getRoll()));
-      diceBtn5.setText(Integer.toString(game.die5.getRoll()));
+      if (diceBtn1.isEnabled())
+        diceBtn1.setText(Integer.toString(game.die1.getRoll()));
+      if (diceBtn2.isEnabled())
+        diceBtn2.setText(Integer.toString(game.die2.getRoll()));
+      if (diceBtn3.isEnabled())
+        diceBtn3.setText(Integer.toString(game.die3.getRoll()));
+      if (diceBtn4.isEnabled())
+        diceBtn4.setText(Integer.toString(game.die4.getRoll()));
+      if (diceBtn5.isEnabled())
+        diceBtn5.setText(Integer.toString(game.die5.getRoll()));
     }
 
     // Submit Score Button
@@ -332,7 +339,18 @@ public class GUI extends JFrame implements ActionListener {
       player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
     }
 
-    if (e.getSource() == holdDice) {}
+    if (e.getSource() == holdDice) {
+      if (diceBtn1.isEnabled())
+        game.die1.setHold(true);
+      if (diceBtn2.isEnabled())
+        game.die2.setHold(true);
+      if (diceBtn3.isEnabled())
+        game.die3.setHold(true);
+      if (diceBtn4.isEnabled())
+        game.die4.setHold(true);
+      if (diceBtn5.isEnabled())
+        game.die5.setHold(true);
+    }
     if (e.getSource() == passDice) {}
     if (e.getSource() == addPlayer) {
       String playername = JOptionPane.showInputDialog("Please input a player name: ");
