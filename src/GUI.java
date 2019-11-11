@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -164,6 +165,12 @@ public class GUI extends JFrame implements ActionListener {
     diceBtn5.addActionListener(this);
     rollAll.addActionListener(this);
 
+    diceBtn1.setOpaque(true);
+    diceBtn2.setOpaque(true);
+    diceBtn3.setOpaque(true);
+    diceBtn4.setOpaque(true);
+    diceBtn5.setOpaque(true);
+
     // ads new panel and labels to show players scores
     scorePanel = new JPanel();
     add(scorePanel);
@@ -274,43 +281,43 @@ public class GUI extends JFrame implements ActionListener {
 
     // Select Button 1
     if (e.getSource() == diceBtn1) {
-      if (!diceBtn1.isEnabled())
-        diceBtn1.setEnabled(true);
-      else
-        diceBtn1.setEnabled(false);
+      if (diceBtn1.getBackground() != Color.red)
+        diceBtn1.setBackground(Color.red);
+        else
+        diceBtn1.setBackground(new JButton().getBackground());
     }
 
     // Select Button 2
     if (e.getSource() == diceBtn2) {
-      if (!diceBtn2.isEnabled())
-        diceBtn2.setEnabled(true);
-      else
-        diceBtn2.setEnabled(false);
+      if (diceBtn2.getBackground() != Color.red)
+        diceBtn2.setBackground(Color.red);
+        else
+        diceBtn2.setBackground(new JButton().getBackground());
     }
 
     // Select Button 3
     if (e.getSource() == diceBtn3) {
-      if (!diceBtn3.isEnabled())
-        diceBtn3.setEnabled(true);
+      if (diceBtn3.getBackground() != Color.red)
+        diceBtn3.setBackground(Color.red);
       else
-        diceBtn3.setEnabled(false);
+        diceBtn3.setBackground(new JButton().getBackground());
     }
 
     // Select Button 4
     if (e.getSource() == diceBtn4) {
-      if (!diceBtn4.isEnabled()) {
-        diceBtn4.setEnabled(true);
+      if (diceBtn4.getBackground() != Color.red) {
+        diceBtn4.setBackground(Color.red);
       } else {
-        diceBtn4.setEnabled(false);
+        diceBtn4.setBackground(new JButton().getBackground());
         }
     }
 
     // Select Button 5
     if (e.getSource() == diceBtn5) {
-      if (!diceBtn5.isEnabled())
-        diceBtn5.setEnabled(true);
+      if (diceBtn5.getBackground() != Color.red)
+        diceBtn5.setBackground(Color.red);
       else
-        diceBtn5.setEnabled(false);
+        diceBtn5.setBackground(new JButton().getBackground());
     }
 
     // Roll All
@@ -340,16 +347,26 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     if (e.getSource() == holdDice) {
-      if (diceBtn1.isEnabled())
+      if (diceBtn1.getBackground() == Color.red) {
         game.die1.setHold(true);
-      if (diceBtn2.isEnabled())
+        diceBtn1.setEnabled(false);
+        }
+      if (diceBtn2.getBackground() == Color.red) {
+        diceBtn2.setEnabled(false);
         game.die2.setHold(true);
-      if (diceBtn3.isEnabled())
+        }
+      if (diceBtn3.getBackground() == Color.red) {
+        diceBtn3.setEnabled(false);
         game.die3.setHold(true);
-      if (diceBtn4.isEnabled())
+        }
+      if (diceBtn4.getBackground() == Color.red) {
+        diceBtn4.setEnabled(false);
         game.die4.setHold(true);
-      if (diceBtn5.isEnabled())
+        }
+      if (diceBtn5.getBackground() == Color.red) {
         game.die5.setHold(true);
+        diceBtn5.setEnabled(false);
+        }
     }
     if (e.getSource() == passDice) {}
     if (e.getSource() == addPlayer) {
