@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.LinkedList;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -77,10 +75,10 @@ public class GUI extends JFrame implements ActionListener {
 
   /* Button to submit score */
   JButton submitScore;
-  
+
   /* Label to show whose turn it is */
   JLabel turn;
-  
+
   /* Label to show scores */
   JLabel player1Score;
   JLabel player2Score;
@@ -88,11 +86,10 @@ public class GUI extends JFrame implements ActionListener {
   JLabel player4Score;
   JLabel player5Score;
 
-
   JComboBox scoreOptions;
-  /** Constructor for GUI, This is where
-   * I set up the layout as well as
-   * all the buttons and menus. */
+  /**
+   * Constructor for GUI, This is where I set up the layout as well as all the buttons and menus.
+   */
   public GUI() {
     // Instantiates new gamelogic object
     game = new GameLogic();
@@ -212,6 +209,16 @@ public class GUI extends JFrame implements ActionListener {
     submitScore = new JButton("Submit");
     scoreSelectPanel.add(submitScore);
 
+    holdDice.setEnabled(false);
+    passDice.setEnabled(false);
+    diceBtn1.setEnabled(false);
+    diceBtn2.setEnabled(false);
+    diceBtn3.setEnabled(false);
+    diceBtn4.setEnabled(false);
+    diceBtn5.setEnabled(false);
+    submitScore.setEnabled(false);
+    scoreOptions.setEnabled(false);
+
     // some additional parameters
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
@@ -244,21 +251,18 @@ public class GUI extends JFrame implements ActionListener {
       int status = chooser.showOpenDialog(null);
       if (status == JFileChooser.APPROVE_OPTION) {
         String filename = chooser.getSelectedFile().getAbsolutePath();
-		try {
-			FileInputStream fileIn = new FileInputStream(filename);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			game = (GameLogic) in.readObject();
-			in.close();
-		} catch (ClassNotFoundException e1) {
-			JOptionPane.showMessageDialog
-			(null, "Invalid File!");
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog
-			(null, "Invalid File!");
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog
-			(null, "Invalid File!");
-		}
+        try {
+          FileInputStream fileIn = new FileInputStream(filename);
+          ObjectInputStream in = new ObjectInputStream(fileIn);
+          game = (GameLogic) in.readObject();
+          in.close();
+        } catch (ClassNotFoundException e1) {
+          JOptionPane.showMessageDialog(null, "Invalid File!");
+        } catch (IOException e1) {
+          JOptionPane.showMessageDialog(null, "Invalid File!");
+        } catch (Exception e1) {
+          JOptionPane.showMessageDialog(null, "Invalid File!");
+        }
       }
     }
 
@@ -281,26 +285,20 @@ public class GUI extends JFrame implements ActionListener {
 
     // Select Button 1
     if (e.getSource() == diceBtn1) {
-      if (diceBtn1.getBackground() != Color.red)
-        diceBtn1.setBackground(Color.red);
-        else
-        diceBtn1.setBackground(new JButton().getBackground());
+      if (diceBtn1.getBackground() != Color.red) diceBtn1.setBackground(Color.red);
+      else diceBtn1.setBackground(new JButton().getBackground());
     }
 
     // Select Button 2
     if (e.getSource() == diceBtn2) {
-      if (diceBtn2.getBackground() != Color.red)
-        diceBtn2.setBackground(Color.red);
-        else
-        diceBtn2.setBackground(new JButton().getBackground());
+      if (diceBtn2.getBackground() != Color.red) diceBtn2.setBackground(Color.red);
+      else diceBtn2.setBackground(new JButton().getBackground());
     }
 
     // Select Button 3
     if (e.getSource() == diceBtn3) {
-      if (diceBtn3.getBackground() != Color.red)
-        diceBtn3.setBackground(Color.red);
-      else
-        diceBtn3.setBackground(new JButton().getBackground());
+      if (diceBtn3.getBackground() != Color.red) diceBtn3.setBackground(Color.red);
+      else diceBtn3.setBackground(new JButton().getBackground());
     }
 
     // Select Button 4
@@ -309,36 +307,61 @@ public class GUI extends JFrame implements ActionListener {
         diceBtn4.setBackground(Color.red);
       } else {
         diceBtn4.setBackground(new JButton().getBackground());
-        }
+      }
     }
 
     // Select Button 5
     if (e.getSource() == diceBtn5) {
-      if (diceBtn5.getBackground() != Color.red)
-        diceBtn5.setBackground(Color.red);
-      else
+      if (diceBtn5.getBackground() != Color.red) diceBtn5.setBackground(Color.red);
+      else {
         diceBtn5.setBackground(new JButton().getBackground());
+        }
     }
 
     // Roll All
     if (e.getSource() == rollAll) {
       game.roll();
-      if (diceBtn1.isEnabled())
-        diceBtn1.setText(Integer.toString(game.die1.getRoll()));
-      if (diceBtn2.isEnabled())
-        diceBtn2.setText(Integer.toString(game.die2.getRoll()));
-      if (diceBtn3.isEnabled())
-        diceBtn3.setText(Integer.toString(game.die3.getRoll()));
-      if (diceBtn4.isEnabled())
-        diceBtn4.setText(Integer.toString(game.die4.getRoll()));
-      if (diceBtn5.isEnabled())
-        diceBtn5.setText(Integer.toString(game.die5.getRoll()));
+      diceBtn1.setText(Integer.toString(game.die1.getRoll()));
+      diceBtn2.setText(Integer.toString(game.die2.getRoll()));
+      diceBtn3.setText(Integer.toString(game.die3.getRoll()));
+      diceBtn4.setText(Integer.toString(game.die4.getRoll()));
+      diceBtn5.setText(Integer.toString(game.die5.getRoll()));
+      if (game.getNumRolls() == 1) {
+        diceBtn1.setEnabled(true);
+        diceBtn2.setEnabled(true);
+        diceBtn3.setEnabled(true);
+        diceBtn4.setEnabled(true);
+        diceBtn5.setEnabled(true);
+        holdDice.setEnabled(true);
+        submitScore.setEnabled(true);
+        scoreOptions.setEnabled(true);
+        rollAll.setEnabled(false);
+      } else if (game.getNumRolls() == 2) {
+        holdDice.setEnabled(true);
+        diceBtn1.setEnabled(true);
+        diceBtn2.setEnabled(true);
+        diceBtn3.setEnabled(true);
+        diceBtn4.setEnabled(true);
+        diceBtn5.setEnabled(true);
+        rollAll.setEnabled(false);
+      } else {
+        submitScore.setEnabled(true);
+        scoreOptions.setEnabled(true);
+        passDice.setEnabled(true);
+        diceBtn1.setEnabled(false);
+        diceBtn2.setEnabled(false);
+        diceBtn3.setEnabled(false);
+        diceBtn4.setEnabled(false);
+        diceBtn5.setEnabled(false);
+        rollAll.setEnabled(false);
+      }
+      game.incrementNumRolls();
     }
 
     // Submit Score Button
     if (e.getSource() == submitScore) {
       game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
-      turn.setText("Turn Player  " + game.getTurn()); //update whose turn it is
+      turn.setText("Turn Player  " + game.getTurn()); // update whose turn it is
       player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
       player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
       player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
@@ -350,25 +373,67 @@ public class GUI extends JFrame implements ActionListener {
       if (diceBtn1.getBackground() == Color.red) {
         game.die1.setHold(true);
         diceBtn1.setEnabled(false);
-        }
+      } else {
+        game.die1.setHold(false);
+      }
       if (diceBtn2.getBackground() == Color.red) {
         diceBtn2.setEnabled(false);
         game.die2.setHold(true);
-        }
+      } else {
+        game.die2.setHold(false);
+      }
       if (diceBtn3.getBackground() == Color.red) {
         diceBtn3.setEnabled(false);
         game.die3.setHold(true);
-        }
+      } else {
+        game.die3.setHold(false);
+      }
       if (diceBtn4.getBackground() == Color.red) {
         diceBtn4.setEnabled(false);
         game.die4.setHold(true);
-        }
+      } else {
+        game.die4.setHold(false);
+      }
       if (diceBtn5.getBackground() == Color.red) {
         game.die5.setHold(true);
         diceBtn5.setEnabled(false);
-        }
+      } else {
+        game.die5.setHold(false);
+      }
+      if (!game.isMustPass())
+        rollAll.setEnabled(true);
+      else
+        rollAll.setEnabled(false);
+      holdDice.setEnabled(false);
     }
-    if (e.getSource() == passDice) {}
+    if (e.getSource() == passDice) {
+      game.setMustPass(false);
+      holdDice.setEnabled(false);
+      passDice.setEnabled(false);
+      diceBtn1.setEnabled(false);
+      diceBtn2.setEnabled(false);
+      diceBtn3.setEnabled(false);
+      diceBtn4.setEnabled(false);
+      diceBtn5.setEnabled(false);
+      submitScore.setEnabled(false);
+      scoreOptions.setEnabled(false);
+      rollAll.setEnabled(true);
+      diceBtn1.setText("");
+      diceBtn2.setText("");
+      diceBtn3.setText("");
+      diceBtn4.setText("");
+      diceBtn5.setText("");
+      diceBtn1.setBackground(new JButton().getBackground());
+      diceBtn2.setBackground(new JButton().getBackground());
+      diceBtn3.setBackground(new JButton().getBackground());
+      diceBtn4.setBackground(new JButton().getBackground());
+      diceBtn5.setBackground(new JButton().getBackground());
+      game.die1.setHold(false);
+      game.die2.setHold(false);
+      game.die3.setHold(false);
+      game.die4.setHold(false);
+      game.die5.setHold(false);
+    }
     if (e.getSource() == addPlayer) {
       String playername = JOptionPane.showInputDialog("Please input a player name: ");
       game.addPlayer(playername);

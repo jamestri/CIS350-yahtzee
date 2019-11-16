@@ -5,7 +5,9 @@ import java.util.Collections;
 public class GameLogic implements Serializable {
   public Die die1, die2, die3, die4, die5;
   public Player player1, player2, player3, player4, player5;
-  public int numRounds, numRolls, die1Val, die2Val, die3Val, die4Val, die5Val;
+  public int numRounds, die1Val, die2Val, die3Val, die4Val, die5Val;
+  private int numRolls;
+  private boolean mustPass;
   public ScoreOption optionChosen;
   public static final int FULL_HOUSE_SCORE = 25,
       SMALL_STRAIGHT_SCORE = 30,
@@ -27,24 +29,49 @@ public class GameLogic implements Serializable {
     player3 = new Player("Player 3");
     player4 = new Player("Player 4");
     player5 = new Player("Player 5");
-    numRolls = 0;
+    numRolls = 1;
     numRounds = 0;
     player1.setTurn(true);
     optionChosen = ScoreOption.NONE;
     dieVals = new ArrayList<>();
     gameStatus = GameStatus.IN_PROGRESS;
+    mustPass = false;
   }
 
   /** Rolls the dice should the number of max rolls not be hit */
   public void roll() {
     if (numRolls < 3) {
-      die1Val = die1.roll();
-      die2Val = die2.roll();
-      die3Val = die3.roll();
-      die4Val = die4.roll();
-      die5Val = die5.roll();
+      if (!die1.isHold())
+        die1Val = die1.roll();
+      if (!die2.isHold())
+        die2Val = die2.roll();
+      if (!die3.isHold())
+        die3Val = die3.roll();
+      if (!die4.isHold())
+        die4Val = die4.roll();
+      if (!die5.isHold())
+        die5Val = die5.roll();
     }
-    numRolls++;
+  }
+
+  public void incrementNumRolls() {
+    if (numRolls == 1 || numRolls == 2){
+      numRolls++;
+    } else if (numRolls == 3) {
+      numRolls = 1;
+    }
+  }
+
+  public boolean isMustPass() {
+    return mustPass;
+  }
+
+  public void setMustPass(boolean mustPass) {
+    this.mustPass = mustPass;
+  }
+
+  public int getNumRolls() {
+    return numRolls;
   }
 
   /**
