@@ -433,6 +433,8 @@ public class GUI extends JFrame implements ActionListener {
       game.die3.setHold(false);
       game.die4.setHold(false);
       game.die5.setHold(false);
+      game.changeTurn();
+      turn.setText("Turn Player  " + game.getTurn());
     }
     if (e.getSource() == addPlayer) {
       String playername = JOptionPane.showInputDialog("Please input a player name: ");

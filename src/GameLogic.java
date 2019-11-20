@@ -40,7 +40,7 @@ public class GameLogic implements Serializable {
 
   /** Rolls the dice should the number of max rolls not be hit */
   public void roll() {
-    if (numRolls < 3) {
+    if (numRolls <= 3) {
       if (!die1.isHold())
         die1Val = die1.roll();
       if (!die2.isHold())
@@ -95,24 +95,20 @@ public class GameLogic implements Serializable {
   /**
    * Changes turn to next player and increments round counter
    */
-  private void changeTurn() {
+  public void changeTurn() {
     if (player1.isTurn()) {
       player1.setTurn(false);
       player2.setTurn(true);
-    }
-    if (player2.isTurn()) {
+    } else if (player2.isTurn()) {
       player2.setTurn(false);
       player3.setTurn(true);
-    }
-    if (player3.isTurn()) {
+    } else if (player3.isTurn()) {
       player3.setTurn(false);
       player4.setTurn(true);
-    }
-    if (player4.isTurn()) {
+    } else if (player4.isTurn()) {
       player4.setTurn(false);
       player5.setTurn(true);
-    }
-    if (player5.isTurn()) {
+    } else if (player5.isTurn()) {
       player5.setTurn(false);
       player1.setTurn(true);
       numRounds++;
