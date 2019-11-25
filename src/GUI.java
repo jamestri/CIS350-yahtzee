@@ -7,8 +7,7 @@
  * @author Nate Johnson
  */
 
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -18,16 +17,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
@@ -60,6 +50,21 @@ public class GUI extends JFrame implements ActionListener {
     private JMenuItem exitItem;
     /** Menu Item to add player */
     private JMenuItem addPlayer;
+
+    /** Blank ImageIcon */
+    private ImageIcon blank;
+    /** ImageIcon for Dice 1 */
+    private ImageIcon one;
+    /** ImageIcon for Dice 2 */
+    private ImageIcon two;
+    /** ImageIcon for Dice 3 */
+    private ImageIcon three;
+    /** ImageIcon for Dice 4 */
+    private ImageIcon four;
+    /** ImageIcon for Dice 5 */
+    private ImageIcon five;
+    /** ImageIcon for Dice 6 */
+    private ImageIcon six;
 
     /** Button to Roll Dice 1 */
     JButton diceBtn1;
@@ -139,16 +144,19 @@ public class GUI extends JFrame implements ActionListener {
         setJMenuBar(menus);
 
         // Sets layout for GUI
-        setLayout(new GridLayout(4, 1));
+        setLayout(new GridLayout(3, 1));
 
         // Instantiates label with current players turn and adds it to GUI
         turn = new JLabel("Turn: Player  " + game.getTurn());
         add(turn);
 
+        // create ImageIcons for the dice
+        createDiceIcons();
+
         // Instantiates and adds panel for the dice buttons
         dicePanel = new JPanel();
         add(dicePanel);
-        dicePanel.setLayout(new GridLayout(1, 5));
+        dicePanel.setLayout(new FlowLayout());
 
         // Instantiates and adds dice buttons
         diceBtn1 = new JButton("");
@@ -156,6 +164,19 @@ public class GUI extends JFrame implements ActionListener {
         diceBtn3 = new JButton("");
         diceBtn4 = new JButton("");
         diceBtn5 = new JButton("");
+        diceBtn1.setPreferredSize(new Dimension(70, 70));
+        diceBtn2.setPreferredSize(new Dimension(70, 70));
+        diceBtn3.setPreferredSize(new Dimension(70, 70));
+        diceBtn4.setPreferredSize(new Dimension(70, 70));
+        diceBtn5.setPreferredSize(new Dimension(70, 70));
+
+        // set initial dice button icons
+        setDiceIcon(diceBtn1, 0);
+        setDiceIcon(diceBtn2, 0);
+        setDiceIcon(diceBtn3, 0);
+        setDiceIcon(diceBtn4, 0);
+        setDiceIcon(diceBtn5, 0);
+
         dicePanel.add(diceBtn1);
         dicePanel.add(diceBtn2);
         dicePanel.add(diceBtn3);
@@ -234,6 +255,63 @@ public class GUI extends JFrame implements ActionListener {
         setSize(800, 500);
     }
 
+    /**
+     * Create ImageIcons for the Dice and
+     * buffer the size to fit the Dice button size
+     */
+    private void createDiceIcons() {
+
+        // instantiate ImageIcons from image files
+        blank   = new ImageIcon("./src/DiceImages/blank.png");
+        one     = new ImageIcon("./src/DiceImages/one.png");
+        two     = new ImageIcon("./src/DiceImages/two.png");
+        three   = new ImageIcon("./src/DiceImages/three.png");
+        four    = new ImageIcon("./src/DiceImages/four.png");
+        five    = new ImageIcon("./src/DiceImages/five.png");
+        six     = new ImageIcon("./src/DiceImages/six.png");
+
+        // buffer ImageIcons to fit the dice size
+        blank   = new ImageIcon(blank.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        one     = new ImageIcon(one.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        two     = new ImageIcon(two.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        three   = new ImageIcon(three.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        four    = new ImageIcon(four.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        five    = new ImageIcon(five.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        six     = new ImageIcon(six.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+    }
+
+    /**
+     * Sets the Dice Icon to what that dice was rolled to
+     * @param dieButton which die button need to set icon to
+     * @param rolledValue value of the die roll on that button
+     */
+    private void setDiceIcon(JButton dieButton, int rolledValue) {
+
+        // switches to the value the dice was rolled to set that dice icon
+        switch (rolledValue) {
+            case 1:
+                dieButton.setIcon(one);
+                break;
+            case 2:
+                dieButton.setIcon(two);
+                break;
+            case 3:
+                dieButton.setIcon(three);
+                break;
+            case 4:
+                dieButton.setIcon(four);
+                break;
+            case 5:
+                dieButton.setIcon(five);
+                break;
+            case 6:
+                dieButton.setIcon(six);
+                break;
+            default:
+                dieButton.setIcon(blank);
+                break;
+        }
+    }
     /**
      * @param args <p>Instantiates a new gui
      */
@@ -346,15 +424,15 @@ public class GUI extends JFrame implements ActionListener {
         if (e.getSource() == rollAll) {
             game.roll();
             if (diceBtn1.isEnabled())
-                diceBtn1.setText(Integer.toString(game.die1.getRoll()));
+                setDiceIcon(diceBtn1, game.die1.getRoll());
             if (diceBtn2.isEnabled())
-                diceBtn2.setText(Integer.toString(game.die2.getRoll()));
+                setDiceIcon(diceBtn2, game.die2.getRoll());
             if (diceBtn3.isEnabled())
-                diceBtn3.setText(Integer.toString(game.die3.getRoll()));
+                setDiceIcon(diceBtn3, game.die3.getRoll());
             if (diceBtn4.isEnabled())
-                diceBtn4.setText(Integer.toString(game.die4.getRoll()));
+                setDiceIcon(diceBtn4, game.die4.getRoll());
             if (diceBtn5.isEnabled())
-                diceBtn5.setText(Integer.toString(game.die5.getRoll()));
+                setDiceIcon(diceBtn5, game.die5.getRoll());
         }
 
         // holds dice selected
