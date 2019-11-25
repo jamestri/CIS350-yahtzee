@@ -3,7 +3,7 @@
  * random value between 1 and 6.
  *
  * @version 2
- * */
+ */
 
 import java.io.Serializable;
 import java.util.Random;
@@ -36,7 +36,7 @@ public class Die implements Serializable {
      */
     public int roll() {
         if (!hold) {
-          roll = rand.nextInt(6) + 1;
+            roll = rand.nextInt(6) + 1;
         }
 
         return roll;

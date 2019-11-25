@@ -15,103 +15,125 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.LinkedList;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
 
-    /** Game Logic Object */
+    /* Game Logic Object */
     GameLogic game;
 
-    /** JPanel for All Dice Buttons */
+    /* JPanel for All Dice Buttons */
     private JPanel dicePanel;
-    /** JPanel for Displaying Scores */
+    /* JPanel for Displaying Scores */
     private JPanel scorePanel;
-    /** JPanel for Selecting Scores */
+    /* JPanel for Selecting Scores */
     private JPanel scoreSelectPanel;
-    /** JPanel for Action Buttons */
+    /* JPanel for Action Buttons */
     private JPanel actionPanel;
 
-    /** Holds all JMenus */
+    /* Holds all JMenus */
     private JMenuBar menus;
-
-    /** JMenu for file operations */
+    /* JMenu for file operations */
     private JMenu fileMenu;
-    /** JMenu for options menu */
+    /* JMenu for options menu */
     private JMenu optionsMenu;
-
-    /** Menu Item to Open Saved Game */
+    /* Menu Item to Open Saved Game */
     private JMenuItem openGame;
-    /** Menu Item to Save Game */
+    /* Menu Item to Save Game */
     private JMenuItem saveGame;
-    /** Menu Item to exit game */
+    /* Menu Item to exit game */
     private JMenuItem exitItem;
-    /** Menu Item to add player */
+    /* Menu Item to add player */
     private JMenuItem addPlayer;
 
-    /** Blank ImageIcon */
+    /* Blank ImageIcon */
     private ImageIcon blank;
-    /** ImageIcon for Dice 1 */
+    /* ImageIcon for Dice 1 */
     private ImageIcon one;
-    /** ImageIcon for Dice 2 */
+    /* ImageIcon for Dice 2 */
     private ImageIcon two;
-    /** ImageIcon for Dice 3 */
+    /* ImageIcon for Dice 3 */
     private ImageIcon three;
-    /** ImageIcon for Dice 4 */
+    /* ImageIcon for Dice 4 */
     private ImageIcon four;
-    /** ImageIcon for Dice 5 */
+    /* ImageIcon for Dice 5 */
     private ImageIcon five;
-    /** ImageIcon for Dice 6 */
+    /* ImageIcon for Dice 6 */
     private ImageIcon six;
+    /* ImageIcon for Selected Dice 1 */
+    private ImageIcon oneSelect;
+    /* ImageIcon for Selected Dice 2 */
+    private ImageIcon twoSelect;
+    /* ImageIcon for Selected Dice 3 */
+    private ImageIcon threeSelect;
+    /* ImageIcon for Selected Dice 4 */
+    private ImageIcon fourSelect;
+    /* ImageIcon for Selected Dice 5 */
+    private ImageIcon fiveSelect;
+    /* ImageIcon for Selected Dice 6 */
+    private ImageIcon sixSelect;
 
-    /** Button to Roll Dice 1 */
-    JButton diceBtn1;
-    /** Button to Roll Dice 2 */
-    JButton diceBtn2;
-    /** Button to Roll Dice 3 */
-    JButton diceBtn3;
-    /** Button to Roll Dice 4 */
-    JButton diceBtn4;
-    /** Button to Roll Dice 5 */
-    JButton diceBtn5;
-    /** Button to Roll All Dice */
-    JButton rollAll;
-    /** Button to Hold Dice */
-    JButton holdDice;
-    /** Button to Pass Dice */
-    JButton passDice;
+    /* Button to Roll Dice 1 */
+    private JButton diceBtn1;
+    /* Button to Roll Dice 2 */
+    private JButton diceBtn2;
+    /* Button to Roll Dice 3 */
+    private JButton diceBtn3;
+    /* Button to Roll Dice 4 */
+    private JButton diceBtn4;
+    /* Button to Roll Dice 5 */
+    private JButton diceBtn5;
 
-    /** Button to submit score */
-    JButton submitScore;
+    /* Button to Roll All Dice */
+    private JButton rollDice;
+    /* Button to Hold Dice */
+    private JButton holdDice;
+    /* Button to Pass Dice */
+    private JButton passDice;
 
-    /** Label to show whose turn it is */
-    JLabel turn;
+    /* Button to submit score */
+    private JButton submitScore;
+    /* JComboBox to display score options */
+    private JComboBox scoreOptions;
 
-    /** Label to show player 1's score */
-    JLabel player1Score;
-    /** Label to show player 2's score */
-    JLabel player2Score;
-    /** Label to show player 3's score */
-    JLabel player3Score;
-    /** Label to show player 4's score */
-    JLabel player4Score;
-    /** Label to show player 5's score */
-    JLabel player5Score;
+    /* Label to show whose turn it is */
+    private JLabel turn;
 
-    /** JComboBox to display score options */
-    JComboBox scoreOptions;
+    /* Label to show player 1's score */
+    private JLabel player1Score;
+    /* Label to show player 2's score */
+    private JLabel player2Score;
+    /* Label to show player 3's score */
+    private JLabel player3Score;
+    /* Label to show player 4's score */
+    private JLabel player4Score;
+    /* Label to show player 5's score */
+    private JLabel player5Score;
+
+    /**
+     * @param args <p>Instantiates a new gui
+     */
+    public static void main(String[] args) {
+        new GUI();
+    }
 
     /**
      * Constructor for GUI, This is where I set up the layout as well as
      * all the buttons and menus.
      */
     public GUI() {
+
         // Instantiates new game logic object
         game = new GameLogic();
 
-        // Instantiates menu bars and menu items
+        // Sets layout for GUI
+        setLayout(new GridLayout(3, 1));
+
+        // Instantiates menus and menu items then adds
+        // menu items to menus
+        // Add action listeners for the menu items
         fileMenu = new JMenu("File");
         optionsMenu = new JMenu("Options");
 
@@ -120,70 +142,45 @@ public class GUI extends JFrame implements ActionListener {
         exitItem = new JMenuItem("Exit");
         addPlayer = new JMenuItem("Add Player");
 
-        // Adds menu items to file menu
         fileMenu.add(openGame);
         fileMenu.add(saveGame);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
 
-        // Adds menu items to options menu
         optionsMenu.add(addPlayer);
 
-        // Adds action listeners for menu items
         openGame.addActionListener(this);
         exitItem.addActionListener(this);
         saveGame.addActionListener(this);
         addPlayer.addActionListener(this);
 
         // Instantiates menu bar and adds file and options menu
+        // then adds menu bar to GUI
         menus = new JMenuBar();
         menus.add(fileMenu);
         menus.add(optionsMenu);
 
-        // Adds menu bar to GUI
         setJMenuBar(menus);
 
-        // Sets layout for GUI
-        setLayout(new GridLayout(3, 1));
-
-        // Instantiates label with current players turn and adds it to GUI
-        turn = new JLabel("Turn: Player  " + game.getTurn());
+        // Instantiates label to display current players turn
+        // and adds the label to GUI
+        turn = new JLabel("Turn Player  " + game.getTurn());
         add(turn);
 
-        // create ImageIcons for the dice
-        createDiceIcons();
-
-        // Instantiates and adds panel for the dice buttons
-        dicePanel = new JPanel();
-        add(dicePanel);
-        dicePanel.setLayout(new FlowLayout());
-
-        // Instantiates and adds dice buttons
+        // Instantiates and sets size of dice buttons
+        // then adds action listeners to the dice buttons
         diceBtn1 = new JButton("");
         diceBtn2 = new JButton("");
         diceBtn3 = new JButton("");
         diceBtn4 = new JButton("");
         diceBtn5 = new JButton("");
+
         diceBtn1.setPreferredSize(new Dimension(70, 70));
         diceBtn2.setPreferredSize(new Dimension(70, 70));
         diceBtn3.setPreferredSize(new Dimension(70, 70));
         diceBtn4.setPreferredSize(new Dimension(70, 70));
         diceBtn5.setPreferredSize(new Dimension(70, 70));
 
-        // set initial dice button icons
-        setDiceIcon(diceBtn1, 0);
-        setDiceIcon(diceBtn2, 0);
-        setDiceIcon(diceBtn3, 0);
-        setDiceIcon(diceBtn4, 0);
-        setDiceIcon(diceBtn5, 0);
-
-        dicePanel.add(diceBtn1);
-        dicePanel.add(diceBtn2);
-        dicePanel.add(diceBtn3);
-        dicePanel.add(diceBtn4);
-        dicePanel.add(diceBtn5);
-
-        // Adds action listeners for dice buttons
         diceBtn1.addActionListener(this);
         diceBtn2.addActionListener(this);
         diceBtn3.addActionListener(this);
@@ -196,58 +193,93 @@ public class GUI extends JFrame implements ActionListener {
         diceBtn4.setOpaque(true);
         diceBtn5.setOpaque(true);
 
-        // Instantiates and adds player score panel
-        scorePanel = new JPanel();
-        add(scorePanel);
-        scorePanel.setLayout(new GridLayout(6, 1));
-        scorePanel.add(new JLabel("Scores:"));
+        // Creates and buffers ImageIcons for the dice to fit
+        // and sets the initial dice button icons
+        createDiceIcons();
 
-        // Instantiates labels for player scores and adds it to score panel
-        player1Score = new JLabel("Player 1:  " + game.player1.getTotalScore());
-        player2Score = new JLabel("Player 2:  " + game.player2.getTotalScore());
-        player3Score = new JLabel("Player 3:  " + game.player3.getTotalScore());
-        player4Score = new JLabel("Player 4:  " + game.player4.getTotalScore());
-        player5Score = new JLabel("Player 5:  " + game.player5.getTotalScore());
+        setDiceIcon(diceBtn1, 0, false);
+        setDiceIcon(diceBtn2, 0, false);
+        setDiceIcon(diceBtn3, 0, false);
+        setDiceIcon(diceBtn4, 0, false);
+        setDiceIcon(diceBtn5, 0, false);
+
+        // Instantiates panel for the dice buttons and adds
+        // the buttons then adds the panel to the GUI
+        dicePanel = new JPanel();
+        dicePanel.setLayout(new FlowLayout());
+
+        dicePanel.add(diceBtn1);
+        dicePanel.add(diceBtn2);
+        dicePanel.add(diceBtn3);
+        dicePanel.add(diceBtn4);
+        dicePanel.add(diceBtn5);
+
+        add(dicePanel);
+
+        // Instantiates panel and labels to display player scores,
+        // adds labels to panel then adds panel to GUI
+        scorePanel = new JPanel();
+        scorePanel.setLayout(new GridLayout(6, 1));
+
+        player1Score = new JLabel("Player 1's Score:  " + game.player1.getTotalScore());
+        player2Score = new JLabel("Player 2's Score:  " + game.player2.getTotalScore());
+        player3Score = new JLabel("Player 3's Score:  " + game.player3.getTotalScore());
+        player4Score = new JLabel("Player 4's Score:  " + game.player4.getTotalScore());
+        player5Score = new JLabel("Player 5's Score:  " + game.player5.getTotalScore());
+
+        scorePanel.add(new JLabel("Scores:"));
         scorePanel.add(player1Score);
         scorePanel.add(player2Score);
         scorePanel.add(player3Score);
         scorePanel.add(player4Score);
         scorePanel.add(player5Score);
 
-        // Instantiates and adds panel for the dice action options
-        actionPanel = new JPanel();
-        add(actionPanel);
-        actionPanel.setLayout(new GridLayout(1, 3));
+        add(scorePanel);
 
-        // Instantiates and adds dice actions
-        rollAll = new JButton("Roll");
-        holdDice = new JButton("Hold Dice");
-        passDice = new JButton("Pass Dice");
-        actionPanel.add(rollAll);
-        actionPanel.add(holdDice);
-        actionPanel.add(passDice);
+        // Instantiates action buttons and adds action listeners
+        rollDice = new JButton("Roll");
+        holdDice = new JButton("Hold");
+        passDice = new JButton("Pass");
 
-        // Adds action listeners for dice action options
-        rollAll.addActionListener(this);
+        rollDice.addActionListener(this);
         holdDice.addActionListener(this);
         passDice.addActionListener(this);
 
-        // Instantiates and adds score select panel
+        // Instantiates action panel and adds
+        // buttons to panel then adds panel to GUI
+        actionPanel = new JPanel();
+        actionPanel.setLayout(new GridLayout(1, 3));
+
+        actionPanel.add(rollDice);
+        actionPanel.add(holdDice);
+        actionPanel.add(passDice);
+
+        add(actionPanel);
+
+        // Instantiates score select panel, combobox for selection
+        // and button for submitting selection, add combobox and button
+        // to the panel and add panel to GUI
         scoreSelectPanel = new JPanel();
-        add(scoreSelectPanel);
         scoreSelectPanel.setLayout(new GridLayout(1, 2));
 
-        // Instantiates and adds combobox for scores to select
-        scoreOptions = new JComboBox(game.optionChosen.values());
-        scoreSelectPanel.add(scoreOptions);
-
-        // Instantiates and adds button to submit score selected
+        scoreOptions = new JComboBox(ScoreOption.values());
         submitScore = new JButton("Submit");
+
+        scoreSelectPanel.add(scoreOptions);
         scoreSelectPanel.add(submitScore);
 
-        // Adds action listeners for score selecting combobox and submit button
-        scoreOptions.addActionListener(this);
-        submitScore.addActionListener(this);
+        add(scoreSelectPanel);
+
+        // Disable all buttons initially except roll
+        holdDice.setEnabled(false);
+        passDice.setEnabled(false);
+        diceBtn1.setEnabled(false);
+        diceBtn2.setEnabled(false);
+        diceBtn3.setEnabled(false);
+        diceBtn4.setEnabled(false);
+        diceBtn5.setEnabled(false);
+        submitScore.setEnabled(false);
+        scoreOptions.setEnabled(false);
 
         // some additional parameters
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -262,61 +294,86 @@ public class GUI extends JFrame implements ActionListener {
     private void createDiceIcons() {
 
         // instantiate ImageIcons from image files
-        blank   = new ImageIcon("./src/DiceImages/blank.png");
-        one     = new ImageIcon("./src/DiceImages/one.png");
-        two     = new ImageIcon("./src/DiceImages/two.png");
-        three   = new ImageIcon("./src/DiceImages/three.png");
-        four    = new ImageIcon("./src/DiceImages/four.png");
-        five    = new ImageIcon("./src/DiceImages/five.png");
-        six     = new ImageIcon("./src/DiceImages/six.png");
+        blank = new ImageIcon("./src/DiceImages/blank.png");
+        one = new ImageIcon("./src/DiceImages/one.png");
+        two = new ImageIcon("./src/DiceImages/two.png");
+        three = new ImageIcon("./src/DiceImages/three.png");
+        four = new ImageIcon("./src/DiceImages/four.png");
+        five = new ImageIcon("./src/DiceImages/five.png");
+        six = new ImageIcon("./src/DiceImages/six.png");
+        oneSelect = new ImageIcon("./src/DiceImages/oneSelect.png");
+        twoSelect = new ImageIcon("./src/DiceImages/twoSelect.png");
+        threeSelect = new ImageIcon("./src/DiceImages/threeSelect.png");
+        fourSelect = new ImageIcon("./src/DiceImages/fourSelect.png");
+        fiveSelect = new ImageIcon("./src/DiceImages/fiveSelect.png");
+        sixSelect = new ImageIcon("./src/DiceImages/sixSelect.png");
 
         // buffer ImageIcons to fit the dice size
-        blank   = new ImageIcon(blank.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        one     = new ImageIcon(one.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        two     = new ImageIcon(two.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        three   = new ImageIcon(three.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        four    = new ImageIcon(four.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        five    = new ImageIcon(five.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
-        six     = new ImageIcon(six.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        blank = new ImageIcon(blank.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        one = new ImageIcon(one.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        two = new ImageIcon(two.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        three = new ImageIcon(three.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        four = new ImageIcon(four.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        five = new ImageIcon(five.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        six = new ImageIcon(six.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        oneSelect = new ImageIcon(oneSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        twoSelect = new ImageIcon(twoSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        threeSelect = new ImageIcon(threeSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        fourSelect = new ImageIcon(fourSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        fiveSelect = new ImageIcon(fiveSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+        sixSelect = new ImageIcon(sixSelect.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH));
     }
 
     /**
      * Sets the Dice Icon to what that dice was rolled to
-     * @param dieButton which die button need to set icon to
+     *
+     * @param dieButton   which die button need to set icon to
      * @param rolledValue value of the die roll on that button
      */
-    private void setDiceIcon(JButton dieButton, int rolledValue) {
+    private void setDiceIcon(JButton dieButton, int rolledValue, boolean selected) {
 
         // switches to the value the dice was rolled to set that dice icon
         switch (rolledValue) {
             case 1:
-                dieButton.setIcon(one);
+                if (selected)
+                    dieButton.setIcon(oneSelect);
+                else
+                    dieButton.setIcon(one);
                 break;
             case 2:
-                dieButton.setIcon(two);
+                if (selected)
+                    dieButton.setIcon(twoSelect);
+                else
+                    dieButton.setIcon(two);
                 break;
             case 3:
-                dieButton.setIcon(three);
+                if (selected)
+                    dieButton.setIcon(threeSelect);
+                else
+                    dieButton.setIcon(three);
                 break;
             case 4:
-                dieButton.setIcon(four);
+                if (selected)
+                    dieButton.setIcon(fourSelect);
+                else
+                    dieButton.setIcon(four);
                 break;
             case 5:
-                dieButton.setIcon(five);
+                if (selected)
+                    dieButton.setIcon(fiveSelect);
+                else
+                    dieButton.setIcon(five);
                 break;
             case 6:
-                dieButton.setIcon(six);
+                if (selected)
+                    dieButton.setIcon(sixSelect);
+                else
+                    dieButton.setIcon(six);
                 break;
             default:
                 dieButton.setIcon(blank);
                 break;
         }
-    }
-    /**
-     * @param args <p>Instantiates a new gui
-     */
-    public static void main(String[] args) {
-        new GUI();
     }
 
     /* (non-Javadoc)
@@ -326,7 +383,12 @@ public class GUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        // open saved game from file
+        // Exit button
+        if (e.getSource() == exitItem) {
+            System.exit(0);
+        }
+
+        // Opens a saved from file
         if (e.getSource() == openGame) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showOpenDialog(null);
@@ -349,7 +411,7 @@ public class GUI extends JFrame implements ActionListener {
             }
         }
 
-        // save current game to a file
+        // Saves current game to file
         if (e.getSource() == saveGame) {
             JFileChooser chooser = new JFileChooser();
             int status = chooser.showSaveDialog(null);
@@ -368,12 +430,7 @@ public class GUI extends JFrame implements ActionListener {
             }
         }
 
-        // exit current game
-        if (e.getSource() == exitItem) {
-            System.exit(0);
-        }
-
-        // adds new player to game
+        // Adds additional player to game
         if (e.getSource() == addPlayer) {
             String playername = JOptionPane.showInputDialog("Please input a player name: ");
             game.addPlayer(playername);
@@ -381,105 +438,208 @@ public class GUI extends JFrame implements ActionListener {
 
         // Select Button 1
         if (e.getSource() == diceBtn1) {
-            if (diceBtn1.getBackground() != Color.red)
+            if (diceBtn1.getBackground() != Color.red) {
                 diceBtn1.setBackground(Color.red);
-            else
+                setDiceIcon(diceBtn1, game.die1.getRoll(), true);
+            } else {
                 diceBtn1.setBackground(new JButton().getBackground());
+                setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+            }
         }
 
         // Select Button 2
         if (e.getSource() == diceBtn2) {
-            if (diceBtn2.getBackground() != Color.red)
+            if (diceBtn2.getBackground() != Color.red) {
                 diceBtn2.setBackground(Color.red);
-            else
+                setDiceIcon(diceBtn2, game.die2.getRoll(), true);
+            } else {
                 diceBtn2.setBackground(new JButton().getBackground());
+                setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+            }
         }
 
         // Select Button 3
         if (e.getSource() == diceBtn3) {
-            if (diceBtn3.getBackground() != Color.red)
+            if (diceBtn3.getBackground() != Color.red) {
                 diceBtn3.setBackground(Color.red);
-            else
+                setDiceIcon(diceBtn3, game.die3.getRoll(), true);
+            } else {
                 diceBtn3.setBackground(new JButton().getBackground());
+                setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+            }
         }
 
         // Select Button 4
         if (e.getSource() == diceBtn4) {
             if (diceBtn4.getBackground() != Color.red) {
                 diceBtn4.setBackground(Color.red);
+                setDiceIcon(diceBtn4, game.die4.getRoll(), true);
             } else {
                 diceBtn4.setBackground(new JButton().getBackground());
+                setDiceIcon(diceBtn4, game.die4.getRoll(), false);
             }
         }
 
         // Select Button 5
         if (e.getSource() == diceBtn5) {
-            if (diceBtn5.getBackground() != Color.red)
+            if (diceBtn5.getBackground() != Color.red) {
                 diceBtn5.setBackground(Color.red);
-            else
+                setDiceIcon(diceBtn5, game.die5.getRoll(), true);
+            } else {
                 diceBtn5.setBackground(new JButton().getBackground());
+                setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+            }
         }
 
         // Roll all available dice
-        if (e.getSource() == rollAll) {
+        if (e.getSource() == rollDice) {
+
             game.roll();
-            if (diceBtn1.isEnabled())
-                setDiceIcon(diceBtn1, game.die1.getRoll());
-            if (diceBtn2.isEnabled())
-                setDiceIcon(diceBtn2, game.die2.getRoll());
-            if (diceBtn3.isEnabled())
-                setDiceIcon(diceBtn3, game.die3.getRoll());
-            if (diceBtn4.isEnabled())
-                setDiceIcon(diceBtn4, game.die4.getRoll());
-            if (diceBtn5.isEnabled())
-                setDiceIcon(diceBtn5, game.die5.getRoll());
+
+            if (game.getNumRolls() == 1) {
+                diceBtn1.setEnabled(true);
+                diceBtn2.setEnabled(true);
+                diceBtn3.setEnabled(true);
+                diceBtn4.setEnabled(true);
+                diceBtn5.setEnabled(true);
+                holdDice.setEnabled(true);
+                submitScore.setEnabled(true);
+                scoreOptions.setEnabled(true);
+                rollDice.setEnabled(false);
+            } else if (game.getNumRolls() == 2) {
+                holdDice.setEnabled(true);
+                diceBtn1.setEnabled(true);
+                diceBtn2.setEnabled(true);
+                diceBtn3.setEnabled(true);
+                diceBtn4.setEnabled(true);
+                diceBtn5.setEnabled(true);
+                rollDice.setEnabled(false);
+            } else {
+                submitScore.setEnabled(true);
+                scoreOptions.setEnabled(true);
+                passDice.setEnabled(true);
+                diceBtn1.setEnabled(false);
+                diceBtn2.setEnabled(false);
+                diceBtn3.setEnabled(false);
+                diceBtn4.setEnabled(false);
+                diceBtn5.setEnabled(false);
+                rollDice.setEnabled(false);
+            }
+
+//            if (diceBtn1.isEnabled())
+            setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+//            if (diceBtn2.isEnabled())
+            setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+//            if (diceBtn3.isEnabled())
+            setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+//            if (diceBtn4.isEnabled())
+            setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+//            if (diceBtn5.isEnabled())
+            setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+
+            game.incrementNumRolls();
         }
 
-        // holds dice selected
+        // Holds the dice that were selected
         if (e.getSource() == holdDice) {
+
             if (diceBtn1.getBackground() == Color.red) {
-                game.die1.setHold(true);
                 diceBtn1.setEnabled(false);
+                game.die1.setHold(true);
+            } else {
+                game.die1.setHold(false);
             }
+
             if (diceBtn2.getBackground() == Color.red) {
                 diceBtn2.setEnabled(false);
                 game.die2.setHold(true);
+            } else {
+                game.die2.setHold(false);
             }
+
             if (diceBtn3.getBackground() == Color.red) {
                 diceBtn3.setEnabled(false);
                 game.die3.setHold(true);
+            } else {
+                game.die3.setHold(false);
             }
+
             if (diceBtn4.getBackground() == Color.red) {
                 diceBtn4.setEnabled(false);
                 game.die4.setHold(true);
+            } else {
+                game.die4.setHold(false);
             }
+
             if (diceBtn5.getBackground() == Color.red) {
-                game.die5.setHold(true);
                 diceBtn5.setEnabled(false);
+                game.die5.setHold(true);
+            } else {
+                game.die5.setHold(false);
             }
+
+            if (!game.isMustPass())
+                rollDice.setEnabled(true);
+            else {
+                rollDice.setEnabled(false);
+            }
+
+            holdDice.setEnabled(false);
         }
 
-        // pass dice selected
+        // Passes to next player
         if (e.getSource() == passDice) {
+
+            game.setMustPass(false);
+            holdDice.setEnabled(false);
+            passDice.setEnabled(false);
+            diceBtn1.setEnabled(false);
+            diceBtn2.setEnabled(false);
+            diceBtn3.setEnabled(false);
+            diceBtn4.setEnabled(false);
+            diceBtn5.setEnabled(false);
+            submitScore.setEnabled(false);
+            scoreOptions.setEnabled(false);
+            rollDice.setEnabled(true);
+
+            diceBtn1.setText("");
+            diceBtn2.setText("");
+            diceBtn3.setText("");
+            diceBtn4.setText("");
+            diceBtn5.setText("");
+
+            setDiceIcon(diceBtn1, 0, false);
+            setDiceIcon(diceBtn2, 0, false);
+            setDiceIcon(diceBtn3, 0, false);
+            setDiceIcon(diceBtn4, 0, false);
+            setDiceIcon(diceBtn5, 0, false);
+
+            diceBtn1.setBackground(new JButton().getBackground());
+            diceBtn2.setBackground(new JButton().getBackground());
+            diceBtn3.setBackground(new JButton().getBackground());
+            diceBtn4.setBackground(new JButton().getBackground());
+            diceBtn5.setBackground(new JButton().getBackground());
+
+            game.die1.setHold(false);
+            game.die2.setHold(false);
+            game.die3.setHold(false);
+            game.die4.setHold(false);
+            game.die5.setHold(false);
+
+            game.changeTurn();
+
+            turn.setText("Turn Player  " + game.getTurn());
         }
 
-        // score option selected
-        if (e.getSource() == scoreOptions) {
-
-        }
-
-        // Submit Score Button
+        // Submits the score option selected and displays score
         if (e.getSource() == submitScore) {
             game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
-            turn.setText("Turn: Player  " + game.getTurn()); //update whose turn it is
-            player1Score.setText("Player 1:  " + game.player1.getTotalScore());
-            player2Score.setText("Player 2:  " + game.player2.getTotalScore());
-            player3Score.setText("Player 3:  " + game.player3.getTotalScore());
-            player4Score.setText("Player 4:  " + game.player4.getTotalScore());
-            player5Score.setText("Player 5:  " + game.player5.getTotalScore());
+            turn.setText("Turn Player  " + game.getTurn()); // update whose turn it is
+            player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
+            player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
+            player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
+            player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
+            player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
         }
-
-
-
     }
 }
