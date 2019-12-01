@@ -7,6 +7,7 @@ public class GameLogic implements Serializable {
     public Player player1, player2, player3, player4, player5;
     public int numRounds, die1Val, die2Val, die3Val, die4Val, die5Val;
     private int numRolls;
+    private int numberOfPlayers;
     private boolean mustPass;
     public ScoreOption optionChosen;
     public static final int FULL_HOUSE_SCORE = 25,
@@ -105,13 +106,28 @@ public class GameLogic implements Serializable {
             player2.setTurn(true);
         } else if (player2.isTurn()) {
             player2.setTurn(false);
-            player3.setTurn(true);
+            if (numberOfPlayers > 2)
+                player3.setTurn(true);
+            else {
+                player1.setTurn(true);
+                numRounds++;
+                }
         } else if (player3.isTurn()) {
             player3.setTurn(false);
-            player4.setTurn(true);
+            if (numberOfPlayers > 3)
+                player4.setTurn(true);
+            else {
+                player1.setTurn(true);
+                numRounds++;
+            }
         } else if (player4.isTurn()) {
             player4.setTurn(false);
-            player5.setTurn(true);
+            if (numberOfPlayers > 4)
+                player5.setTurn(true);
+            else{
+                player1.setTurn(true);
+                numRounds++;
+            }
         } else if (player5.isTurn()) {
             player5.setTurn(false);
             player1.setTurn(true);
@@ -530,5 +546,9 @@ public class GameLogic implements Serializable {
                 break;
         }
         return 0;
+    }
+
+    public void setNumPlayers (int numPlayers) {
+        numberOfPlayers = numPlayers;
     }
 }

@@ -19,7 +19,9 @@ public class Player implements Comparable, Serializable {
             fourOfAKindChosen,
             chanceChosen,
             yahtzeeChosen;
-    private int totalScore, yahtzeeRolls;
+    private boolean isAI;
+    private int totalScore = 0,
+        yahtzeeRolls;
 
     /**
      * Default constructor that sets name to parameter
@@ -360,6 +362,14 @@ public class Player implements Comparable, Serializable {
     @Override
     public int compareTo(Object o) {
         return getTotalScore();
+    }
+
+    public boolean hasAI() {
+        return isAI;
+    }
+
+    public void setAI(boolean newMode) {
+        isAI = newMode;
     }
 }
 

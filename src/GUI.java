@@ -24,6 +24,8 @@ public class GUI extends JFrame implements ActionListener {
     /* Game Logic Object */
     GameLogic game;
 
+    private int numPlayers;
+    private int numAI;
     /* JPanel for All Dice Buttons */
     private JPanel dicePanel;
     /* JPanel for Displaying Scores */
@@ -125,8 +127,66 @@ public class GUI extends JFrame implements ActionListener {
      */
     public GUI() {
 
+        String[] options = {"2", "3", "4", "5"};
+        String playersChosen = (String) JOptionPane.showInputDialog(null, "Choose how many players you want", "Choose players", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (playersChosen == null)
+            System.exit(0);
+        if (playersChosen == "2") {
+            numPlayers = 2;
+        } else if (playersChosen == "3") {
+            numPlayers = 3;
+        } else if (playersChosen == "4") {
+            numPlayers = 4;
+        } else if (playersChosen == "5") {
+            numPlayers = 5;
+        } else {
+            System.exit(0);
+        }
+
+        String[] AIOptions = new String[numPlayers];
+        for (int i = 0; i < numPlayers; i++) {
+            AIOptions[i] = "" + i;
+        }
+        String AIChosen = (String) JOptionPane.showInputDialog(null, "Choose how many AI players you want", "Choose players", JOptionPane.QUESTION_MESSAGE, null, AIOptions, AIOptions[0]);
+        if (AIChosen == null)
+            System.exit(0);
+        if (AIChosen.equals("0")){
+            numAI = 0;
+        } else if (AIChosen.equals("1")) {
+            numAI = 1;
+        } else if (AIChosen.equals("2")) {
+            numAI = 2;
+        } else if (AIChosen.equals("3")) {
+            numAI = 3;
+        } else if (AIChosen.equals("4")) {
+            numAI = 4;
+        } else if (AIChosen.equals("5")) {
+            numAI = 5;
+        } else {
+            System.exit(0);
+        }
+
         // Instantiates new game logic object
         game = new GameLogic();
+        game.setNumPlayers(numPlayers);
+        for (int i = 0; i < numAI; i++) {
+            if (numPlayers - i == 5){
+                game.player5.setAI(true);
+                game.player5.setName("AI Thomas");
+            }
+            if (numPlayers - i == 4){
+                game.player4.setAI(true);
+                game.player4.setName("AI Jessica");
+            }
+            if (numPlayers - i == 3){
+                game.player3.setAI(true);
+                game.player3.setName("AI Steven");
+            }
+            if (numPlayers - i == 2){
+                game.player2.setAI(true);
+                game.player2.setName("AI Sean");
+            }
+        }
 
         // Sets layout for GUI
         setLayout(new GridLayout(3, 1));
@@ -135,30 +195,24 @@ public class GUI extends JFrame implements ActionListener {
         // menu items to menus
         // Add action listeners for the menu items
         fileMenu = new JMenu("File");
-        optionsMenu = new JMenu("Options");
 
         openGame = new JMenuItem("Open Game");
         saveGame = new JMenuItem("Save Game");
         exitItem = new JMenuItem("Exit");
-        addPlayer = new JMenuItem("Add Player");
 
         fileMenu.add(openGame);
         fileMenu.add(saveGame);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
 
-        optionsMenu.add(addPlayer);
-
         openGame.addActionListener(this);
         exitItem.addActionListener(this);
         saveGame.addActionListener(this);
-        addPlayer.addActionListener(this);
 
         // Instantiates menu bar and adds file and options menu
         // then adds menu bar to GUI
         menus = new JMenuBar();
         menus.add(fileMenu);
-        menus.add(optionsMenu);
 
         setJMenuBar(menus);
 
@@ -221,18 +275,25 @@ public class GUI extends JFrame implements ActionListener {
         scorePanel = new JPanel();
         scorePanel.setLayout(new GridLayout(6, 1));
 
-        player1Score = new JLabel("Player 1's Score:  " + game.player1.getTotalScore());
-        player2Score = new JLabel("Player 2's Score:  " + game.player2.getTotalScore());
-        player3Score = new JLabel("Player 3's Score:  " + game.player3.getTotalScore());
-        player4Score = new JLabel("Player 4's Score:  " + game.player4.getTotalScore());
-        player5Score = new JLabel("Player 5's Score:  " + game.player5.getTotalScore());
+        turn.setText("Turn " + game.getTurn().getName()); // update whose turn it is
+        player1Score = new JLabel(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
+        player2Score = new JLabel(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
+        if (numPlayers > 2)
+            player3Score = new JLabel(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
+        if (numPlayers > 3)
+            player4Score = new JLabel(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
+        if (numPlayers > 4)
+            player5Score = new JLabel(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
 
         scorePanel.add(new JLabel("Scores:"));
         scorePanel.add(player1Score);
         scorePanel.add(player2Score);
-        scorePanel.add(player3Score);
-        scorePanel.add(player4Score);
-        scorePanel.add(player5Score);
+        if (numPlayers > 2)
+            scorePanel.add(player3Score);
+        if (numPlayers > 3)
+            scorePanel.add(player4Score);
+        if (numPlayers > 4)
+            scorePanel.add(player5Score);
 
         add(scorePanel);
 
@@ -429,12 +490,6 @@ public class GUI extends JFrame implements ActionListener {
                     e1.printStackTrace();
                 }
             }
-        }
-
-        // Adds additional player to game
-        if (e.getSource() == addPlayer) {
-            String playername = JOptionPane.showInputDialog("Please input a player name: ");
-            game.addPlayer(playername);
         }
 
         // Select Button 1
@@ -648,11 +703,14 @@ public class GUI extends JFrame implements ActionListener {
             diceBtn4.setBackground(new JButton().getBackground());
             diceBtn5.setBackground(new JButton().getBackground());
 
-            player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
-            player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
-            player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
-            player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
-            player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
+            player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
+            player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
+            if (numPlayers > 2)
+             player3Score.setText(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
+            if (numPlayers > 3)
+                player4Score.setText(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
+            if (numPlayers > 4)
+                player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
 
             game.die1.setHold(false);
             game.die2.setHold(false);
@@ -665,13 +723,7 @@ public class GUI extends JFrame implements ActionListener {
 
         // Submits the score option selected and displays score
         if (e.getSource() == submitScore) {
-            game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
-            turn.setText("Turn " + game.getTurn().getName()); // update whose turn it is
-            player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
-            player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
-            player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
-            player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
-            player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
+            game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();;
             submitScore.setEnabled(false);
             scoreOptions.setEnabled(false);
         }
