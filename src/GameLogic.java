@@ -83,7 +83,7 @@ public class GameLogic implements Serializable {
      *
      * @param player player who chose the score category
      */
-    private void addScore(Player player) {
+    public void addScore(Player player) {
         // does bonus score here
         if (player.getYahtzeeRolls() > 0 && player.isYahtzeeChosen()) {
             if (die1Val == die2Val && die1Val == die3Val && die1Val == die4Val && die1Val == die5Val) {
@@ -125,13 +125,12 @@ public class GameLogic implements Serializable {
     /**
      * Gets the current player numbers turn
      */
-    public int getTurn() {
-        if (player1.isTurn()) return 1;
-        else if (player2.isTurn()) return 2;
-        else if (player3.isTurn()) return 3;
-        else if (player4.isTurn()) return 4;
-        else if (player5.isTurn()) return 5;
-        else return -1;
+    public Player getTurn() {
+        if (player1.isTurn()) return player1;
+        else if (player2.isTurn()) return player2;
+        else if (player3.isTurn()) return player3;
+        else if (player4.isTurn()) return player4;
+        else return player5;
     }
 
     /**
@@ -176,7 +175,7 @@ public class GameLogic implements Serializable {
      * @param player player who is choosing score
      * @return correct score of option chosen
      */
-    private int chosenOptionScore(ScoreOption option, Player player) {
+    public int chosenOptionScore(ScoreOption option, Player player) {
         dieVals.add(die1Val);
         dieVals.add(die2Val);
         dieVals.add(die3Val);

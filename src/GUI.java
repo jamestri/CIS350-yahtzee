@@ -164,7 +164,7 @@ public class GUI extends JFrame implements ActionListener {
 
         // Instantiates label to display current players turn
         // and adds the label to GUI
-        turn = new JLabel("Turn Player  " + game.getTurn());
+        turn = new JLabel("Turn " + game.getTurn().getName());
         add(turn);
 
         // Instantiates and sets size of dice buttons
@@ -268,6 +268,7 @@ public class GUI extends JFrame implements ActionListener {
         scoreSelectPanel.add(scoreOptions);
         scoreSelectPanel.add(submitScore);
 
+        submitScore.addActionListener(this);
         add(scoreSelectPanel);
 
         // Disable all buttons initially except roll
@@ -497,6 +498,16 @@ public class GUI extends JFrame implements ActionListener {
             game.roll();
 
             if (game.getNumRolls() == 1) {
+                game.die1.setHold(false);
+                game.die2.setHold(false);
+                game.die3.setHold(false);
+                game.die4.setHold(false);
+                game.die5.setHold(false);
+                diceBtn1.setBackground(new JButton().getBackground());
+                diceBtn2.setBackground(new JButton().getBackground());
+                diceBtn3.setBackground(new JButton().getBackground());
+                diceBtn4.setBackground(new JButton().getBackground());
+                diceBtn5.setBackground(new JButton().getBackground());
                 diceBtn1.setEnabled(true);
                 diceBtn2.setEnabled(true);
                 diceBtn3.setEnabled(true);
@@ -507,6 +518,16 @@ public class GUI extends JFrame implements ActionListener {
                 scoreOptions.setEnabled(true);
                 rollDice.setEnabled(false);
             } else if (game.getNumRolls() == 2) {
+                game.die1.setHold(false);
+                game.die2.setHold(false);
+                game.die3.setHold(false);
+                game.die4.setHold(false);
+                game.die5.setHold(false);
+                diceBtn1.setBackground(new JButton().getBackground());
+                diceBtn2.setBackground(new JButton().getBackground());
+                diceBtn3.setBackground(new JButton().getBackground());
+                diceBtn4.setBackground(new JButton().getBackground());
+                diceBtn5.setBackground(new JButton().getBackground());
                 holdDice.setEnabled(true);
                 diceBtn1.setEnabled(true);
                 diceBtn2.setEnabled(true);
@@ -515,8 +536,16 @@ public class GUI extends JFrame implements ActionListener {
                 diceBtn5.setEnabled(true);
                 rollDice.setEnabled(false);
             } else {
-                submitScore.setEnabled(true);
-                scoreOptions.setEnabled(true);
+                game.die1.setHold(false);
+                game.die2.setHold(false);
+                game.die3.setHold(false);
+                game.die4.setHold(false);
+                game.die5.setHold(false);
+                diceBtn1.setBackground(new JButton().getBackground());
+                diceBtn2.setBackground(new JButton().getBackground());
+                diceBtn3.setBackground(new JButton().getBackground());
+                diceBtn4.setBackground(new JButton().getBackground());
+                diceBtn5.setBackground(new JButton().getBackground());
                 passDice.setEnabled(true);
                 diceBtn1.setEnabled(false);
                 diceBtn2.setEnabled(false);
@@ -542,37 +571,36 @@ public class GUI extends JFrame implements ActionListener {
 
         // Holds the dice that were selected
         if (e.getSource() == holdDice) {
-
+            diceBtn1.setEnabled(false);
+            diceBtn2.setEnabled(false);
+            diceBtn3.setEnabled(false);
+            diceBtn4.setEnabled(false);
+            diceBtn5.setEnabled(false);
             if (diceBtn1.getBackground() == Color.red) {
-                diceBtn1.setEnabled(false);
                 game.die1.setHold(true);
             } else {
                 game.die1.setHold(false);
             }
 
             if (diceBtn2.getBackground() == Color.red) {
-                diceBtn2.setEnabled(false);
                 game.die2.setHold(true);
             } else {
                 game.die2.setHold(false);
             }
 
             if (diceBtn3.getBackground() == Color.red) {
-                diceBtn3.setEnabled(false);
                 game.die3.setHold(true);
             } else {
                 game.die3.setHold(false);
             }
 
             if (diceBtn4.getBackground() == Color.red) {
-                diceBtn4.setEnabled(false);
                 game.die4.setHold(true);
             } else {
                 game.die4.setHold(false);
             }
 
             if (diceBtn5.getBackground() == Color.red) {
-                diceBtn5.setEnabled(false);
                 game.die5.setHold(true);
             } else {
                 game.die5.setHold(false);
@@ -589,7 +617,7 @@ public class GUI extends JFrame implements ActionListener {
 
         // Passes to next player
         if (e.getSource() == passDice) {
-
+            game.addScore(game.getTurn());
             game.setMustPass(false);
             holdDice.setEnabled(false);
             passDice.setEnabled(false);
@@ -620,26 +648,32 @@ public class GUI extends JFrame implements ActionListener {
             diceBtn4.setBackground(new JButton().getBackground());
             diceBtn5.setBackground(new JButton().getBackground());
 
+            player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
+            player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
+            player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
+            player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
+            player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
+
             game.die1.setHold(false);
             game.die2.setHold(false);
             game.die3.setHold(false);
             game.die4.setHold(false);
             game.die5.setHold(false);
 
-            game.changeTurn();
-
-            turn.setText("Turn Player  " + game.getTurn());
+            turn.setText("Turn " + game.getTurn().getName());
         }
 
         // Submits the score option selected and displays score
         if (e.getSource() == submitScore) {
             game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
-            turn.setText("Turn Player  " + game.getTurn()); // update whose turn it is
+            turn.setText("Turn " + game.getTurn().getName()); // update whose turn it is
             player1Score.setText("Player 1's Score:  " + game.player1.getTotalScore());
             player2Score.setText("Player 2's Score:  " + game.player2.getTotalScore());
             player3Score.setText("Player 3's Score:  " + game.player3.getTotalScore());
             player4Score.setText("Player 4's Score:  " + game.player4.getTotalScore());
             player5Score.setText("Player 5's Score:  " + game.player5.getTotalScore());
+            submitScore.setEnabled(false);
+            scoreOptions.setEnabled(false);
         }
     }
 }
