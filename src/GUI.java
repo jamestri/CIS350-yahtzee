@@ -471,6 +471,18 @@ public class GUI extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Invalid File!");
                 }
             }
+            
+            player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
+            player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
+            if (numPlayers > 2)
+             player3Score.setText(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
+            if (numPlayers > 3)
+                player4Score.setText(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
+            if (numPlayers > 4)
+                player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
+            
+            turn.setText("Turn " + game.getTurn().getName());
+            
         }
 
         // Saves current game to file
