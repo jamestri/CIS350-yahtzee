@@ -4,21 +4,55 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * AI extends Player to act as a player, but controlled by computer
+ * AI extends Player to act as a player, but controlled by computer.
  */
 public class AI extends Player {
 
+    /** First die for AI to score themselves. */
+    public Die die1;
+    /** Second die for AI to score themselves. */
+    public Die die2;
+    /** Third die for AI to score themselves. */
+    public Die die3;
+    /** fourth die for AI to score themselves. */
+    public Die die4;
+    /** Fifth die for AI to score themselves. */
+    public Die die5;
 
-    public Die die1, die2, die3, die4, die5;
-    public int numRounds, numRolls, die1Val, die2Val, die3Val, die4Val, die5Val;
+    /** Keep track of the number of rounds in game. */
+    public int numRounds;
+
+    /** Keep track of rolls AI did. */
+    public int numRolls;
+
+    /** Value of first die. */
+    public int die1Val;
+    /** Value of second die. */
+    public int die2Val;
+    /** Value of third die. */
+    public int die3Val;
+    /** Value of fourth die. */
+    public int die4Val;
+    /** Value of fifth die. */
+    public int die5Val;
+
+    /** List of all die values. */
     public static ArrayList<Integer> dieVals;
+
+    /** To tell AI to work on its turn. */
     public boolean turn;
+
+    /** Random for determining scoring option. */
     public static Random rnd;
+
+    /** List of held die values. */
     public static ArrayList<Integer> dieHold;
+
+    /** Holds random value. */
     public int rndValue;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public AI() {
         super("Mark");
@@ -83,11 +117,11 @@ public class AI extends Player {
                     || (val5 == val1 && val5 == val2)
                     || (val5 == val3 && val5 == val4);
 
-    static boolean fourMatch = (val1 == val2 && val1 == val3 &&
-            val1 == val4 || val1 == val5);
+    static boolean fourMatch = (val1 == val2 && val1 == val3
+            && val1 == val4 || val1 == val5);
 
     /**
-     * Determines the chances of a Yahtzee
+     * Determines the chances of a Yahtzee.
      */
     public void chancesOfYahtzee() {
 
@@ -245,7 +279,7 @@ public class AI extends Player {
     }
 
     /**
-     * Getter for player's turn
+     * Getter for player's turn.
      *
      * @return true if player's turn
      */

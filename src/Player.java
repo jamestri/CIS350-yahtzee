@@ -1,54 +1,91 @@
 import java.io.Serializable;
 
 /**
- * Class to hold Player data, like name, options chosen, and score
+ * Class to hold Player data, like name, options chosen, and score.
  */
 public class Player implements Comparable, Serializable {
+
+    /** Player's name for viewing on GUI. */
     private String name;
-    private boolean turn,
-            acesChosen,
-            twosChosen,
-            threesChosen,
-            foursChosen,
-            fivesChosen,
-            sixesChosen,
-            smallStraightChosen,
-            largeStraightChosen,
-            fullHouseChosen,
-            threeOfAKindChosen,
-            fourOfAKindChosen,
-            chanceChosen,
-            yahtzeeChosen;
+
+    /** To tell if it is player's turn. */
+    private boolean turn;
+
+    /** If aces scoring option has been chosen. */
+    private boolean acesChosen;
+
+    /** If twos scoring option has been chosen. */
+    private boolean twosChosen;
+
+    /** If threes scoring option has been chosen. */
+    private boolean threesChosen;
+
+    /** If fours scoring option has been chosen. */
+    private boolean foursChosen;
+
+    /** If fives scoring option has been chosen. */
+    private boolean fivesChosen;
+
+    /** If sixes scoring option has been chosen. */
+    private boolean sixesChosen;
+
+    /** If small straight scoring option has been chosen. */
+    private boolean smallStraightChosen;
+
+    /** If large straight scoring option has been chosen. */
+    private boolean largeStraightChosen;
+
+    /** If full house scoring option has been chosen. */
+    private boolean fullHouseChosen;
+
+    /** If three of a kind scoring option has been chosen. */
+    private boolean threeOfAKindChosen;
+
+    /** If four of a kind scoring option has been chosen. */
+    private boolean fourOfAKindChosen;
+
+    /** If chance scoring option has been chosen. */
+    private boolean chanceChosen;
+
+    /** If yahtzee scoring option has been chosen. */
+    private boolean yahtzeeChosen;
+
+    /** If player is an AI. */
     private boolean isAI;
-    private int totalScore = 0,
-        yahtzeeRolls;
+
+    /** Keep track of player's score. */
+    private int totalScore = 0;
+
+    /** Keep track of number of Yahtzees rolled for bonus scoring. */
+    private int yahtzeeRolls;
 
     /**
-     * Default constructor that sets name to parameter
+     * Default constructor that sets name to parameter.
      *
-     * @param name name of player
+     * @param newName name of player
      */
-    public Player(String name) {
-        this.name = name;
-        turn =
-                acesChosen =
-                        twosChosen =
-                                threesChosen =
-                                        foursChosen =
-                                                fivesChosen =
-                                                        sixesChosen =
-                                                                smallStraightChosen =
-                                                                        largeStraightChosen =
-                                                                                fullHouseChosen =
-                                                                                        threeOfAKindChosen =
-                                                                                                fourOfAKindChosen =
-                                                                                                        chanceChosen = yahtzeeChosen = false;
-
-        totalScore = yahtzeeRolls = 0;
+    public Player(final String newName) {
+        this.name = newName;
+        turn = false;
+        acesChosen = false;
+        twosChosen = false;
+        threesChosen = false;
+        foursChosen = false;
+        fivesChosen = false;
+        sixesChosen = false;
+        fullHouseChosen = false;
+        smallStraightChosen = false;
+        largeStraightChosen = false;
+        yahtzeeChosen = false;
+        chanceChosen = false;
+        threesChosen = false;
+        fourOfAKindChosen = false;
+        totalScore = 0;
+        yahtzeeRolls = 0;
     }
 
     /**
-     * Getter for number of yahtzee rolls
+     * Getter for number of yahtzee rolls.
      *
      * @return yahtzee rolls
      */
@@ -57,16 +94,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for yahtzee rolls
+     * Setter for yahtzee rolls.
      *
-     * @param yahtzeeRolls yahtzee rolls to set
+     * @param newYahtzeeRolls yahtzee rolls to set
      */
-    public void setYahtzeeRolls(int yahtzeeRolls) {
-        this.yahtzeeRolls = yahtzeeRolls;
+    public void setYahtzeeRolls(int newYahtzeeRolls) {
+        this.yahtzeeRolls = newYahtzeeRolls;
     }
 
     /**
-     * Getter for name
+     * Getter for name.
      *
      * @return player name
      */
@@ -75,16 +112,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for name
+     * Setter for name.
      *
-     * @param name name to be set
+     * @param newName name to be set
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String newName) {
+        this.name = newName;
     }
 
     /**
-     * Getter for turn
+     * Getter for turn.
      *
      * @return true if player's turn
      */
@@ -93,16 +130,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for turn
+     * Setter for turn.
      *
-     * @param turn boolean to set turn
+     * @param newTurn boolean to set turn
      */
-    public void setTurn(boolean turn) {
-        this.turn = turn;
+    public void setTurn(boolean newTurn) {
+        this.turn = newTurn;
     }
 
     /**
-     * Getter for aces chosen
+     * Getter for aces chosen.
      *
      * @return true if aces has been chosen
      */
@@ -111,16 +148,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for aces chosen
+     * Setter for aces chosen.
      *
-     * @param acesChosen boolean to set aces chosen
+     * @param newAcesChosen boolean to set aces chosen
      */
-    public void setAcesChosen(boolean acesChosen) {
-        this.acesChosen = acesChosen;
+    public void setAcesChosen(boolean newAcesChosen) {
+        this.acesChosen = newAcesChosen;
     }
 
     /**
-     * Getter for twos chosen
+     * Getter for twos chosen.
      *
      * @return true if twos chosen
      */
@@ -129,16 +166,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for twos chosen
+     * Setter for twos chosen.
      *
-     * @param twosChosen boolean to set twos chosen
+     * @param newTwosChosen boolean to set twos chosen
      */
-    public void setTwosChosen(boolean twosChosen) {
-        this.twosChosen = twosChosen;
+    public void setTwosChosen(boolean newTwosChosen) {
+        this.twosChosen = newTwosChosen;
     }
 
     /**
-     * Getter for threes chosen
+     * Getter for threes chosen.
      *
      * @return true if threes chosen
      */
@@ -147,16 +184,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for threes chosen
+     * Setter for threes chosen.
      *
-     * @param threesChosen boolean to set threes chosen
+     * @param newThreesChosen boolean to set threes chosen
      */
-    public void setThreesChosen(boolean threesChosen) {
-        this.threesChosen = threesChosen;
+    public void setThreesChosen(boolean newThreesChosen) {
+        this.threesChosen = newThreesChosen;
     }
 
     /**
-     * Getter for fours chosen
+     * Getter for fours chosen.
      *
      * @return true if fours chosen
      */
@@ -165,16 +202,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for fours chosen
+     * Setter for fours chosen.
      *
-     * @param foursChosen boolean to set fours chosen
+     * @param newFoursChosen boolean to set fours chosen
      */
-    public void setFoursChosen(boolean foursChosen) {
-        this.foursChosen = foursChosen;
+    public void setFoursChosen(boolean newFoursChosen) {
+        this.foursChosen = newFoursChosen;
     }
 
     /**
-     * Getter for fives chosen
+     * Getter for fives chosen.
      *
      * @return true if fives chosen
      */
@@ -183,16 +220,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for fives chosen
+     * Setter for fives chosen.
      *
-     * @param fivesChosen boolean to set fives chosen
+     * @param newFivesChosen boolean to set fives chosen
      */
-    public void setFivesChosen(boolean fivesChosen) {
-        this.fivesChosen = fivesChosen;
+    public void setFivesChosen(boolean newFivesChosen) {
+        this.fivesChosen = newFivesChosen;
     }
 
     /**
-     * Getter for sixes chosen
+     * Getter for sixes chosen.
      *
      * @return true if sixes chosen
      */
@@ -201,16 +238,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for sixes chosen
+     * Setter for sixes chosen.
      *
-     * @param sixesChosen boolean to set sixes chosen
+     * @param newSixesChosen boolean to set sixes chosen
      */
-    public void setSixesChosen(boolean sixesChosen) {
-        this.sixesChosen = sixesChosen;
+    public void setSixesChosen(boolean newSixesChosen) {
+        this.sixesChosen = newSixesChosen;
     }
 
     /**
-     * Setter for small straight chosen
+     * Setter for small straight chosen.
      *
      * @return true if small straight chosen
      */
@@ -219,16 +256,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for small straight chosen
+     * Setter for small straight chosen.
      *
-     * @param smallStraightChosen boolean to set small straight chosen
+     * @param newSmallStraightChosen boolean to set small straight chosen
      */
-    public void setSmallStraightChosen(boolean smallStraightChosen) {
-        this.smallStraightChosen = smallStraightChosen;
+    public void setSmallStraightChosen(boolean newSmallStraightChosen) {
+        this.smallStraightChosen = newSmallStraightChosen;
     }
 
     /**
-     * Getter for large straight chosen
+     * Getter for large straight chosen.
      *
      * @return true if larges straight chosen
      */
@@ -237,16 +274,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for large straight chosen
+     * Setter for large straight chosen.
      *
-     * @param largeStraightChosen boolean to set large straight chosen
+     * @param newLargeStraightChosen boolean to set large straight chosen
      */
-    public void setLargeStraightChosen(boolean largeStraightChosen) {
-        this.largeStraightChosen = largeStraightChosen;
+    public void setLargeStraightChosen(boolean newLargeStraightChosen) {
+        this.largeStraightChosen = newLargeStraightChosen;
     }
 
     /**
-     * Getter for full house chosen
+     * Getter for full house chosen.
      *
      * @return true if full house chosen
      */
@@ -255,16 +292,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for full house chosen
+     * Setter for full house chosen.
      *
-     * @param fullHouseChosen boolean to set full house chosen
+     * @param newFullHouseChosen boolean to set full house chosen
      */
-    public void setFullHouseChosen(boolean fullHouseChosen) {
-        this.fullHouseChosen = fullHouseChosen;
+    public void setFullHouseChosen(boolean newFullHouseChosen) {
+        this.fullHouseChosen = newFullHouseChosen;
     }
 
     /**
-     * Getter for three of a kind chosen
+     * Getter for three of a kind chosen.
      *
      * @return true if three of a kind chosen
      */
@@ -273,16 +310,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for three of a kind chosen
+     * Setter for three of a kind chosen.
      *
-     * @param threeOfAKindChosen boolean to set three of a kind chosen
+     * @param newThreeOfAKindChosen boolean to set three of a kind chosen
      */
-    public void setThreeOfAKindChosen(boolean threeOfAKindChosen) {
-        this.threeOfAKindChosen = threeOfAKindChosen;
+    public void setThreeOfAKindChosen(boolean newThreeOfAKindChosen) {
+        this.threeOfAKindChosen = newThreeOfAKindChosen;
     }
 
     /**
-     * Getter for four of a kind chosen
+     * Getter for four of a kind chosen.
      *
      * @return true if four of a kind chosen
      */
@@ -291,16 +328,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for four of a kind chosen
+     * Setter for four of a kind chosen.
      *
-     * @param fourOfAKindChosen boolean to set four of a kind chosen
+     * @param newFourOfAKindChosen boolean to set four of a kind chosen
      */
-    public void setFourOfAKindChosen(boolean fourOfAKindChosen) {
-        this.fourOfAKindChosen = fourOfAKindChosen;
+    public void setFourOfAKindChosen(boolean newFourOfAKindChosen) {
+        this.fourOfAKindChosen = newFourOfAKindChosen;
     }
 
     /**
-     * Getter for chance chosen
+     * Getter for chance chosen.
      *
      * @return true if chance chosen
      */
@@ -309,16 +346,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for chance chosen
+     * Setter for chance chosen.
      *
-     * @param chanceChosen boolean to set chance chosen
+     * @param newChanceChosen boolean to set chance chosen
      */
-    public void setChanceChosen(boolean chanceChosen) {
-        this.chanceChosen = chanceChosen;
+    public void setChanceChosen(boolean newChanceChosen) {
+        this.chanceChosen = newChanceChosen;
     }
 
     /**
-     * Getter for yahtzee chosen
+     * Getter for yahtzee chosen.
      *
      * @return true if yahtzee chosen
      */
@@ -327,16 +364,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for yahtzee chosen
+     * Setter for yahtzee chosen.
      *
-     * @param yahtzeeChosen boolean to set yahtzee chosen
+     * @param newYahtzeeChosen boolean to set yahtzee chosen
      */
-    public void setYahtzeeChosen(boolean yahtzeeChosen) {
-        this.yahtzeeChosen = yahtzeeChosen;
+    public void setYahtzeeChosen(boolean newYahtzeeChosen) {
+        this.yahtzeeChosen = newYahtzeeChosen;
     }
 
     /**
-     * Getter for total score
+     * Getter for total score.
      *
      * @return player's total score
      */
@@ -345,16 +382,16 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for total score
+     * Setter for total score.
      *
-     * @param totalScore int to set total score
+     * @param newTotalScore int to set total score
      */
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
+    public void setTotalScore(int newTotalScore) {
+        this.totalScore = newTotalScore;
     }
 
     /**
-     * Function to compare player objects
+     * Function to compare player objects.
      *
      * @param o player to compare to
      * @return player's total score
@@ -365,7 +402,7 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Getter for if player is an ai
+     * Getter for if player is an ai.
      *
      * @return true if player is an ai
      */
@@ -374,7 +411,7 @@ public class Player implements Comparable, Serializable {
     }
 
     /**
-     * Setter for if player is an ai
+     * Setter for if player is an ai.
      *
      * @param newMode boolean to set if player is an ai
      */

@@ -3,26 +3,65 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * The game logic of Yahtzee, determining score and rolling
+ * The game logic of Yahtzee, determining score and rolling.
  */
 public class GameLogic implements Serializable {
-    public Die die1, die2, die3, die4, die5;
-    public Player player1, player2, player3, player4, player5;
-    public int numRounds, die1Val, die2Val, die3Val, die4Val, die5Val;
+    /** First die for playing the game. */
+    public Die die1;
+    /** Second die for playing the game. */
+    public Die die2;
+    /** Third die for playing the game. */
+    public Die die3;
+    /** Fourth die for playing the game. */
+    public Die die4;
+    /** Fifth die for playing the game. */
+    public Die die5;
+    /** First player to play the game. */
+    public Player player1;
+    /** Second player to play the game. */
+    public Player player2;
+    /** Third player to play the game. */
+    public Player player3;
+    /** Fourth player to play the game. */
+    public Player player4;
+    /** Fifth player to play the game. */
+    public Player player5;
+    /** Number of rounds to keep track of game. */
+    public int numRounds;
+    /** Value of first die rolled. */
+    public int die1Val;
+    /** Value of second die rolled. */
+    public int die2Val;
+    /** Value of third die rolled. */
+    public int die3Val;
+    /** Value of fourth die rolled. */
+    public int die4Val;
+    /** Value of fifth die rolled. */
+    public int die5Val;
+    /** Number of rolls of player during round. */
     private int numRolls;
+    /** Number of players for game creation. */
     private int numberOfPlayers;
+    /** To tell if player must pass turn to next player. */
     private boolean mustPass;
+    /** Score Option chosen by player to end turn. */
     public ScoreOption optionChosen;
-    public static final int FULL_HOUSE_SCORE = 25,
-            SMALL_STRAIGHT_SCORE = 30,
-            LARGE_STRAIGHT_SCORE = 40,
-            YAHTZEE_SCORE = 50,
-            BONUS_SCORE = 100;
+    /**  Score of getting a full house. */
+    public static final int FULL_HOUSE_SCORE = 25;
+    /** Score of getting a small straight. */
+    public static final int SMALL_STRAIGHT_SCORE = 30;
+    /** Score of getting a large straight. */
+    public static final int LARGE_STRAIGHT_SCORE = 40;
+    /** Score of getting a yahtzee. */
+    public static final int YAHTZEE_SCORE = 50;
+    /** Score of getting a bonus yahtzee. */
+    public static final int BONUS_SCORE = 100;
+    /** List of all the values of dice rolled. */
     public static ArrayList<Integer> dieVals;
+    /** Game status to keep track of game status. */
     public GameStatus gameStatus;
-
     /**
-     * Default Constructor
+     * Default Constructor.
      */
     public GameLogic() {
         die1 = new Die();
@@ -45,25 +84,30 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Rolls the dice should the number of max rolls not be hit
+     * Rolls the dice should the number of max rolls not be hit.
      */
     public void roll() {
         if (numRolls <= 3) {
-            if (!die1.isHold())
+            if (!die1.isHold()) {
                 die1Val = die1.roll();
-            if (!die2.isHold())
+            }
+            if (!die2.isHold()) {
                 die2Val = die2.roll();
-            if (!die3.isHold())
+            }
+            if (!die3.isHold()) {
                 die3Val = die3.roll();
-            if (!die4.isHold())
+            }
+            if (!die4.isHold()) {
                 die4Val = die4.roll();
-            if (!die5.isHold())
+            }
+            if (!die5.isHold()) {
                 die5Val = die5.roll();
+            }
         }
     }
 
     /**
-     * Increments the number of rolls or resets if at 3 rolls
+     * Increments the number of rolls or resets if at 3 rolls.
      */
     public void incrementNumRolls() {
         if (numRolls == 1 || numRolls == 2) {
@@ -74,7 +118,7 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Getter for must pass
+     * Getter for must pass.
      *
      * @return true if must pass turn
      */
@@ -83,16 +127,16 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Setter for must pass
+     * Setter for must pass.
      *
-     * @param mustPass boolean to set if player must pass
+     * @param newMustPass boolean to set if player must pass
      */
-    public void setMustPass(boolean mustPass) {
-        this.mustPass = mustPass;
+    public void setMustPass(boolean newMustPass) {
+        this.mustPass = newMustPass;
     }
 
     /**
-     * Getter for the number of rolls
+     * Getter for the number of rolls.
      *
      * @return int for number of rolls
      */
@@ -101,14 +145,15 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Adds the players score to the score option that they chose
+     * Adds the players score to the score option that they chose.
      *
      * @param player player who chose the score category
      */
     public void addScore(Player player) {
         // does bonus score here
         if (player.getYahtzeeRolls() > 0 && player.isYahtzeeChosen()) {
-            if (die1Val == die2Val && die1Val == die3Val && die1Val == die4Val && die1Val == die5Val) {
+            if (die1Val == die2Val && die1Val == die3Val
+                    && die1Val == die4Val && die1Val == die5Val) {
                 player.setTotalScore(player.getTotalScore() + BONUS_SCORE);
                 player.setYahtzeeRolls(player.getYahtzeeRolls() + 1);
             }
@@ -119,33 +164,33 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Changes turn to next player and increments round counter
+     * Changes turn to next player and increments round counter.
      */
-    void changeTurn() {
+    public void changeTurn() {
         if (player1.isTurn()) {
             player1.setTurn(false);
             player2.setTurn(true);
         } else if (player2.isTurn()) {
             player2.setTurn(false);
-            if (numberOfPlayers > 2)
+            if (numberOfPlayers > 2) {
                 player3.setTurn(true);
-            else {
+            } else {
                 player1.setTurn(true);
                 numRounds++;
-                }
+            }
         } else if (player3.isTurn()) {
             player3.setTurn(false);
-            if (numberOfPlayers > 3)
+            if (numberOfPlayers > 3) {
                 player4.setTurn(true);
-            else {
+            } else {
                 player1.setTurn(true);
                 numRounds++;
             }
         } else if (player4.isTurn()) {
             player4.setTurn(false);
-            if (numberOfPlayers > 4)
+            if (numberOfPlayers > 4) {
                 player5.setTurn(true);
-            else{
+            } else {
                 player1.setTurn(true);
                 numRounds++;
             }
@@ -160,18 +205,24 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Gets the current player numbers turn
+     * Gets the current player numbers turn.
      */
     public Player getTurn() {
-        if (player1.isTurn()) return player1;
-        else if (player2.isTurn()) return player2;
-        else if (player3.isTurn()) return player3;
-        else if (player4.isTurn()) return player4;
-        else return player5;
+        if (player1.isTurn()) {
+            return player1;
+        } else if (player2.isTurn()) {
+            return player2;
+        } else if (player3.isTurn()) {
+            return player3;
+        } else if (player4.isTurn()) {
+            return player4;
+        } else {
+            return player5;
+        }
     }
 
     /**
-     * Returns the number of rounds currently in progress
+     * Returns the number of rounds currently in progress.
      *
      * @return num rounds in progress
      */
@@ -189,7 +240,7 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Returns the winner out of the five players and sets gamestatus to over
+     * Returns the winner out of the five players and sets game status to over.
      *
      * @return winning player
      */
@@ -206,7 +257,7 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Returns the score of what option the player chose
+     * Returns the score of what option the player chose.
      *
      * @param option score option they chose
      * @param player player who is choosing score
@@ -297,7 +348,12 @@ public class GameLogic implements Serializable {
                     player.setSmallStraightChosen(true);
                     // add dievals to see if match 10, 14, or 18, and for one occurrence of each val
                     int sum = 0;
-                    boolean one = false, two = false, three = false, four = false, five = false, six = false;
+                    boolean one = false;
+                    boolean two = false;
+                    boolean three = false;
+                    boolean four = false;
+                    boolean five = false;
+                    boolean six = false;
                     for (int val : dieVals) {
                         sum += val;
                         if (val == 1 && !one) {
@@ -335,7 +391,12 @@ public class GameLogic implements Serializable {
                     // check for if large straight happened.
                     int sum = 0;
                     // add contents of array list to get 15 or 20, check to see if one occurrence of each num
-                    boolean one = false, two = false, three = false, four = false, five = false, six = false;
+                    boolean one = false;
+                    boolean two = false;
+                    boolean three = false;
+                    boolean four = false;
+                    boolean five = false;
+                    boolean six = false;
                     for (int val : dieVals) {
                         sum += val;
                         if (val == 1 && !one) {
@@ -389,12 +450,12 @@ public class GameLogic implements Serializable {
                 if (!player.isFullHouseChosen()) {
                     player.setFullHouseChosen(true);
                     // getting counts of each value
-                    int oneCount = 0,
-                            twoCount = 0,
-                            threeCount = 0,
-                            fourCount = 0,
-                            fiveCount = 0,
-                            sixCount = 0;
+                    int oneCount = 0;
+                    int twoCount = 0;
+                    int threeCount = 0;
+                    int fourCount = 0;
+                    int fiveCount = 0;
+                    int sixCount = 0;
                     for (int val : dieVals) {
                         switch (val) {
                             case 1:
@@ -415,21 +476,23 @@ public class GameLogic implements Serializable {
                             case 6:
                                 sixCount++;
                                 break;
+                            default:
+                                break;
                         }
                     }
                     // seeing how many of each there are
-                    boolean oneTwo = false,
-                            oneThree = false,
-                            twoTwo = false,
-                            twoThree = false,
-                            threeTwo = false,
-                            threeThree = false,
-                            fourTwo = false,
-                            fourThree = false,
-                            fiveTwo = false,
-                            fiveThree = false,
-                            sixTwo = false,
-                            sixThree = false;
+                    boolean oneTwo = false;
+                    boolean oneThree = false;
+                    boolean twoTwo = false;
+                    boolean twoThree = false;
+                    boolean threeTwo = false;
+                    boolean threeThree = false;
+                    boolean fourTwo = false;
+                    boolean fourThree = false;
+                    boolean fiveTwo = false;
+                    boolean fiveThree = false;
+                    boolean sixTwo = false;
+                    boolean sixThree = false;
                     if (oneCount == 2) {
                         oneTwo = true;
                     }
@@ -483,12 +546,12 @@ public class GameLogic implements Serializable {
                 if (!player.isThreeOfAKindChosen()) {
                     player.setThreeOfAKindChosen(true);
                     // counting occurrences of each value
-                    int oneCount = 0,
-                            twoCount = 0,
-                            threeCount = 0,
-                            fourCount = 0,
-                            fiveCount = 0,
-                            sixCount = 0;
+                    int oneCount = 0;
+                    int twoCount = 0;
+                    int threeCount = 0;
+                    int fourCount = 0;
+                    int fiveCount = 0;
+                    int sixCount = 0;
                     for (int val : dieVals) {
                         switch (val) {
                             case 1:
@@ -508,6 +571,8 @@ public class GameLogic implements Serializable {
                                 break;
                             case 6:
                                 sixCount++;
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -526,12 +591,12 @@ public class GameLogic implements Serializable {
                 if (!player.isFourOfAKindChosen()) {
                     player.setFourOfAKindChosen(true);
                     // counting occurrences of each value
-                    int oneCount = 0,
-                            twoCount = 0,
-                            threeCount = 0,
-                            fourCount = 0,
-                            fiveCount = 0,
-                            sixCount = 0;
+                    int oneCount = 0;
+                    int twoCount = 0;
+                    int threeCount = 0;
+                    int fourCount = 0;
+                    int fiveCount = 0;
+                    int sixCount = 0;
                     for (int val : dieVals) {
                         switch (val) {
                             case 1:
@@ -551,6 +616,8 @@ public class GameLogic implements Serializable {
                                 break;
                             case 6:
                                 sixCount++;
+                                break;
+                            default:
                                 break;
                         }
                     }
@@ -570,11 +637,11 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Setter for the number of players
+     * Setter for the number of players.
      *
      * @param numPlayers in for number of players to be set
      */
-    public void setNumPlayers (int numPlayers) {
+    public void setNumPlayers(int numPlayers) {
         numberOfPlayers = numPlayers;
     }
 }
