@@ -8,6 +8,9 @@
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * Object class for a six-sided die, used for rolling and holding
+ */
 public class Die implements Serializable {
 
     /** holds the value of the die after rolled */

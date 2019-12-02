@@ -3,6 +3,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * AI extends Player to act as a player, but controlled by computer
+ */
 public class AI extends Player {
 
 
@@ -14,6 +17,9 @@ public class AI extends Player {
     public static ArrayList<Integer> dieHold;
     public int rndValue;
 
+    /**
+     * Default constructor
+     */
     public AI() {
         super("Mark");
         die1 = new Die();
@@ -80,6 +86,9 @@ public class AI extends Player {
     static boolean fourMatch = (val1 == val2 && val1 == val3 &&
             val1 == val4 || val1 == val5);
 
+    /**
+     * Determines the chances of a Yahtzee
+     */
     public void chancesOfYahtzee() {
 
         // after each roll program evaluates chances of getting some configuration.
@@ -235,6 +244,11 @@ public class AI extends Player {
         dieHold.add(val);
     }
 
+    /**
+     * Getter for player's turn
+     *
+     * @return true if player's turn
+     */
     @Override
     public boolean isTurn() {
         return turn;

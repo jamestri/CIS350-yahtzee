@@ -2,6 +2,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The game logic of Yahtzee, determining score and rolling
+ */
 public class GameLogic implements Serializable {
     public Die die1, die2, die3, die4, die5;
     public Player player1, player2, player3, player4, player5;
@@ -59,6 +62,9 @@ public class GameLogic implements Serializable {
         }
     }
 
+    /**
+     * Increments the number of rolls or resets if at 3 rolls
+     */
     public void incrementNumRolls() {
         if (numRolls == 1 || numRolls == 2) {
             numRolls++;
@@ -67,14 +73,29 @@ public class GameLogic implements Serializable {
         }
     }
 
+    /**
+     * Getter for must pass
+     *
+     * @return true if must pass turn
+     */
     public boolean isMustPass() {
         return mustPass;
     }
 
+    /**
+     * Setter for must pass
+     *
+     * @param mustPass boolean to set if player must pass
+     */
     public void setMustPass(boolean mustPass) {
         this.mustPass = mustPass;
     }
 
+    /**
+     * Getter for the number of rolls
+     *
+     * @return int for number of rolls
+     */
     public int getNumRolls() {
         return numRolls;
     }
@@ -548,6 +569,11 @@ public class GameLogic implements Serializable {
         return 0;
     }
 
+    /**
+     * Setter for the number of players
+     *
+     * @param numPlayers in for number of players to be set
+     */
     public void setNumPlayers (int numPlayers) {
         numberOfPlayers = numPlayers;
     }

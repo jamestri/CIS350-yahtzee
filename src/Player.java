@@ -364,10 +364,20 @@ public class Player implements Comparable, Serializable {
         return getTotalScore();
     }
 
+    /**
+     * Getter for if player is an ai
+     *
+     * @return true if player is an ai
+     */
     public boolean hasAI() {
         return isAI;
     }
 
+    /**
+     * Setter for if player is an ai
+     *
+     * @param newMode boolean to set if player is an ai
+     */
     public void setAI(boolean newMode) {
         isAI = newMode;
     }
