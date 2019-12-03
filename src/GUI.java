@@ -604,54 +604,64 @@ public class GUI extends JFrame implements ActionListener {
     }
     // Select Button 1
     if (e.getSource() == diceBtn1) {
-      if (diceBtn1.getBackground() != Color.red) {
-        diceBtn1.setBackground(Color.red);
-        setDiceIcon(diceBtn1, game.die1.getRoll(), true);
-      } else {
-        diceBtn1.setBackground(new JButton().getBackground());
-        setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+      if (!game.getTurn().hasAI()) {
+        if (diceBtn1.getBackground() != Color.red) {
+          diceBtn1.setBackground(Color.red);
+          setDiceIcon(diceBtn1, game.die1.getRoll(), true);
+        } else {
+          diceBtn1.setBackground(new JButton().getBackground());
+          setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+        }
       }
     }
     // Select Button 2
     if (e.getSource() == diceBtn2) {
-      if (diceBtn2.getBackground() != Color.red) {
-        diceBtn2.setBackground(Color.red);
-        setDiceIcon(diceBtn2, game.die2.getRoll(), true);
-      } else {
-        diceBtn2.setBackground(new JButton().getBackground());
-        setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+      if (!game.getTurn().hasAI()) {
+        if (diceBtn2.getBackground() != Color.red) {
+          diceBtn2.setBackground(Color.red);
+          setDiceIcon(diceBtn2, game.die2.getRoll(), true);
+        } else {
+          diceBtn2.setBackground(new JButton().getBackground());
+          setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+        }
       }
     }
     // Select Button 3
     if (e.getSource() == diceBtn3) {
-      if (diceBtn3.getBackground() != Color.red) {
-        diceBtn3.setBackground(Color.red);
-        setDiceIcon(diceBtn3, game.die3.getRoll(), true);
-      } else {
-        diceBtn3.setBackground(new JButton().getBackground());
-        setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+      if (!game.getTurn().hasAI()) {
+        if (diceBtn3.getBackground() != Color.red) {
+          diceBtn3.setBackground(Color.red);
+          setDiceIcon(diceBtn3, game.die3.getRoll(), true);
+        } else {
+          diceBtn3.setBackground(new JButton().getBackground());
+          setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+        }
       }
     }
     // Select Button 4
     if (e.getSource() == diceBtn4) {
-      if (diceBtn4.getBackground() != Color.red) {
-        diceBtn4.setBackground(Color.red);
-        setDiceIcon(diceBtn4, game.die4.getRoll(), true);
-      } else {
-        diceBtn4.setBackground(new JButton().getBackground());
-        setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+      if (!game.getTurn().hasAI()) {
+        if (diceBtn4.getBackground() != Color.red) {
+          diceBtn4.setBackground(Color.red);
+          setDiceIcon(diceBtn4, game.die4.getRoll(), true);
+        } else {
+          diceBtn4.setBackground(new JButton().getBackground());
+          setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+        }
       }
-    }
+      }
     // Select Button 5
     if (e.getSource() == diceBtn5) {
-      if (diceBtn5.getBackground() != Color.red) {
-        diceBtn5.setBackground(Color.red);
-        setDiceIcon(diceBtn5, game.die5.getRoll(), true);
-      } else {
-        diceBtn5.setBackground(new JButton().getBackground());
-        setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+      if (!game.getTurn().hasAI()) {
+        if (diceBtn5.getBackground() != Color.red) {
+          diceBtn5.setBackground(Color.red);
+          setDiceIcon(diceBtn5, game.die5.getRoll(), true);
+        } else {
+          diceBtn5.setBackground(new JButton().getBackground());
+          setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+        }
       }
-    }
+      }
     // Roll all available dice
     if (e.getSource() == rollDice) {
       game.roll();
@@ -815,6 +825,11 @@ public class GUI extends JFrame implements ActionListener {
         turn.setText("Turn " + game.getTurn().getName());
         if (game.getTurn().hasAI()) {
             while (game.getTurn().hasAI()) {
+              diceBtn1.setEnabled(true);
+              diceBtn2.setEnabled(true);
+              diceBtn3.setEnabled(true);
+              diceBtn4.setEnabled(true);
+              diceBtn5.setEnabled(true);
                 rollDice.setEnabled(false);
                 game.roll();
                 if (game.die1.isHold()) {
@@ -841,11 +856,6 @@ public class GUI extends JFrame implements ActionListener {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), true);
                 } else {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), false);
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
                 }
                 game.getAIScoringOption(game.getTurn());
                 JOptionPane.showMessageDialog(null, game.getTurn().getName() + " has chosen " + game.optionChosen);
@@ -876,11 +886,7 @@ public class GUI extends JFrame implements ActionListener {
                 } else {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), false);
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
+              JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s second roll!");
                 game.aiChooseDice();
                 game.roll();
                 if (game.die1.isHold()) {
@@ -913,6 +919,7 @@ public class GUI extends JFrame implements ActionListener {
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
+                game.aiChooseDice();
                 game.addScore(game.getTurn());
                 player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
                 player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
