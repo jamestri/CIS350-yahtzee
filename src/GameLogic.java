@@ -50,6 +50,12 @@ public class GameLogic implements Serializable {
     public static ArrayList<Integer> dieVals;
     /** Game status to keep track of game status. */
     public GameStatus gameStatus;
+
+    private int firstValue;
+    private int secondValue;
+    private boolean oneChosen;
+    private boolean sixChosen;
+
     /**
      * Default Constructor.
      */
@@ -190,6 +196,9 @@ public class GameLogic implements Serializable {
             player1.setTurn(true);
             numRounds++;
         }
+        secondValue = -1;
+        oneChosen = false;
+        sixChosen = false;
     }
 
     /**
@@ -684,5 +693,378 @@ public class GameLogic implements Serializable {
                 hasBeenUsed = true;
         }
         return hasBeenUsed;
+    }
+
+    public ScoreOption getAIScoringOption(Player p) {
+        ScoreOption AIScoringOption;
+        int range = 13;
+        int min = 1;
+        int chooseRandomScoringOption = (int)(Math.random() * 13) + 1;
+        if (chooseRandomScoringOption == 1) {
+            AIScoringOption = ScoreOption.CHANCE;
+        }
+        if (chooseRandomScoringOption == 2) {
+            AIScoringOption = ScoreOption.YAHTZEE;
+        }
+        if (chooseRandomScoringOption == 3) {
+            AIScoringOption = ScoreOption.ACES;
+        }
+        if (chooseRandomScoringOption == 4) {
+            AIScoringOption = ScoreOption.TWOS;
+        }
+        if (chooseRandomScoringOption == 5) {
+            AIScoringOption = ScoreOption.THREES;
+        }
+        if (chooseRandomScoringOption == 6) {
+            AIScoringOption = ScoreOption.FOURS;
+        }
+        if (chooseRandomScoringOption == 7) {
+            AIScoringOption = ScoreOption.FIVES;
+        }
+        if (chooseRandomScoringOption == 8) {
+            AIScoringOption = ScoreOption.SIXES;
+        }
+        if (chooseRandomScoringOption == 9) {
+            AIScoringOption = ScoreOption.THREE_OF_A_KIND;
+        }
+        if (chooseRandomScoringOption == 10) {
+            AIScoringOption = ScoreOption.FOUR_OF_A_KIND;
+        }
+        if (chooseRandomScoringOption == 11) {
+            AIScoringOption = ScoreOption.FULL_HOUSE;
+        }
+        if (chooseRandomScoringOption == 12) {
+            AIScoringOption = ScoreOption.SMALL_STRAIGHT;
+        }
+        if (chooseRandomScoringOption == 13) {
+            AIScoringOption = ScoreOption.LARGE_STRAIGHT;
+        }
+        AIScoringOption = optionChosen;
+        if (checkIfCategoryUsed()) {
+            AIScoringOption = getAIScoringOption(getTurn());
+        }
+        return AIScoringOption;
+    }
+
+    public void aiChooseDice() {
+        ArrayList<Die>Dice = new ArrayList<>();
+        Dice.add(die1);
+        Dice.add(die2);
+        Dice.add(die3);
+        Dice.add(die4);
+        Dice.add(die5);
+        int oneCount = 0;
+        int twoCount = 0;
+        int threeCount = 0;
+        int fourCount = 0;
+        int fiveCount = 0;
+        int sixCount = 0;
+        for (Die d : Dice) {
+            if (d.getRoll() == 1) {
+                oneCount++;
+            }
+            if (d.getRoll() == 2) {
+                twoCount++;
+            }
+            if (d.getRoll() == 3) {
+                threeCount++;
+            }
+            if (d.getRoll() == 4) {
+                fourCount++;
+            }
+            if (d.getRoll() == 5) {
+                fiveCount++;
+            }
+            if (d.getRoll() == 6) {
+                sixCount++;
+            }
+        }
+        int maxValue1 = Math.max(oneCount, twoCount);
+        int maxValue2 = Math.max(threeCount, fourCount);
+        int maxValue3 = Math.max(fiveCount, sixCount);
+        int maxValue4 = Math.max(maxValue1, maxValue2);
+        int finalMaxValue = Math.max(maxValue4, maxValue3);
+
+        if (optionChosen == ScoreOption.ACES) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 1) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.TWOS) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 2) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.THREES) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 3) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.FOURS) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 4) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.FIVES) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 5) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.SIXES) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 6) {
+                    d.setHold(true);
+                } else {
+                    d.setHold(false);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.THREE_OF_A_KIND || optionChosen == ScoreOption.FOUR_OF_A_KIND || optionChosen == ScoreOption.YAHTZEE) {
+            if (finalMaxValue == oneCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 1) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+            if (finalMaxValue == twoCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 2) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+            if (finalMaxValue == threeCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 3) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+            if (finalMaxValue == fourCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 4) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+            if (finalMaxValue == fiveCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 5) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+            if (finalMaxValue == sixCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 6) {
+                        d.setHold(true);
+                    } else {
+                        d.setHold(false);
+                    }
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.LARGE_STRAIGHT || optionChosen == ScoreOption.SMALL_STRAIGHT) {
+            boolean oneTaken = false;
+            boolean twoTaken = false;
+            boolean threeTaken = false;
+            boolean fourTaken = false;
+            boolean fiveTaken = false;
+            boolean sixTaken = false;
+            for (Die d : Dice) {
+                if (d.getRoll() == 1) {
+                    if (oneTaken || sixChosen)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        oneTaken = true;
+                        oneChosen = true;
+                    }
+                }
+                if (d.getRoll() == 2) {
+                    if (twoTaken)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        twoTaken = true;
+                    }
+                }
+                if (d.getRoll() == 3) {
+                    if (threeTaken)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        threeTaken = true;
+                    }
+                }
+                if (d.getRoll() == 4) {
+                    if (fourTaken)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        fourTaken = true;
+                    }
+                }
+                if (d.getRoll() == 5) {
+                    if (fiveTaken)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        fiveTaken = true;
+                    }
+                }
+                if (d.getRoll() == 6) {
+                    if (sixTaken || oneChosen)
+                        d.setHold(false);
+                    else {
+                        d.setHold(true);
+                        sixTaken = true;
+                        sixChosen = true;
+                    }
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.CHANCE) {
+            for (Die d : Dice) {
+                if (d.getRoll() == 6 || d.getRoll() == 5) {
+                    d.setHold(true);
+                }
+            }
+        }
+        if (optionChosen == ScoreOption.FULL_HOUSE) {
+            boolean secondOptionChosen = false;
+            if (finalMaxValue == oneCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 1) {
+                        d.setHold(true);
+                        firstValue = 1;
+                    }
+                }
+            } else if (oneCount >= 1) {
+                if (secondValue == -1 || secondValue == 1 || firstValue == 1)
+                for (Die d : Dice) {
+                    if (d.getRoll() == 1) {
+                        d.setHold(true);
+                        secondValue = 1;
+                    }
+                }
+            }
+            if (finalMaxValue == twoCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 2) {
+                        d.setHold(true);
+                        firstValue =2;
+                    }
+                }
+            } else if (twoCount >= 1) {
+                if (secondValue == 2 || secondValue == -1 || firstValue == 2) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 2) {
+                        d.setHold(true);
+                        secondValue = 2;
+                    }
+                }
+                }
+            }
+            if (finalMaxValue == threeCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 3) {
+                        d.setHold(true);
+                        firstValue = 3;
+                    }
+                }
+            } else if (threeCount >= 1) {
+                if (secondValue == 3 || secondValue == -1 || firstValue == 3) {
+                    for (Die d : Dice) {
+                        if (d.getRoll() == 3) {
+                            d.setHold(true);
+                            secondValue = 3;
+                        }
+                    }
+                }
+            }
+            if (finalMaxValue == fourCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 4) {
+                        d.setHold(true);
+                        firstValue = 4;
+                    }
+                }
+            } else if (fourCount >= 1) {
+                if (secondValue == 4 || secondValue == -1 || firstValue == 4) {
+                    for (Die d : Dice) {
+                        if (d.getRoll() == 4) {
+                            d.setHold(true);
+                            secondValue = 4;
+                        }
+                    }
+                }
+            }
+            if (finalMaxValue == fiveCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 5) {
+                        d.setHold(true);
+                        firstValue = 5;
+                    }
+                }
+            } else if (fiveCount >= 1) {
+                if (secondValue == 5 || secondValue == -1 || firstValue == 5) {
+                    for (Die d : Dice) {
+                        if (d.getRoll() == 5) {
+                            d.setHold(true);
+                            secondValue = 5;
+                        }
+                    }
+                }
+            }
+            if (finalMaxValue == sixCount) {
+                for (Die d : Dice) {
+                    if (d.getRoll() == 6) {
+                        d.setHold(true);
+                        firstValue = 6;
+                    }
+                }
+            } else if (sixCount >= 1) {
+                if (secondValue == 6 || secondValue == -1 || firstValue == 6) {
+                    for (Die d : Dice) {
+                        if (d.getRoll() == 6) {
+                            d.setHold(true);
+                            secondValue = 6;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
