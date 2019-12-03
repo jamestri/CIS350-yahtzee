@@ -889,6 +889,7 @@ public class GUI extends JFrame implements ActionListener {
               JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s second roll!");
                 game.aiChooseDice();
                 game.roll();
+                game.aiChooseDice();
                 if (game.die1.isHold()) {
                     setDiceIcon(diceBtn1, game.die1.getRoll(), true);
                 } else {
@@ -919,7 +920,6 @@ public class GUI extends JFrame implements ActionListener {
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
-                game.aiChooseDice();
                 game.addScore(game.getTurn());
                 player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
                 player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
