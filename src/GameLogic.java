@@ -681,7 +681,7 @@ public class GameLogic implements Serializable {
   }
 
   public ScoreOption getAIScoringOption(Player p) {
-    ScoreOption AIScoringOption;
+    ScoreOption AIScoringOption = ScoreOption.NONE;
     int range = 13;
     int min = 1;
     int chooseRandomScoringOption = (int) (Math.random() * 13) + 1;
@@ -724,10 +724,11 @@ public class GameLogic implements Serializable {
     if (chooseRandomScoringOption == 13) {
       AIScoringOption = ScoreOption.LARGE_STRAIGHT;
     }
-    AIScoringOption = optionChosen;
+    optionChosen = AIScoringOption;
     if (checkIfCategoryUsed()) {
-      AIScoringOption = getAIScoringOption(getTurn());
+      optionChosen = getAIScoringOption(getTurn());
     }
+    AIScoringOption = optionChosen;
     return AIScoringOption;
   }
 
@@ -763,6 +764,7 @@ public class GameLogic implements Serializable {
       if (d.getRoll() == 6) {
         sixCount++;
       }
+      d.setHold(false);
     }
     int maxValue1 = Math.max(oneCount, twoCount);
     int maxValue2 = Math.max(threeCount, fourCount);
@@ -955,7 +957,8 @@ public class GameLogic implements Serializable {
         if (secondValue == -1 || secondValue == 1 || firstValue == 1)
           for (Die d : Dice) {
             if (d.getRoll() == 1) {
-              d.setHold(true);
+              if (oneCount <= 3)
+                d.setHold(true);
               secondValue = 1;
             }
           }
@@ -963,7 +966,8 @@ public class GameLogic implements Serializable {
       if (finalMaxValue == twoCount) {
         for (Die d : Dice) {
           if (d.getRoll() == 2) {
-            d.setHold(true);
+            if (twoCount <= 3)
+              d.setHold(true);
             if (firstValue == 1) secondValue = 2;
             else firstValue = 2;
           }
@@ -982,7 +986,8 @@ public class GameLogic implements Serializable {
         if (secondValue < 0) {
           for (Die d : Dice) {
             if (d.getRoll() == 3) {
-              d.setHold(true);
+              if (threeCount <= 3)
+                d.setHold(true);
               if (firstValue > 0 && firstValue < 3) secondValue = 3;
               else firstValue = 3;
             }
@@ -1002,7 +1007,8 @@ public class GameLogic implements Serializable {
         if (secondValue < 0) {
           for (Die d : Dice) {
             if (d.getRoll() == 4) {
-              d.setHold(true);
+              if (fourCount <= 3)
+                d.setHold(true);
               if (firstValue > 0 && firstValue < 4) secondValue = 4;
               else firstValue = 4;
             }
@@ -1024,6 +1030,7 @@ public class GameLogic implements Serializable {
         if (secondValue < 0) {
           for (Die d : Dice) {
             if (d.getRoll() == 5) {
+              if (fiveCount <= 3)
               d.setHold(true);
               if (firstValue > 0 && firstValue < 5) secondValue = 5;
               else firstValue = 5;
@@ -1044,7 +1051,8 @@ public class GameLogic implements Serializable {
         if (secondValue < 0) {
           for (Die d : Dice) {
             if (d.getRoll() == 6) {
-              d.setHold(true);
+              if (sixCount <= 3)
+                d.setHold(true);
               if (firstValue > 0 && firstValue < 6) secondValue = 6;
               else firstValue = 6;
             }

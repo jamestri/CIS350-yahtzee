@@ -857,7 +857,7 @@ public class GUI extends JFrame implements ActionListener {
                 } else {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), false);
                 }
-                game.getAIScoringOption(game.getTurn());
+                game.optionChosen = game.getAIScoringOption(game.getTurn());
                 JOptionPane.showMessageDialog(null, game.getTurn().getName() + " has chosen " + game.optionChosen);
                 game.aiChooseDice();
                 game.roll();
@@ -915,11 +915,6 @@ public class GUI extends JFrame implements ActionListener {
                 } else {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), false);
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
                 game.addScore(game.getTurn());
                 player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
                 player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
@@ -932,11 +927,17 @@ public class GUI extends JFrame implements ActionListener {
                 if (game.getNumPlayers() > 4) {
                     player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
                 }
+              JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s Turn!");
                 game.die1.setHold(false);
                 game.die2.setHold(false);
                 game.die3.setHold(false);
                 game.die4.setHold(false);
                 game.die5.setHold(false);
+              setDiceIcon(diceBtn1, 0, false);
+              setDiceIcon(diceBtn2, 0, false);
+              setDiceIcon(diceBtn3, 0, false);
+              setDiceIcon(diceBtn4, 0, false);
+              setDiceIcon(diceBtn5, 0, false);
             }
 
         rollDice.setEnabled(true);
