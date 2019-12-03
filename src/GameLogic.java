@@ -938,7 +938,7 @@ public class GameLogic implements Serializable {
     }
     if (optionChosen == ScoreOption.CHANCE) {
       for (Die d : Dice) {
-        if (d.getRoll() == 6 || d.getRoll() == 5) {
+        if (d.getRoll() == 6 || d.getRoll() == 5 || d.getRoll() == 4) {
           d.setHold(true);
         }
       }
