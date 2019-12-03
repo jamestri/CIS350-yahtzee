@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 public class Testing {
 
+
   @Test
   public void testRoll() {
     GameLogic game = new GameLogic();

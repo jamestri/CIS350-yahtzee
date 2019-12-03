@@ -48,10 +48,13 @@ public class GameLogic implements Serializable {
   public static ArrayList<Integer> dieVals;
   /** Game status to keep track of game status. */
   public GameStatus gameStatus;
-
+  /** For AI to use for deciding dice. */
   private int firstValue;
+  /** For AI to use for deciding dice. */
   private int secondValue;
+  /** For AI to use for deciding dice. */
   private boolean oneChosen;
+  /** For AI to use for deciding dice. */
   private boolean sixChosen;
 
   /** Default Constructor. */
@@ -193,7 +196,10 @@ public class GameLogic implements Serializable {
     sixChosen = false;
   }
 
-  /** Gets the current player numbers turn. */
+  /**
+   * Gets the current player's turn.
+   * @return current player's turn
+   */
   public Player getTurn() {
     if (player1.isTurn()) {
       return player1;
@@ -630,49 +636,77 @@ public class GameLogic implements Serializable {
   /**
    * Getter for the number of players.
    *
-   * @returns number of players in the game
+   * @return number of players in the game
    */
   public int getNumPlayers() {
     return numberOfPlayers;
   }
 
+  /**
+   * Checks to see what scoring options have been used.
+   * @return true if option has been used previously
+   */
   public boolean checkIfCategoryUsed() {
     boolean hasBeenUsed = false;
     if (optionChosen == ScoreOption.ACES) {
-      if (getTurn().isAcesChosen()) hasBeenUsed = true;
+      if (getTurn().isAcesChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.CHANCE) {
-      if (getTurn().isChanceChosen()) hasBeenUsed = true;
+      if (getTurn().isChanceChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.FIVES) {
-      if (getTurn().isFivesChosen()) hasBeenUsed = true;
+      if (getTurn().isFivesChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.FOUR_OF_A_KIND) {
-      if (getTurn().isFourOfAKindChosen()) hasBeenUsed = true;
+      if (getTurn().isFourOfAKindChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.FOURS) {
-      if (getTurn().isFoursChosen()) hasBeenUsed = true;
+      if (getTurn().isFoursChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.FULL_HOUSE) {
-      if (getTurn().isFullHouseChosen()) hasBeenUsed = true;
+      if (getTurn().isFullHouseChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.LARGE_STRAIGHT) {
-      if (getTurn().isLargeStraightChosen()) hasBeenUsed = true;
+      if (getTurn().isLargeStraightChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.SIXES) {
-      if (getTurn().isSixesChosen()) hasBeenUsed = true;
+      if (getTurn().isSixesChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.SMALL_STRAIGHT) {
-      if (getTurn().isSmallStraightChosen()) hasBeenUsed = true;
+      if (getTurn().isSmallStraightChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.THREE_OF_A_KIND) {
-      if (getTurn().isThreeOfAKindChosen()) hasBeenUsed = true;
+      if (getTurn().isThreeOfAKindChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.THREES) {
-      if (getTurn().isThreesChosen()) hasBeenUsed = true;
+      if (getTurn().isThreesChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.TWOS) {
-      if (getTurn().isTwosChosen()) hasBeenUsed = true;
+      if (getTurn().isTwosChosen()) {
+        hasBeenUsed = true;
+      }
     }
     if (optionChosen == ScoreOption.YAHTZEE) {
       if (getTurn().isYahtzeeChosen()) hasBeenUsed = true;
@@ -681,72 +715,80 @@ public class GameLogic implements Serializable {
     return hasBeenUsed;
   }
 
+  /**
+   * Gets the AI's scoring option that they chose.
+   * @param p the AI to get their option
+   * @return the option they chose
+   */
   public ScoreOption getAIScoringOption(Player p) {
-    ScoreOption AIScoringOption = ScoreOption.NONE;
+    ScoreOption aiScoringOption = ScoreOption.NONE;
     int range = 13;
     int min = 1;
     int chooseRandomScoringOption = (int) (Math.random() * 13) + 1;
     if (chooseRandomScoringOption == 1) {
-      AIScoringOption = ScoreOption.CHANCE;
+      aiScoringOption = ScoreOption.CHANCE;
     }
     if (chooseRandomScoringOption == 2) {
-      AIScoringOption = ScoreOption.YAHTZEE;
+      aiScoringOption = ScoreOption.YAHTZEE;
     }
     if (chooseRandomScoringOption == 3) {
-      AIScoringOption = ScoreOption.ACES;
+      aiScoringOption = ScoreOption.ACES;
     }
     if (chooseRandomScoringOption == 4) {
-      AIScoringOption = ScoreOption.TWOS;
+      aiScoringOption = ScoreOption.TWOS;
     }
     if (chooseRandomScoringOption == 5) {
-      AIScoringOption = ScoreOption.THREES;
+      aiScoringOption = ScoreOption.THREES;
     }
     if (chooseRandomScoringOption == 6) {
-      AIScoringOption = ScoreOption.FOURS;
+      aiScoringOption = ScoreOption.FOURS;
     }
     if (chooseRandomScoringOption == 7) {
-      AIScoringOption = ScoreOption.FIVES;
+      aiScoringOption = ScoreOption.FIVES;
     }
     if (chooseRandomScoringOption == 8) {
-      AIScoringOption = ScoreOption.SIXES;
+      aiScoringOption = ScoreOption.SIXES;
     }
     if (chooseRandomScoringOption == 9) {
-      AIScoringOption = ScoreOption.THREE_OF_A_KIND;
+      aiScoringOption = ScoreOption.THREE_OF_A_KIND;
     }
     if (chooseRandomScoringOption == 10) {
-      AIScoringOption = ScoreOption.FOUR_OF_A_KIND;
+      aiScoringOption = ScoreOption.FOUR_OF_A_KIND;
     }
     if (chooseRandomScoringOption == 11) {
-      AIScoringOption = ScoreOption.FULL_HOUSE;
+      aiScoringOption = ScoreOption.FULL_HOUSE;
     }
     if (chooseRandomScoringOption == 12) {
-      AIScoringOption = ScoreOption.SMALL_STRAIGHT;
+      aiScoringOption = ScoreOption.SMALL_STRAIGHT;
     }
     if (chooseRandomScoringOption == 13) {
-      AIScoringOption = ScoreOption.LARGE_STRAIGHT;
+      aiScoringOption = ScoreOption.LARGE_STRAIGHT;
     }
-    optionChosen = AIScoringOption;
+    optionChosen = aiScoringOption;
     if (checkIfCategoryUsed()) {
       optionChosen = getAIScoringOption(getTurn());
     }
-    AIScoringOption = optionChosen;
-    return AIScoringOption;
+    aiScoringOption = optionChosen;
+    return aiScoringOption;
   }
 
+  /**
+   * AI chooses which dice they want to hold.
+   */
   public void aiChooseDice() {
-    ArrayList<Die> Dice = new ArrayList<>();
-    Dice.add(die1);
-    Dice.add(die2);
-    Dice.add(die3);
-    Dice.add(die4);
-    Dice.add(die5);
+    ArrayList<Die> dice = new ArrayList<>();
+    dice.add(die1);
+    dice.add(die2);
+    dice.add(die3);
+    dice.add(die4);
+    dice.add(die5);
     int oneCount = 0;
     int twoCount = 0;
     int threeCount = 0;
     int fourCount = 0;
     int fiveCount = 0;
     int sixCount = 0;
-    for (Die d : Dice) {
+    for (Die d : dice) {
       if (d.getRoll() == 1) {
         oneCount++;
       }
@@ -774,7 +816,7 @@ public class GameLogic implements Serializable {
     int finalMaxValue = Math.max(maxValue4, maxValue3);
 
     if (optionChosen == ScoreOption.ACES) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 1) {
           d.setHold(true);
         } else {
@@ -783,7 +825,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.TWOS) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 2) {
           d.setHold(true);
         } else {
@@ -792,7 +834,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.THREES) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 3) {
           d.setHold(true);
         } else {
@@ -801,7 +843,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.FOURS) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 4) {
           d.setHold(true);
         } else {
@@ -810,7 +852,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.FIVES) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 5) {
           d.setHold(true);
         } else {
@@ -819,7 +861,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.SIXES) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 6) {
           d.setHold(true);
         } else {
@@ -831,7 +873,7 @@ public class GameLogic implements Serializable {
         || optionChosen == ScoreOption.FOUR_OF_A_KIND
         || optionChosen == ScoreOption.YAHTZEE) {
       if (finalMaxValue == oneCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 1) {
             d.setHold(true);
           } else {
@@ -840,7 +882,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == twoCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 2) {
             d.setHold(true);
           } else {
@@ -849,7 +891,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == threeCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 3) {
             d.setHold(true);
           } else {
@@ -858,7 +900,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == fourCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 4) {
             d.setHold(true);
           } else {
@@ -867,7 +909,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == fiveCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 5) {
             d.setHold(true);
           } else {
@@ -876,7 +918,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == sixCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 6) {
             d.setHold(true);
           } else {
@@ -892,46 +934,52 @@ public class GameLogic implements Serializable {
       boolean fourTaken = false;
       boolean fiveTaken = false;
       boolean sixTaken = false;
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 1) {
-          if (oneTaken || sixChosen) d.setHold(false);
-          else {
+          if (oneTaken || sixChosen) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             oneTaken = true;
             oneChosen = true;
           }
         }
         if (d.getRoll() == 2) {
-          if (twoTaken) d.setHold(false);
-          else {
+          if (twoTaken) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             twoTaken = true;
           }
         }
         if (d.getRoll() == 3) {
-          if (threeTaken) d.setHold(false);
-          else {
+          if (threeTaken) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             threeTaken = true;
           }
         }
         if (d.getRoll() == 4) {
-          if (fourTaken) d.setHold(false);
-          else {
+          if (fourTaken) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             fourTaken = true;
           }
         }
         if (d.getRoll() == 5) {
-          if (fiveTaken) d.setHold(false);
-          else {
+          if (fiveTaken) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             fiveTaken = true;
           }
         }
         if (d.getRoll() == 6) {
-          if (sixTaken || oneChosen) d.setHold(false);
-          else {
+          if (sixTaken || oneChosen) {
+            d.setHold(false);
+          } else {
             d.setHold(true);
             sixTaken = true;
             sixChosen = true;
@@ -940,7 +988,7 @@ public class GameLogic implements Serializable {
       }
     }
     if (optionChosen == ScoreOption.CHANCE) {
-      for (Die d : Dice) {
+      for (Die d : dice) {
         if (d.getRoll() == 6 || d.getRoll() == 5 || d.getRoll() == 4) {
           d.setHold(true);
         }
@@ -948,7 +996,7 @@ public class GameLogic implements Serializable {
     }
     if (optionChosen == ScoreOption.FULL_HOUSE) {
       if (finalMaxValue == oneCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 1) {
             d.setHold(true);
             firstValue = 1;
@@ -956,7 +1004,7 @@ public class GameLogic implements Serializable {
         }
       } else if (oneCount >= 1) {
         if (secondValue == -1 || secondValue == 1 || firstValue == 1)
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 1) {
               if (oneCount <= 3)
                 d.setHold(true);
@@ -965,17 +1013,21 @@ public class GameLogic implements Serializable {
           }
       }
       if (finalMaxValue == twoCount) {
-        for (Die d : Dice) {
+        for (Die d : dice) {
           if (d.getRoll() == 2) {
-            if (twoCount <= 3)
+            if (twoCount <= 3) {
               d.setHold(true);
-            if (firstValue == 1) secondValue = 2;
-            else firstValue = 2;
+            }
+            if (firstValue == 1) {
+              secondValue = 2;
+            } else {
+              firstValue = 2;
+            }
           }
         }
       } else if (twoCount >= 1) {
         if (secondValue == 2 || secondValue == -1 || firstValue == 2) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 2) {
               d.setHold(true);
               secondValue = 2;
@@ -985,18 +1037,22 @@ public class GameLogic implements Serializable {
       }
       if (finalMaxValue == threeCount) {
         if (secondValue < 0) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 3) {
-              if (threeCount <= 3)
+              if (threeCount <= 3) {
                 d.setHold(true);
-              if (firstValue > 0 && firstValue < 3) secondValue = 3;
-              else firstValue = 3;
+              }
+              if (firstValue > 0 && firstValue < 3) {
+                secondValue = 3;
+              } else {
+                firstValue = 3;
+              }
             }
           }
         }
       } else if (threeCount >= 1) {
         if (secondValue == 3 || secondValue == -1 || firstValue == 3) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 3) {
               d.setHold(true);
               secondValue = 3;
@@ -1006,19 +1062,23 @@ public class GameLogic implements Serializable {
       }
       if (finalMaxValue == fourCount) {
         if (secondValue < 0) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 4) {
-              if (fourCount <= 3)
+              if (fourCount <= 3) {
                 d.setHold(true);
-              if (firstValue > 0 && firstValue < 4) secondValue = 4;
-              else firstValue = 4;
+              }
+              if (firstValue > 0 && firstValue < 4) {
+                secondValue = 4;
+              } else {
+                firstValue = 4;
+              }
             }
           }
         }
       } else if (fourCount >= 1) {
         if (secondValue < 0) {
           if (secondValue == 4 || secondValue == -1 || firstValue == 4) {
-            for (Die d : Dice) {
+            for (Die d : dice) {
               if (d.getRoll() == 4) {
                 d.setHold(true);
                 secondValue = 4;
@@ -1029,18 +1089,22 @@ public class GameLogic implements Serializable {
       }
       if (finalMaxValue == fiveCount) {
         if (secondValue < 0) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 5) {
-              if (fiveCount <= 3)
-              d.setHold(true);
-              if (firstValue > 0 && firstValue < 5) secondValue = 5;
-              else firstValue = 5;
+              if (fiveCount <= 3) {
+                d.setHold(true);
+              }
+              if (firstValue > 0 && firstValue < 5) {
+                secondValue = 5;
+              } else {
+                firstValue = 5;
+              }
             }
           }
         }
       } else if (fiveCount >= 1) {
         if (secondValue == 5 || secondValue == -1 || firstValue == 5) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 5) {
               d.setHold(true);
               secondValue = 5;
@@ -1050,18 +1114,22 @@ public class GameLogic implements Serializable {
       }
       if (finalMaxValue == sixCount) {
         if (secondValue < 0) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 6) {
-              if (sixCount <= 3)
+              if (sixCount <= 3) {
                 d.setHold(true);
-              if (firstValue > 0 && firstValue < 6) secondValue = 6;
-              else firstValue = 6;
+              }
+              if (firstValue > 0 && firstValue < 6) {
+                secondValue = 6;
+              } else {
+                firstValue = 6;
+              }
             }
           }
         }
       } else if (sixCount >= 1) {
         if (secondValue == 6 || secondValue == -1 || firstValue == 6) {
-          for (Die d : Dice) {
+          for (Die d : dice) {
             if (d.getRoll() == 6) {
               d.setHold(true);
               secondValue = 6;

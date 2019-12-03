@@ -115,7 +115,7 @@ public class GUI extends JFrame implements ActionListener {
   private JLabel player4Score;
   /** Label to show player 5's score. */
   private JLabel player5Score;
-  /** Menu item to change a player's name */
+  /** Menu item to change a player's name. */
   private JMenuItem changeName;
   /** Dimension of Die for GUI. */
   private static final int DIE_DIMENSION = 80;
@@ -563,7 +563,9 @@ public class GUI extends JFrame implements ActionListener {
           player3Score.setText(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
         }
       } else {
-        if (numPlayers > 2) player3Score.setText("");
+        if (numPlayers > 2) {
+            player3Score.setText("");
+        }
       }
       if (game.getNumPlayers() > 3) {
         if (numPlayers < 4) {
@@ -574,7 +576,9 @@ public class GUI extends JFrame implements ActionListener {
           player4Score.setText(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
         }
       } else {
-        if (numPlayers > 3) player4Score.setText("");
+        if (numPlayers > 3) {
+            player4Score.setText("");
+        }
       }
       if (game.getNumPlayers() > 4) {
         if (numPlayers < 5) {
@@ -585,7 +589,9 @@ public class GUI extends JFrame implements ActionListener {
           player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
         }
       } else {
-        if (numPlayers > 4) player5Score.setText("");
+        if (numPlayers > 4) {
+            player5Score.setText("");
+        }
       }
       turn.setText("Turn " + game.getTurn().getName());
       numPlayers = game.getNumPlayers();
@@ -718,7 +724,9 @@ public class GUI extends JFrame implements ActionListener {
         diceBtn3.setBackground(new JButton().getBackground());
         diceBtn4.setBackground(new JButton().getBackground());
         diceBtn5.setBackground(new JButton().getBackground());
-        if (!submitScore.isEnabled()) passDice.setEnabled(true);
+        if (!submitScore.isEnabled()) {
+            passDice.setEnabled(true);
+        }
         diceBtn1.setEnabled(false);
         diceBtn2.setEnabled(false);
         diceBtn3.setEnabled(false);
@@ -778,15 +786,18 @@ public class GUI extends JFrame implements ActionListener {
       holdDice.setEnabled(false);
     }
     if (e.getSource() == changeName) {
-      String[] Options = new String[numPlayers];
-      Options[0] = game.player1.getName();
-      Options[1] = game.player2.getName();
-      if (game.getNumPlayers() > 2)
-        Options[2] = game.player3.getName();
-      if (game.getNumPlayers() > 3)
-        Options[3] = game.player4.getName();
-      if (game.getNumPlayers() > 4)
-        Options[4] = game.player5.getName();
+      String[] options = new String[numPlayers];
+      options[0] = game.player1.getName();
+      options[1] = game.player2.getName();
+      if (game.getNumPlayers() > 2) {
+          options[2] = game.player3.getName();
+      }
+      if (game.getNumPlayers() > 3) {
+          options[3] = game.player4.getName();
+      }
+      if (game.getNumPlayers() > 4) {
+          options[4] = game.player5.getName();
+      }
       String playerChosen =
           (String)
               JOptionPane.showInputDialog(
@@ -795,20 +806,20 @@ public class GUI extends JFrame implements ActionListener {
                   "Choose players",
                   JOptionPane.QUESTION_MESSAGE,
                   null,
-                  Options,
-                  Options[0]);
+                  options,
+                  options[0]);
       String newName = JOptionPane.showInputDialog(null, "What's your name?");
       if (playerChosen == null || newName == null || newName.equals("")) {
 
-      } else if (playerChosen.equals(game.player1.getName())){
+      } else if (playerChosen.equals(game.player1.getName())) {
         game.player1.setName(newName);
-      } else if (playerChosen.equals(game.player2.getName())){
+      } else if (playerChosen.equals(game.player2.getName())) {
         game.player2.setName(newName);
-      } else if (playerChosen.equals(game.player3.getName())){
+      } else if (playerChosen.equals(game.player3.getName())) {
         game.player3.setName(newName);
-      } else if (playerChosen.equals(game.player4.getName())){
+      } else if (playerChosen.equals(game.player4.getName())) {
         game.player4.setName(newName);
-      } else if (playerChosen.equals(game.player5.getName())){
+      } else if (playerChosen.equals(game.player5.getName())) {
         game.player5.setName(newName);
       }
       player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
@@ -1001,17 +1012,19 @@ public class GUI extends JFrame implements ActionListener {
     // Submits the score option selected and displays score
     if (e.getSource() == submitScore) {
       game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
-      if (game.optionChosen == ScoreOption.NONE)
-        JOptionPane.showMessageDialog(null, "Please select a scoring method");
-      else {
-        if (game.checkIfCategoryUsed())
-          JOptionPane.showMessageDialog(
-              null,
-              "Category already scored for current player, please choose a different category");
-        else {
+      if (game.optionChosen == ScoreOption.NONE) {
+          JOptionPane.showMessageDialog(null, "Please select a scoring method");
+      } else {
+        if (game.checkIfCategoryUsed()) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Category already scored for current player, please choose a different category");
+        } else {
           submitScore.setEnabled(false);
           scoreOptions.setEnabled(false);
-          if (game.getNumRolls() == 1) passDice.setEnabled(true);
+          if (game.getNumRolls() == 1) {
+              passDice.setEnabled(true);
+          }
         }
       }
     }
