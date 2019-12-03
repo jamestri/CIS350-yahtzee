@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -58,8 +57,6 @@ public class GUI extends JFrame implements ActionListener {
   private JMenuItem saveGame;
   /** Menu Item to exit game. */
   private JMenuItem exitItem;
-  /** Menu Item to add player. */
-  private JMenuItem addPlayer;
   /** Blank ImageIcon. */
   private ImageIcon blank;
   /** ImageIcon for Dice 1. */
@@ -118,6 +115,8 @@ public class GUI extends JFrame implements ActionListener {
   private JLabel player4Score;
   /** Label to show player 5's score. */
   private JLabel player5Score;
+  /** Menu item to change a player's name */
+  private JMenuItem changeName;
   /** Dimension of Die for GUI. */
   private static final int DIE_DIMENSION = 80;
   /**
@@ -224,10 +223,15 @@ public class GUI extends JFrame implements ActionListener {
     // Add action listeners for the menu items
     fileMenu = new JMenu("File");
 
+    changeName = new JMenuItem("Change Name");
+    changeName.addActionListener(this);
+
     openGame = new JMenuItem("Open Game");
     saveGame = new JMenuItem("Save Game");
     exitItem = new JMenuItem("Exit");
 
+    fileMenu.add(changeName);
+    fileMenu.addSeparator();
     fileMenu.add(openGame);
     fileMenu.add(saveGame);
     fileMenu.addSeparator();
@@ -773,6 +777,52 @@ public class GUI extends JFrame implements ActionListener {
       }
       holdDice.setEnabled(false);
     }
+    if (e.getSource() == changeName) {
+      String[] Options = new String[numPlayers];
+      Options[0] = game.player1.getName();
+      Options[1] = game.player2.getName();
+      if (game.getNumPlayers() > 2)
+        Options[2] = game.player3.getName();
+      if (game.getNumPlayers() > 3)
+        Options[3] = game.player4.getName();
+      if (game.getNumPlayers() > 4)
+        Options[4] = game.player5.getName();
+      String playerChosen =
+          (String)
+              JOptionPane.showInputDialog(
+                  null,
+                  "Choose which player you want to change names",
+                  "Choose players",
+                  JOptionPane.QUESTION_MESSAGE,
+                  null,
+                  Options,
+                  Options[0]);
+      String newName = JOptionPane.showInputDialog(null, "What's your name?");
+      if (playerChosen == null || newName == null || newName.equals("")) {
+
+      } else if (playerChosen.equals(game.player1.getName())){
+        game.player1.setName(newName);
+      } else if (playerChosen.equals(game.player2.getName())){
+        game.player2.setName(newName);
+      } else if (playerChosen.equals(game.player3.getName())){
+        game.player3.setName(newName);
+      } else if (playerChosen.equals(game.player4.getName())){
+        game.player4.setName(newName);
+      } else if (playerChosen.equals(game.player5.getName())){
+        game.player5.setName(newName);
+      }
+      player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
+      player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
+      if (game.getNumPlayers() > 2) {
+        player3Score.setText(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
+      }
+      if (game.getNumPlayers() > 3) {
+        player4Score.setText(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
+      }
+      if (game.getNumPlayers() > 4) {
+        player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
+      }
+    }
     // Passes to next player
     if (e.getSource() == passDice) {
       if (submitScore.isEnabled()) {
@@ -858,7 +908,7 @@ public class GUI extends JFrame implements ActionListener {
                     setDiceIcon(diceBtn5, game.die5.getRoll(), false);
                 }
                 game.optionChosen = game.getAIScoringOption(game.getTurn());
-                JOptionPane.showMessageDialog(null, game.getTurn().getName() + " has chosen " + game.optionChosen);
+                JOptionPane.showMessageDialog(null, "After their first roll, " + game.getTurn().getName() + " has chosen " + game.optionChosen);
                 game.aiChooseDice();
                 game.roll();
                 if (game.die1.isHold()) {
@@ -927,7 +977,7 @@ public class GUI extends JFrame implements ActionListener {
                 if (game.getNumPlayers() > 4) {
                     player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
                 }
-              JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s Turn!");
+              JOptionPane.showMessageDialog(null, "That was their last roll, now it's " + game.getTurn().getName() + "'s Turn!");
                 game.die1.setHold(false);
                 game.die2.setHold(false);
                 game.die3.setHold(false);

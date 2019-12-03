@@ -676,6 +676,7 @@ public class GameLogic implements Serializable {
     }
     if (optionChosen == ScoreOption.YAHTZEE) {
       if (getTurn().isYahtzeeChosen()) hasBeenUsed = true;
+        if (getTurn().getYahtzeeRolls() > 0) hasBeenUsed = false;
     }
     return hasBeenUsed;
   }
