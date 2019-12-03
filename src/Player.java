@@ -3,7 +3,7 @@ import java.io.Serializable;
 /**
  * Class to hold Player data, like name, options chosen, and score.
  */
-public class Player implements Comparable, Serializable {
+public class Player implements Comparable<Player>, Serializable {
 
     /** Player's name for viewing on GUI. */
     private String name;
@@ -397,8 +397,12 @@ public class Player implements Comparable, Serializable {
      * @return player's total score
      */
     @Override
-    public int compareTo(Object o) {
-        return getTotalScore();
+    public int compareTo(Player o) {
+      if (getTotalScore() < o.getTotalScore()) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
 
     /**

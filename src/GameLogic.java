@@ -28,16 +28,6 @@ public class GameLogic implements Serializable {
     public Player player5;
     /** Number of rounds to keep track of game. */
     public int numRounds;
-    /** Value of first die rolled. */
-    public int die1Val;
-    /** Value of second die rolled. */
-    public int die2Val;
-    /** Value of third die rolled. */
-    public int die3Val;
-    /** Value of fourth die rolled. */
-    public int die4Val;
-    /** Value of fifth die rolled. */
-    public int die5Val;
     /** Number of rolls of player during round. */
     private int numRolls;
     /** Number of players for game creation. */
@@ -81,6 +71,7 @@ public class GameLogic implements Serializable {
         dieVals = new ArrayList<>();
         gameStatus = GameStatus.IN_PROGRESS;
         mustPass = false;
+        numberOfPlayers = 2;
     }
 
     /**
@@ -89,19 +80,19 @@ public class GameLogic implements Serializable {
     public void roll() {
         if (numRolls <= 3) {
             if (!die1.isHold()) {
-                die1Val = die1.roll();
+                die1.setRoll(die1.roll());
             }
             if (!die2.isHold()) {
-                die2Val = die2.roll();
+                die2.setRoll(die2.roll());
             }
             if (!die3.isHold()) {
-                die3Val = die3.roll();
+                die3.setRoll(die3.roll());
             }
             if (!die4.isHold()) {
-                die4Val = die4.roll();
+                die4.setRoll(die4.roll());
             }
             if (!die5.isHold()) {
-                die5Val = die5.roll();
+                die5.setRoll(die5.roll());
             }
         }
     }
@@ -152,8 +143,8 @@ public class GameLogic implements Serializable {
     public void addScore(Player player) {
         // does bonus score here
         if (player.getYahtzeeRolls() > 0 && player.isYahtzeeChosen()) {
-            if (die1Val == die2Val && die1Val == die3Val
-                    && die1Val == die4Val && die1Val == die5Val) {
+            if (die1.getRoll() == die2.getRoll() && die1.getRoll() == die3.getRoll()
+                    && die1.getRoll() == die4.getRoll() && die1.getRoll() == die5.getRoll()) {
                 player.setTotalScore(player.getTotalScore() + BONUS_SCORE);
                 player.setYahtzeeRolls(player.getYahtzeeRolls() + 1);
             }
@@ -199,9 +190,6 @@ public class GameLogic implements Serializable {
             player1.setTurn(true);
             numRounds++;
         }
-        if (numRounds == 13) {
-            isWinner();
-        }
     }
 
     /**
@@ -231,15 +219,6 @@ public class GameLogic implements Serializable {
     }
 
     /**
-     * Adds the player who will be added into the game.
-     *
-     * @param name of the player
-     */
-    public void addPlayer(String name) {
-        Player newPlayer = new Player(name);
-    }
-
-    /**
      * Returns the winner out of the five players and sets game status to over.
      *
      * @return winning player
@@ -264,11 +243,11 @@ public class GameLogic implements Serializable {
      * @return correct score of option chosen
      */
     public int chosenOptionScore(ScoreOption option, Player player) {
-        dieVals.add(die1Val);
-        dieVals.add(die2Val);
-        dieVals.add(die3Val);
-        dieVals.add(die4Val);
-        dieVals.add(die5Val);
+        dieVals.add(die1.getRoll());
+        dieVals.add(die2.getRoll());
+        dieVals.add(die3.getRoll());
+        dieVals.add(die4.getRoll());
+        dieVals.add(die5.getRoll());
 
         switch (option) {
             case ACES:
@@ -346,8 +325,6 @@ public class GameLogic implements Serializable {
             case SMALL_STRAIGHT: // incomplete, need to check if small straight happened.
                 if (!player.isSmallStraightChosen()) {
                     player.setSmallStraightChosen(true);
-                    // add dievals to see if match 10, 14, or 18, and for one occurrence of each val
-                    int sum = 0;
                     boolean one = false;
                     boolean two = false;
                     boolean three = false;
@@ -355,7 +332,6 @@ public class GameLogic implements Serializable {
                     boolean five = false;
                     boolean six = false;
                     for (int val : dieVals) {
-                        sum += val;
                         if (val == 1 && !one) {
                             one = true;
                         }
@@ -379,8 +355,7 @@ public class GameLogic implements Serializable {
                     boolean conditionOne = one && two && three && four;
                     boolean conditionTwo = two && three && four && five;
                     boolean conditionThree = three && four && five && six;
-                    if ((sum == 10 || sum == 14 || sum == 18)
-                            && (conditionOne || conditionTwo || conditionThree)) {
+                    if ((conditionOne || conditionTwo || conditionThree)) {
                         return SMALL_STRAIGHT_SCORE;
                     }
                 }
@@ -429,16 +404,16 @@ public class GameLogic implements Serializable {
             case CHANCE:
                 if (!player.isChanceChosen()) {
                     player.setChanceChosen(true);
-                    return die1Val + die2Val + die3Val + die4Val + die5Val;
+                    return die1.getRoll() + die2.getRoll() + die3.getRoll() + die4.getRoll() + die5.getRoll();
                 }
                 break;
             case YAHTZEE: // only for first time scoring yahtzee
                 if (!player.isYahtzeeChosen()) {
                     player.setYahtzeeChosen(true);
-                    if (die1Val == die2Val
-                            && die1Val == die3Val
-                            && die1Val == die4Val
-                            && die1Val == die5Val) {
+                    if (die1.getRoll() == die2.getRoll()
+                            && die1.getRoll() == die3.getRoll()
+                            && die1.getRoll() == die4.getRoll()
+                            && die1.getRoll() == die5.getRoll()) {
                         player.setYahtzeeRolls(1);
                         return YAHTZEE_SCORE;
                     } else {
@@ -583,7 +558,7 @@ public class GameLogic implements Serializable {
                             || fourCount >= 3
                             || fiveCount >= 3
                             || sixCount >= 3) {
-                        return die1Val + die2Val + die3Val + die4Val + die5Val;
+                        return die1.getRoll() + die2.getRoll() + die3.getRoll() + die4.getRoll() + die5.getRoll();
                     }
                 }
                 break;
@@ -628,7 +603,7 @@ public class GameLogic implements Serializable {
                             || fourCount >= 4
                             || fiveCount >= 4
                             || sixCount >= 4) {
-                        return die1Val + die2Val + die3Val + die4Val + die5Val;
+                        return die1.getRoll() + die2.getRoll() + die3.getRoll() + die4.getRoll() + die5.getRoll();
                     }
                 }
                 break;
@@ -643,5 +618,71 @@ public class GameLogic implements Serializable {
      */
     public void setNumPlayers(int numPlayers) {
         numberOfPlayers = numPlayers;
+    }
+
+    /**
+     * Getter for the number of players.
+     *
+     * @returns number of players in the game
+     */
+    public int getNumPlayers() {
+        return numberOfPlayers;
+    }
+
+    public boolean checkIfCategoryUsed() {
+        boolean hasBeenUsed = false;
+        if (optionChosen == ScoreOption.ACES){
+            if (getTurn().isAcesChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.CHANCE){
+            if (getTurn().isChanceChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.FIVES){
+            if (getTurn().isFivesChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.FOUR_OF_A_KIND){
+            if (getTurn().isFourOfAKindChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.FOURS){
+            if (getTurn().isFoursChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.FULL_HOUSE){
+            if (getTurn().isFullHouseChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.LARGE_STRAIGHT){
+            if (getTurn().isLargeStraightChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.SIXES){
+            if (getTurn().isSixesChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.SMALL_STRAIGHT){
+            if (getTurn().isSmallStraightChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.THREE_OF_A_KIND){
+            if (getTurn().isThreeOfAKindChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.THREES){
+            if (getTurn().isThreesChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.TWOS){
+            if (getTurn().isTwosChosen())
+                hasBeenUsed = true;
+        }
+        if (optionChosen == ScoreOption.YAHTZEE){
+            if (getTurn().isYahtzeeChosen())
+                hasBeenUsed = true;
+        }
+        return hasBeenUsed;
     }
 }
