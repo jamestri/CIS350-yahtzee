@@ -117,6 +117,8 @@ public class GUI extends JFrame implements ActionListener {
   private JLabel player5Score;
   /** Menu item to change a player's name. */
   private JMenuItem changeName;
+  /** Menu item to start a new game. */
+  private JMenuItem newGame;
   /** Dimension of Die for GUI. */
   private static final int DIE_DIMENSION = 80;
   /**
@@ -220,7 +222,7 @@ public class GUI extends JFrame implements ActionListener {
     // menu items to menus
     // Add action listeners for the menu items
     fileMenu = new JMenu("File");
-
+    newGame = new JMenuItem("New Game");
     changeName = new JMenuItem("Change Name");
     changeName.addActionListener(this);
 
@@ -230,11 +232,13 @@ public class GUI extends JFrame implements ActionListener {
 
     fileMenu.add(changeName);
     fileMenu.addSeparator();
+    fileMenu.add(newGame);
     fileMenu.add(openGame);
     fileMenu.add(saveGame);
     fileMenu.addSeparator();
     fileMenu.add(exitItem);
 
+    newGame.addActionListener(this);
     openGame.addActionListener(this);
     exitItem.addActionListener(this);
     saveGame.addActionListener(this);
@@ -1013,6 +1017,10 @@ public class GUI extends JFrame implements ActionListener {
               null, "The game is finished! Congratulations " + game.isWinner());
           rollDice.setEnabled(false);
         }
+    }
+    if (e.getSource() == newGame) {
+      dispose();
+      new GUI();
     }
     // Submits the score option selected and displays score
     if (e.getSource() == submitScore) {
