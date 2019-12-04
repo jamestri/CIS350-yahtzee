@@ -93,12 +93,12 @@ public class Player implements Comparable<Player>, Serializable {
         return yahtzeeRolls;
     }
 
-    /**
-     * Setter for yahtzee rolls.
-     *
-     * @param newYahtzeeRolls yahtzee rolls to set
-     */
-    public void setYahtzeeRolls(int newYahtzeeRolls) {
+  /**
+   * Setter for yahtzee rolls.
+   *
+   * @param newYahtzeeRolls yahtzee rolls to set
+   */
+  public void setYahtzeeRolls(int newYahtzeeRolls) {
         this.yahtzeeRolls = newYahtzeeRolls;
     }
 

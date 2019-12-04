@@ -1,9 +1,6 @@
-import java.awt.font.GlyphMetrics;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class Testing {
-
 
   @Test
   public void testRoll() {
@@ -28,52 +25,52 @@ public class Testing {
     game.player3.setTotalScore(3500);
     game.player4.setTotalScore(5000);
     game.player5.setTotalScore(2500);
-    assert(game.player4 == game.isWinner());
+    assert (game.player4 == game.isWinner());
   }
 
   @Test
   public void testNumRounds() {
     GameLogic game = new GameLogic();
     game.numRounds = 5;
-    assert(5 == game.getNumRounds());
+    assert (5 == game.getNumRounds());
   }
 
   @Test
   public void testGetTurns() {
     GameLogic game = new GameLogic();
-    assert(game.player1 == game.getTurn());
+    assert (game.player1 == game.getTurn());
     game.player1.setTurn(false);
     game.player2.setTurn(true);
-    assert(game.player2 == game.getTurn());
+    assert (game.player2 == game.getTurn());
     game.player2.setTurn(false);
     game.player3.setTurn(true);
-    assert(game.player3 == game.getTurn());
+    assert (game.player3 == game.getTurn());
     game.player3.setTurn(false);
     game.player4.setTurn(true);
-    assert(game.player4 == game.getTurn());
+    assert (game.player4 == game.getTurn());
     game.player4.setTurn(false);
     game.player5.setTurn(true);
-    assert(game.player5 == game.getTurn());
+    assert (game.player5 == game.getTurn());
     game.player5.setTurn(false);
     game.player1.setTurn(true);
-    assert(game.player1 == game.getTurn());
+    assert (game.player1 == game.getTurn());
   }
 
   @Test
   public void testNumPlayersAIAndRolls() {
     GameLogic game = new GameLogic();
     game.setNumPlayers(5);
-    assert(game.getNumPlayers() == 5);
+    assert (game.getNumPlayers() == 5);
     game.player1.setAI(true);
-    assert(game.player1.hasAI() == true);
+    assert (game.player1.hasAI() == true);
     game.player1.setName("Billy");
-    assert(game.player1.getName().equals("Billy"));
+    assert (game.player1.getName().equals("Billy"));
     game.player1.setYahtzeeRolls(2);
-    assert(game.player1.getYahtzeeRolls() == 2);
+    assert (game.player1.getYahtzeeRolls() == 2);
     game.incrementNumRolls();
     game.incrementNumRolls();
     game.incrementNumRolls();
-    assert(game.getNumRolls() == 1);
+    assert (game.getNumRolls() == 1);
   }
 
   @Test
@@ -228,7 +225,7 @@ public class Testing {
   }
 
   @Test
-  public void testStraights(){
+  public void testStraights() {
     GameLogic game = new GameLogic();
     game.die1.setRoll(1);
     game.die2.setRoll(2);
@@ -261,7 +258,7 @@ public class Testing {
   }
 
   @Test
-  public void testDigitCategoriesAndChance(){
+  public void testDigitCategoriesAndChance() {
     GameLogic game = new GameLogic();
     game.die1.setRoll(1);
     game.die2.setRoll(3);
@@ -300,7 +297,7 @@ public class Testing {
   }
 
   @Test
-  public void testThreeOfAKind(){
+  public void testThreeOfAKind() {
     GameLogic game = new GameLogic();
     game.setNumPlayers(3);
     game.die1.setRoll(1);
@@ -345,7 +342,7 @@ public class Testing {
   }
 
   @Test
-  public void testFourOfAKind(){
+  public void testFourOfAKind() {
     GameLogic game = new GameLogic();
     game.setNumPlayers(3);
     game.die1.setRoll(1);
@@ -438,5 +435,256 @@ public class Testing {
     game.optionChosen = ScoreOption.SMALL_STRAIGHT;
     game.addScore(game.getTurn());
     assert (game.player2.getTotalScore() == 0);
+  }
+
+  @Test
+  public void testAIHolding() {
+    GameLogic game = new GameLogic();
+    game.player1.setAI(true);
+    game.optionChosen = ScoreOption.ACES;
+    game.die1.setRoll(1);
+    game.die2.setRoll(2);
+    game.die3.setRoll(3);
+    game.die4.setRoll(4);
+    game.die5.setRoll(5);
+    game.aiChooseDice();
+    assert (game.die1.isHold());
+    assert (!game.die2.isHold());
+    game.optionChosen = ScoreOption.TWOS;
+    game.aiChooseDice();
+    assert (!game.die1.isHold());
+    assert (game.die2.isHold());
+    game.optionChosen = ScoreOption.THREES;
+    game.aiChooseDice();
+    assert (!game.die4.isHold());
+    assert (game.die3.isHold());
+    game.optionChosen = ScoreOption.FOURS;
+    game.aiChooseDice();
+    assert (!game.die3.isHold());
+    assert (game.die4.isHold());
+    game.die1.setRoll(6);
+    game.optionChosen = ScoreOption.FIVES;
+    game.aiChooseDice();
+    assert (!game.die1.isHold());
+    assert (game.die5.isHold());
+    game.optionChosen = ScoreOption.SIXES;
+    game.aiChooseDice();
+    assert (!game.die5.isHold());
+    assert (game.die1.isHold());
+
+    game.die1.setRoll(1);
+    game.die2.setRoll(1);
+    game.die3.setRoll(2);
+    game.die4.setRoll(3);
+    game.die5.setRoll(4);
+    game.optionChosen = ScoreOption.THREE_OF_A_KIND;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold());
+    game.die2.setRoll(2);
+    game.optionChosen = ScoreOption.FOUR_OF_A_KIND;
+    game.aiChooseDice();
+    assert (game.die2.isHold() && game.die3.isHold());
+    game.die3.setRoll(3);
+    game.optionChosen = ScoreOption.YAHTZEE;
+    game.aiChooseDice();
+    assert (game.die4.isHold() && game.die3.isHold());
+    game.die4.setRoll(4);
+    game.optionChosen = ScoreOption.FOUR_OF_A_KIND;
+    game.aiChooseDice();
+    assert (game.die4.isHold() && game.die5.isHold());
+    game.die1.setRoll(5);
+    game.die5.setRoll(5);
+    game.optionChosen = ScoreOption.FOUR_OF_A_KIND;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die5.isHold());
+    game.die1.setRoll(6);
+    game.die2.setRoll(6);
+    game.optionChosen = ScoreOption.FOUR_OF_A_KIND;
+    game.aiChooseDice();
+    assert (game.die2.isHold() && game.die1.isHold());
+
+    game.die1.setRoll(2);
+    game.die2.setRoll(3);
+    game.die3.setRoll(4);
+    game.die4.setRoll(5);
+    game.die5.setRoll(6);
+    game.optionChosen = ScoreOption.LARGE_STRAIGHT;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+    game.die5.setRoll(1);
+    game.changeTurn();
+    game.optionChosen = ScoreOption.SMALL_STRAIGHT;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+    game.changeTurn();
+    game.die5.setRoll(2);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+    game.changeTurn();
+    game.die5.setRoll(3);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+    game.changeTurn();
+    game.die5.setRoll(4);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+    game.changeTurn();
+    game.die5.setRoll(5);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+    game.changeTurn();
+    game.die5.setRoll(6);
+    game.die1.setRoll(6);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+    game.changeTurn();
+    game.die5.setRoll(1);
+    game.die1.setRoll(1);
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold());
+
+    game.die5.setRoll(6);
+    game.die4.setRoll(5);
+    game.die3.setRoll(4);
+    game.optionChosen = ScoreOption.CHANCE;
+    game.aiChooseDice();
+    assert (game.die5.isHold() && game.die4.isHold() && game.die3.isHold());
+
+    game.die1.setRoll(1);
+    game.die2.setRoll(1);
+    game.die3.setRoll(2);
+    game.die4.setRoll(2);
+    game.die5.setRoll(2);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(1);
+    game.die2.setRoll(1);
+    game.die3.setRoll(1);
+    game.die4.setRoll(2);
+    game.die5.setRoll(2);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(1);
+    game.die2.setRoll(1);
+    game.die3.setRoll(3);
+    game.die4.setRoll(2);
+    game.die5.setRoll(2);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(2);
+    game.die2.setRoll(2);
+    game.die3.setRoll(4);
+    game.die4.setRoll(3);
+    game.die5.setRoll(3);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(3);
+    game.die2.setRoll(3);
+    game.die3.setRoll(3);
+    game.die4.setRoll(4);
+    game.die5.setRoll(4);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(3);
+    game.die2.setRoll(3);
+    game.die3.setRoll(5);
+    game.die4.setRoll(4);
+    game.die5.setRoll(4);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(4);
+    game.die2.setRoll(4);
+    game.die3.setRoll(4);
+    game.die4.setRoll(3);
+    game.die5.setRoll(3);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(5);
+    game.die2.setRoll(5);
+    game.die3.setRoll(1);
+    game.die4.setRoll(6);
+    game.die5.setRoll(6);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(4);
+    game.die2.setRoll(4);
+    game.die3.setRoll(6);
+    game.die4.setRoll(5);
+    game.die5.setRoll(5);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.setAiScoringOption(ScoreOption.FULL_HOUSE);
+    game.changeTurn();
+    game.die1.setRoll(5);
+    game.die2.setRoll(5);
+    game.die3.setRoll(5);
+    game.die4.setRoll(6);
+    game.die5.setRoll(6);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+
+    game.changeTurn();
+    game.die1.setRoll(5);
+    game.die2.setRoll(5);
+    game.die3.setRoll(6);
+    game.die4.setRoll(6);
+    game.die5.setRoll(6);
+    game.optionChosen = ScoreOption.FULL_HOUSE;
+    game.aiChooseDice();
+    assert (game.die1.isHold() && game.die2.isHold() && game.die3.isHold() && game.die4.isHold() && game.die5.isHold());
+  }
+
+  @Test
+  public void testChooseAICategory () {
+    GameLogic game = new GameLogic();
+    game.setNumPlayers(2);
+    for (int i = 0; i < 26; i++) {
+      game.getAIScoringOption(game.getTurn());
+      game.roll();
+      game.aiChooseDice();
+      game.addScore(game.getTurn());
+    }
+    assert(game.player1.isAcesChosen());
+    assert(game.player1.isTwosChosen());
+    assert(game.player1.isThreesChosen());
+    assert(game.player1.isFoursChosen());
+    assert(game.player1.isFivesChosen());
+    assert(game.player1.isSixesChosen());
+    assert(game.player1.isYahtzeeChosen());
+    assert(game.player1.isFourOfAKindChosen());
+    assert(game.player1.isThreeOfAKindChosen());
+    assert(game.player1.isLargeStraightChosen());
+    assert(game.player1.isSmallStraightChosen());
+    assert(game.player1.isChanceChosen());
+    assert(game.player1.isFullHouseChosen());
+
+
   }
 }

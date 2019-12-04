@@ -187,8 +187,6 @@ public class GUI extends JFrame implements ActionListener {
       numAI = 3;
     } else if (aiChosen.equals("4")) {
       numAI = 4;
-    } else if (aiChosen.equals("5")) {
-      numAI = 5;
     } else {
       System.exit(0);
     }
@@ -564,7 +562,7 @@ public class GUI extends JFrame implements ActionListener {
         }
       } else {
         if (numPlayers > 2) {
-            player3Score.setText("");
+          player3Score.setText("");
         }
       }
       if (game.getNumPlayers() > 3) {
@@ -577,7 +575,7 @@ public class GUI extends JFrame implements ActionListener {
         }
       } else {
         if (numPlayers > 3) {
-            player4Score.setText("");
+          player4Score.setText("");
         }
       }
       if (game.getNumPlayers() > 4) {
@@ -590,7 +588,7 @@ public class GUI extends JFrame implements ActionListener {
         }
       } else {
         if (numPlayers > 4) {
-            player5Score.setText("");
+          player5Score.setText("");
         }
       }
       turn.setText("Turn " + game.getTurn().getName());
@@ -659,7 +657,7 @@ public class GUI extends JFrame implements ActionListener {
           setDiceIcon(diceBtn4, game.die4.getRoll(), false);
         }
       }
-      }
+    }
     // Select Button 5
     if (e.getSource() == diceBtn5) {
       if (!game.getTurn().hasAI()) {
@@ -671,7 +669,7 @@ public class GUI extends JFrame implements ActionListener {
           setDiceIcon(diceBtn5, game.die5.getRoll(), false);
         }
       }
-      }
+    }
     // Roll all available dice
     if (e.getSource() == rollDice) {
       game.roll();
@@ -725,7 +723,7 @@ public class GUI extends JFrame implements ActionListener {
         diceBtn4.setBackground(new JButton().getBackground());
         diceBtn5.setBackground(new JButton().getBackground());
         if (!submitScore.isEnabled()) {
-            passDice.setEnabled(true);
+          passDice.setEnabled(true);
         }
         diceBtn1.setEnabled(false);
         diceBtn2.setEnabled(false);
@@ -780,8 +778,6 @@ public class GUI extends JFrame implements ActionListener {
       }
       if (!game.isMustPass()) {
         rollDice.setEnabled(true);
-      } else {
-        rollDice.setEnabled(false);
       }
       holdDice.setEnabled(false);
     }
@@ -790,13 +786,13 @@ public class GUI extends JFrame implements ActionListener {
       options[0] = game.player1.getName();
       options[1] = game.player2.getName();
       if (game.getNumPlayers() > 2) {
-          options[2] = game.player3.getName();
+        options[2] = game.player3.getName();
       }
       if (game.getNumPlayers() > 3) {
-          options[3] = game.player4.getName();
+        options[3] = game.player4.getName();
       }
       if (game.getNumPlayers() > 4) {
-          options[4] = game.player5.getName();
+        options[4] = game.player5.getName();
       }
       String playerChosen =
           (String)
@@ -836,9 +832,6 @@ public class GUI extends JFrame implements ActionListener {
     }
     // Passes to next player
     if (e.getSource() == passDice) {
-      if (submitScore.isEnabled()) {
-        JOptionPane.showMessageDialog(null, "Please select a scoring method");
-      } else {
         game.addScore(game.getTurn());
         game.setMustPass(false);
         holdDice.setEnabled(false);
@@ -885,145 +878,157 @@ public class GUI extends JFrame implements ActionListener {
         scoreOptions.setSelectedIndex(0);
         turn.setText("Turn " + game.getTurn().getName());
         if (game.getTurn().hasAI()) {
-            while (game.getTurn().hasAI()) {
-              diceBtn1.setEnabled(true);
-              diceBtn2.setEnabled(true);
-              diceBtn3.setEnabled(true);
-              diceBtn4.setEnabled(true);
-              diceBtn5.setEnabled(true);
-                rollDice.setEnabled(false);
-                game.roll();
-                if (game.die1.isHold()) {
-                    setDiceIcon(diceBtn1, game.die1.getRoll(), true);
-                } else {
-                setDiceIcon(diceBtn1, game.die1.getRoll(), false);
-                }
-                if (game.die2.isHold()) {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), false);
-                }
-                if (game.die3.isHold()) {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), false);
-                }
-                if (game.die4.isHold()) {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), false);
-                }
-                if (game.die5.isHold()) {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), false);
-                }
-                game.optionChosen = game.getAIScoringOption(game.getTurn());
-                JOptionPane.showMessageDialog(null, "After their first roll, " + game.getTurn().getName() + " has chosen " + game.optionChosen);
-                game.aiChooseDice();
-                game.roll();
-                if (game.die1.isHold()) {
-                    setDiceIcon(diceBtn1, game.die1.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn1, game.die1.getRoll(), false);
-                }
-                if (game.die2.isHold()) {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), false);
-                }
-                if (game.die3.isHold()) {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), false);
-                }
-                if (game.die4.isHold()) {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), false);
-                }
-                if (game.die5.isHold()) {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), false);
-                }
-              JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s second roll!");
-                game.aiChooseDice();
-                game.roll();
-                game.aiChooseDice();
-                if (game.die1.isHold()) {
-                    setDiceIcon(diceBtn1, game.die1.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn1, game.die1.getRoll(), false);
-                }
-                if (game.die2.isHold()) {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn2, game.die2.getRoll(), false);
-                }
-                if (game.die3.isHold()) {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn3, game.die3.getRoll(), false);
-                }
-                if (game.die4.isHold()) {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn4, game.die4.getRoll(), false);
-                }
-                if (game.die5.isHold()) {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), true);
-                } else {
-                    setDiceIcon(diceBtn5, game.die5.getRoll(), false);
-                }
-                game.addScore(game.getTurn());
-                player1Score.setText(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
-                player2Score.setText(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
-                if (game.getNumPlayers() > 2) {
-                    player3Score.setText(game.player3.getName() + " Score:  " + game.player3.getTotalScore());
-                }
-                if (game.getNumPlayers() > 3) {
-                    player4Score.setText(game.player4.getName() + " Score:  " + game.player4.getTotalScore());
-                }
-                if (game.getNumPlayers() > 4) {
-                    player5Score.setText(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
-                }
-              JOptionPane.showMessageDialog(null, "That was their last roll, now it's " + game.getTurn().getName() + "'s Turn!");
-                game.die1.setHold(false);
-                game.die2.setHold(false);
-                game.die3.setHold(false);
-                game.die4.setHold(false);
-                game.die5.setHold(false);
-              setDiceIcon(diceBtn1, 0, false);
-              setDiceIcon(diceBtn2, 0, false);
-              setDiceIcon(diceBtn3, 0, false);
-              setDiceIcon(diceBtn4, 0, false);
-              setDiceIcon(diceBtn5, 0, false);
+          while (game.getTurn().hasAI()) {
+            diceBtn1.setEnabled(true);
+            diceBtn2.setEnabled(true);
+            diceBtn3.setEnabled(true);
+            diceBtn4.setEnabled(true);
+            diceBtn5.setEnabled(true);
+            rollDice.setEnabled(false);
+            game.roll();
+            if (game.die1.isHold()) {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), false);
             }
+            if (game.die2.isHold()) {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+            }
+            if (game.die3.isHold()) {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+            }
+            if (game.die4.isHold()) {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+            }
+            if (game.die5.isHold()) {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+            }
+            game.optionChosen = game.getAIScoringOption(game.getTurn());
+            JOptionPane.showMessageDialog(
+                null,
+                "After their first roll, "
+                    + game.getTurn().getName()
+                    + " has chosen "
+                    + game.optionChosen);
+            game.aiChooseDice();
+            game.roll();
+            if (game.die1.isHold()) {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+            }
+            if (game.die2.isHold()) {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+            }
+            if (game.die3.isHold()) {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+            }
+            if (game.die4.isHold()) {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+            }
+            if (game.die5.isHold()) {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+            }
+            JOptionPane.showMessageDialog(null, game.getTurn().getName() + "'s second roll!");
+            game.aiChooseDice();
+            game.roll();
+            game.aiChooseDice();
+            if (game.die1.isHold()) {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn1, game.die1.getRoll(), false);
+            }
+            if (game.die2.isHold()) {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn2, game.die2.getRoll(), false);
+            }
+            if (game.die3.isHold()) {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn3, game.die3.getRoll(), false);
+            }
+            if (game.die4.isHold()) {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn4, game.die4.getRoll(), false);
+            }
+            if (game.die5.isHold()) {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), true);
+            } else {
+              setDiceIcon(diceBtn5, game.die5.getRoll(), false);
+            }
+            game.addScore(game.getTurn());
+            player1Score.setText(
+                game.player1.getName() + " Score:  " + game.player1.getTotalScore());
+            player2Score.setText(
+                game.player2.getName() + " Score:  " + game.player2.getTotalScore());
+            if (game.getNumPlayers() > 2) {
+              player3Score.setText(
+                  game.player3.getName() + " Score:  " + game.player3.getTotalScore());
+            }
+            if (game.getNumPlayers() > 3) {
+              player4Score.setText(
+                  game.player4.getName() + " Score:  " + game.player4.getTotalScore());
+            }
+            if (game.getNumPlayers() > 4) {
+              player5Score.setText(
+                  game.player5.getName() + " Score:  " + game.player5.getTotalScore());
+            }
+            JOptionPane.showMessageDialog(
+                null,
+                "That was their last roll, now it's " + game.getTurn().getName() + "'s Turn!");
+            game.die1.setHold(false);
+            game.die2.setHold(false);
+            game.die3.setHold(false);
+            game.die4.setHold(false);
+            game.die5.setHold(false);
+            setDiceIcon(diceBtn1, 0, false);
+            setDiceIcon(diceBtn2, 0, false);
+            setDiceIcon(diceBtn3, 0, false);
+            setDiceIcon(diceBtn4, 0, false);
+            setDiceIcon(diceBtn5, 0, false);
+          }
 
-        rollDice.setEnabled(true);
+          rollDice.setEnabled(true);
         }
         if (game.getNumRounds() == 13) {
-            JOptionPane.showMessageDialog(null, "The game is finished! Congratulations " + game.isWinner());
-            rollDice.setEnabled(false);
+          JOptionPane.showMessageDialog(
+              null, "The game is finished! Congratulations " + game.isWinner());
+          rollDice.setEnabled(false);
         }
-      }
     }
     // Submits the score option selected and displays score
     if (e.getSource() == submitScore) {
       game.optionChosen = (ScoreOption) scoreOptions.getSelectedItem();
       if (game.optionChosen == ScoreOption.NONE) {
-          JOptionPane.showMessageDialog(null, "Please select a scoring method");
+        JOptionPane.showMessageDialog(null, "Please select a scoring method");
       } else {
         if (game.checkIfCategoryUsed()) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Category already scored for current player, please choose a different category");
+          JOptionPane.showMessageDialog(
+              null,
+              "Category already scored for current player, please choose a different category");
         } else {
           submitScore.setEnabled(false);
           scoreOptions.setEnabled(false);
           if (game.getNumRolls() == 1) {
-              passDice.setEnabled(true);
+            passDice.setEnabled(true);
           }
         }
       }

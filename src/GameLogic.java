@@ -56,6 +56,8 @@ public class GameLogic implements Serializable {
   private boolean oneChosen;
   /** For AI to use for deciding dice. */
   private boolean sixChosen;
+  /** For AI to choose a category. */
+  private ScoreOption aiScoringOption;
 
   /** Default Constructor. */
   public GameLogic() {
@@ -192,12 +194,14 @@ public class GameLogic implements Serializable {
       numRounds++;
     }
     secondValue = -1;
+    firstValue = -1;
     oneChosen = false;
     sixChosen = false;
   }
 
   /**
    * Gets the current player's turn.
+   *
    * @return current player's turn
    */
   public Player getTurn() {
@@ -644,6 +648,7 @@ public class GameLogic implements Serializable {
 
   /**
    * Checks to see what scoring options have been used.
+   *
    * @return true if option has been used previously
    */
   public boolean checkIfCategoryUsed() {
@@ -710,18 +715,19 @@ public class GameLogic implements Serializable {
     }
     if (optionChosen == ScoreOption.YAHTZEE) {
       if (getTurn().isYahtzeeChosen()) hasBeenUsed = true;
-        if (getTurn().getYahtzeeRolls() > 0) hasBeenUsed = false;
+      if (getTurn().getYahtzeeRolls() > 0) hasBeenUsed = false;
     }
     return hasBeenUsed;
   }
 
   /**
    * Gets the AI's scoring option that they chose.
+   *
    * @param p the AI to get their option
    * @return the option they chose
    */
   public ScoreOption getAIScoringOption(Player p) {
-    ScoreOption aiScoringOption = ScoreOption.NONE;
+    aiScoringOption = ScoreOption.NONE;
     int range = 13;
     int min = 1;
     int chooseRandomScoringOption = (int) (Math.random() * 13) + 1;
@@ -772,9 +778,7 @@ public class GameLogic implements Serializable {
     return aiScoringOption;
   }
 
-  /**
-   * AI chooses which dice they want to hold.
-   */
+  /** AI chooses which dice they want to hold. */
   public void aiChooseDice() {
     ArrayList<Die> dice = new ArrayList<>();
     dice.add(die1);
@@ -1006,8 +1010,7 @@ public class GameLogic implements Serializable {
         if (secondValue == -1 || secondValue == 1 || firstValue == 1)
           for (Die d : dice) {
             if (d.getRoll() == 1) {
-              if (oneCount <= 3)
-                d.setHold(true);
+              if (oneCount <= 3) d.setHold(true);
               secondValue = 1;
             }
           }
@@ -1036,7 +1039,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == threeCount) {
-        if (secondValue < 0) {
+        if (secondValue < 0 || firstValue < 0) {
           for (Die d : dice) {
             if (d.getRoll() == 3) {
               if (threeCount <= 3) {
@@ -1061,7 +1064,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == fourCount) {
-        if (secondValue < 0) {
+        if (secondValue < 0 || firstValue < 0) {
           for (Die d : dice) {
             if (d.getRoll() == 4) {
               if (fourCount <= 3) {
@@ -1076,7 +1079,7 @@ public class GameLogic implements Serializable {
           }
         }
       } else if (fourCount >= 1) {
-        if (secondValue < 0) {
+        if (secondValue < 0 || firstValue < 0) {
           if (secondValue == 4 || secondValue == -1 || firstValue == 4) {
             for (Die d : dice) {
               if (d.getRoll() == 4) {
@@ -1088,7 +1091,7 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == fiveCount) {
-        if (secondValue < 0) {
+        if (secondValue < 0 || firstValue < 0) {
           for (Die d : dice) {
             if (d.getRoll() == 5) {
               if (fiveCount <= 3) {
@@ -1113,7 +1116,6 @@ public class GameLogic implements Serializable {
         }
       }
       if (finalMaxValue == sixCount) {
-        if (secondValue < 0) {
           for (Die d : dice) {
             if (d.getRoll() == 6) {
               if (sixCount <= 3) {
@@ -1125,7 +1127,6 @@ public class GameLogic implements Serializable {
                 firstValue = 6;
               }
             }
-          }
         }
       } else if (sixCount >= 1) {
         if (secondValue == 6 || secondValue == -1 || firstValue == 6) {
@@ -1138,5 +1139,14 @@ public class GameLogic implements Serializable {
         }
       }
     }
+  }
+
+  /**
+   * Setter for yahtzee rolls.
+   *
+   * @param aiScoringOption category to set
+   */
+  public void setAiScoringOption(ScoreOption aiScoringOption) {
+    this.aiScoringOption = aiScoringOption;
   }
 }
