@@ -1,5 +1,13 @@
 import org.junit.Test;
 
+/**
+ * JUnit tests for our Yahtzee system. Looks into all classes except
+ * for the GUI.
+ *
+ * @version 2
+ * @author Logan Jaglowski
+ */
+
 public class Testing {
 
   @Test

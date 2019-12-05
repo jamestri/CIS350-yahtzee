@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * score display and score select panels. Implements game logic and action listeners
  *
  * @version 2
- * @author Nate Johnson
+ * @author Nate Johnson and Logan Jaglowski
  */
 @SuppressWarnings("serial")
 public class GUI extends JFrame implements ActionListener {
@@ -1014,7 +1014,7 @@ public class GUI extends JFrame implements ActionListener {
         }
         if (game.getNumRounds() == 13) {
           JOptionPane.showMessageDialog(
-              null, "The game is finished! Congratulations " + game.isWinner());
+              null, "The game is finished! Congratulations " + game.isWinner().getName());
           rollDice.setEnabled(false);
         }
     }
