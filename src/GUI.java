@@ -315,7 +315,7 @@ public class GUI extends JFrame implements ActionListener {
     scorePanel.setLayout(new GridLayout(6, 1));
 
     turn.setText("Turn " + game.getTurn().getName()); // update whose turn it is
-    round.setText("Round " + game.getNumRounds());
+    round.setText("Round " + (game.getNumRounds() + 1));
     player1Score = new JLabel(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
     player2Score = new JLabel(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
     if (game.getNumPlayers() > 2) {
@@ -330,7 +330,7 @@ public class GUI extends JFrame implements ActionListener {
       player5Score =
           new JLabel(game.player5.getName() + " Score:  " + game.player5.getTotalScore());
     }
-    scorePanel.add(new JLabel("Scores:"));
+    scorePanel.add(round);
     scorePanel.add(player1Score);
     scorePanel.add(player2Score);
     if (game.getNumPlayers() > 2) {
@@ -602,7 +602,7 @@ public class GUI extends JFrame implements ActionListener {
         }
       }
       turn.setText("Turn " + game.getTurn().getName());
-      round.setText("Round " + game.getNumRounds());
+      round.setText("Round " + (game.getNumRounds() + 1));
       numPlayers = game.getNumPlayers();
     }
     // Saves current game to file
@@ -888,7 +888,7 @@ public class GUI extends JFrame implements ActionListener {
         game.die5.setHold(false);
         scoreOptions.setSelectedIndex(0);
         turn.setText("Turn " + game.getTurn().getName());
-        round.setText("Round " + game.getTurn());
+        round.setText("Round " + game.getNumRounds() + 1);
         if (game.getTurn().hasAI()) {
           while (game.getTurn().hasAI()) {
             diceBtn1.setEnabled(true);
