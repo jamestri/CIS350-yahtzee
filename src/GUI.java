@@ -105,6 +105,8 @@ public class GUI extends JFrame implements ActionListener {
   private JComboBox scoreOptions;
   /** Label to show whose turn it is. */
   private JLabel turn;
+  /** Label to show what round it is. */
+  private JLabel round;
   /** Label to show player 1's score. */
   private JLabel player1Score;
   /** Label to show player 2's score. */
@@ -252,8 +254,11 @@ public class GUI extends JFrame implements ActionListener {
 
     // Instantiates label to display current players turn
     // and adds the label to GUI
+
     turn = new JLabel("Turn " + game.getTurn().getName());
     add(turn);
+
+    round = new JLabel("Round " + game.getNumRounds());
 
     // Instantiates and sets size of dice buttons
     // then adds action listeners to the dice buttons
@@ -310,6 +315,7 @@ public class GUI extends JFrame implements ActionListener {
     scorePanel.setLayout(new GridLayout(6, 1));
 
     turn.setText("Turn " + game.getTurn().getName()); // update whose turn it is
+    round.setText("Round " + game.getNumRounds());
     player1Score = new JLabel(game.player1.getName() + " Score:  " + game.player1.getTotalScore());
     player2Score = new JLabel(game.player2.getName() + " Score:  " + game.player2.getTotalScore());
     if (game.getNumPlayers() > 2) {
@@ -596,6 +602,7 @@ public class GUI extends JFrame implements ActionListener {
         }
       }
       turn.setText("Turn " + game.getTurn().getName());
+      round.setText("Round " + game.getNumRounds());
       numPlayers = game.getNumPlayers();
     }
     // Saves current game to file
@@ -881,6 +888,7 @@ public class GUI extends JFrame implements ActionListener {
         game.die5.setHold(false);
         scoreOptions.setSelectedIndex(0);
         turn.setText("Turn " + game.getTurn().getName());
+        round.setText("Round " + game.getTurn());
         if (game.getTurn().hasAI()) {
           while (game.getTurn().hasAI()) {
             diceBtn1.setEnabled(true);
